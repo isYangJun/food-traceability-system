@@ -1,11 +1,11 @@
-package com.yj.foodtraceabilitytystem;
+package com.yj.foodtracesystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FoodtraceabilitytystemApplication {
+public class FoodtracesystemApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(FoodtraceabilitytystemApplication.class, args);
+		SpringApplication.run(FoodtracesystemApplication.class, args);
 	}
 }
