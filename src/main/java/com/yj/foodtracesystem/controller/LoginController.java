@@ -34,7 +34,7 @@ public class LoginController {
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("farmer", user);
         modelAndView.setViewName("registration");
         return modelAndView;
     }
@@ -45,17 +45,16 @@ public class LoginController {
         User userExists = userService.findUserByUserNum(user.getUserNum());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("userNum", "error.user",
-                            "There is already a user registered with the userNum provided");
+                    .rejectValue("userNum", "error.farmer",
+                            "There is already a farmer registered with the userNum provided");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "user has been registered successfully");
-            modelAndView.addObject("user", new User());
+            modelAndView.addObject("successMessage", "farmer has been registered successfully");
+            modelAndView.addObject("farmer", new User());
             modelAndView.setViewName("registration");
-
         }
         return modelAndView;
     }
@@ -71,9 +70,14 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/user/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
     public String toUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "/user/user";
+        return "/farmer/home";
+    }
+    @RequestMapping(value = "/header", method = RequestMethod.GET)
+    public String toHeader() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return "header";
     }
 }

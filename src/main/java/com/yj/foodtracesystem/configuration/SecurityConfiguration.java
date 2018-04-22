@@ -49,11 +49,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
+                .antMatchers("/","/login","/registration","/header").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/cooperator/**").hasAuthority("COOPERATOR")
+                .antMatchers("/farmer/**").hasAuthority("FARMER")
+                .antMatchers("/transadmin/**").hasAuthority("TRANS_ADMIN")
+                .antMatchers("/transporter/**").hasAuthority("TRANSPORTER")
+                .antMatchers("/reposadmin/**").hasAuthority("REPOS_ADMIN")
+                .antMatchers("/repository/**").hasAuthority("REPOSITORY")
+                .antMatchers("/saleadmin/**").hasAuthority("SALE_ADMIN")
+                .antMatchers("/saleman/**").hasAuthority("SALEMAN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -68,7 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
