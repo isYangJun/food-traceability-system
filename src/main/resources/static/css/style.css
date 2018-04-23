@@ -51,7 +51,8 @@ label{
 }
 .top-header {
           padding: 0em 2em;
-    background: #4a245e;
+   /* background: #4a245e;*/
+    background: 	#E6E6FA;
 }
 ul.top-nag {
     float:left
@@ -68,7 +69,8 @@ ul.top-nag  a{
     text-transform: uppercase;
    padding: 20px 20px;
     background: none;
-    background-color: #4A245E;
+    /*background-color: #4A245E;*/
+    background: 	#E6E6FA;
     display: inline-block;
 }
 ul.top-nag  a:hover,ul.top-nag  a.active{
@@ -385,7 +387,7 @@ nav a:focus {
     text-decoration: none;
         height: 79px;
     width: 30px;
-    background: transparent url("../images/arrows.png") no-repeat left top;
+    background: transparent url("../images/arrow.png") no-repeat left top;
     margin-top:3%;
 	display:none;
 }

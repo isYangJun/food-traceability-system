@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.configuration;
 
+import com.yj.foodtracesystem.handler.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,8 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    @Autowired
+    UserHandler userHandler;
 
     @Autowired
     private DataSource dataSource;
@@ -62,7 +64,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
+                .loginPage("/login")
+                .successHandler(userHandler)
+                .failureUrl("/login?error=true")
                 .usernameParameter("userNum")
                 .passwordParameter("password")
                 .and()
