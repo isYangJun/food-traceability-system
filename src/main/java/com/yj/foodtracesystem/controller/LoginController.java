@@ -90,4 +90,10 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return "header";
     }
+
+    @RequestMapping(value = "/single", method = RequestMethod.GET)
+    public String toSingle() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return "single";
+    }
 }

@@ -74,10 +74,12 @@ ul.top-nag  a{
     display: inline-block;
 }
 ul.top-nag  a:hover,ul.top-nag  a.active{
-    background-color: #3C1D4C;
+  /*  background-color: #3C1D4C;*/
+    background-color: #E6E6FA;
 }
 ul.top-nag  a.active{
-  color: #ffcc00;
+ /* color: #ffcc00;*/
+    color: #a6e1ec;
 }
 .search-box{
   float: right;
