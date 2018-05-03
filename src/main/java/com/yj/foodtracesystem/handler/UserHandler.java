@@ -51,13 +51,12 @@ public class UserHandler extends SimpleUrlAuthenticationSuccessHandler {
         if (isAdmin(roles)) {
             url = "/admin/home";
         } else if (isFarmer(roles)) {
-            url = "/farmer/home";
+            url = "/farmer/cultMan";
         } else if (isCoo(roles)) {
             url = "/cooperator/home";
         } else {
             url = "/accessDenied";
         }
-
         return url;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -80,20 +81,19 @@ public class LoginController {
         return "/admin/qrcode";
     }
 
-    @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
     public String toUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return "/farmer/home";
-    }
+    }*/
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     public String toHeader() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return "header";
     }
 
-    @RequestMapping(value = "/single", method = RequestMethod.GET)
-    public String toSingle() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "single";
+    @GetMapping("/403")
+    public String error403() {
+        return "403";
     }
 }

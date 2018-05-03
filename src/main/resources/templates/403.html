@@ -5,7 +5,8 @@
 </head>
 <body>
         <h1>403 - Access is denied</h1>
-        <div th:inline="text">Hello '[[${#httpServletRequest.remoteUser}]]', you do not have permission to access this page.</div>
+        <span th:utext="${userName}"></span>
+        <div th:inline="text">Hello, your account: '[[${#httpServletRequest.remoteUser}]]',  do not have permission to access this page.</div>
 
 </body>
 </html>
