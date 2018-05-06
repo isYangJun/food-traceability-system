@@ -23,7 +23,7 @@ body a {
 }
 a:hover,h5.inner.two a:hover{
  text-decoration:none;
- color:#f26649;
+ color:#000000;
 }
 input[type="button"],input[type="submit"],li.parallelogram{
 	transition:0.5s all;
@@ -538,9 +538,9 @@ ul.side-icons li a.drib{
 
 h3.tittle {
     color: #333;
-    font-size: 2em;
+    font-size: 1.5em;
 	text-align:left;
-	margin-bottom:0.8em;
+	margin-bottom:0em;
 }
 h3.tittle i {
     font-size: 0.7em;
@@ -549,11 +549,11 @@ h3.tittle i {
 h5.top a {
        line-height: 1.6em;
     font-size: 1.3em;
-    color: #4A245E;
+    color: #000000;
     font-weight: 300;
 }
 h5.top a:hover{
-    color:#f26649;
+    color:#000000;
 }
 span.glyphicon.glyphicon-comment:hover, span.glyphicon.glyphicon-eye-open:hover, span.glyphicon.glyphicon-thumbs-up:hover, a.span_link {
     color: #000008;
@@ -635,7 +635,7 @@ i.glyphicon.glyphicon-comment {
     margin-left: 0.5em;
 }
 h5.inner.two a {
-        color: #4A245E;
+        color: #000000;
     font-weight:400;
     text-transform: none;
     font-size: 1.1em;
@@ -924,7 +924,7 @@ p.lom{
 .in-right input[type="submit"]{
 	outline: none;
     border: none;
-    background: #4A245E;
+    background: #f26649;
     color: #fff;
     font-weight: 400;
     font-size: 16px;
@@ -1016,7 +1016,7 @@ p.lom{
   margin-right: 58px;
 }
 .log h5{
-	color: #F26649;
+	color: #000000;
     font-size: 16px;
     text-transform: capitalize;
     margin: 0 0 10px 0;
@@ -1042,7 +1042,7 @@ p.lom{
     font-size: 17px;
     cursor: pointer;
     margin: 0 0 32px 0;
-    background: #4A245E;
+    background: #F26649;
     border: none;
     outline: none;
     -webkit-appearance: none;
@@ -1153,7 +1153,7 @@ p.lom{
 	}
 .sign-up h5{
 	margin: 0 0 2em;
-	color: #D52500;
+	color: #000000;
 	font-size: 20px;
 	}
 .sign-up h6{
@@ -1164,7 +1164,7 @@ p.lom{
 .sign-up input[type="submit"]{
 	    outline: none;
     border: none;
-    background: #4A245E;
+    background: #F26649;
     color: #fff;
     font-size: 20px;
     width: 17%;
@@ -1184,7 +1184,7 @@ p.lom{
 	    background: #F26649;
 	}
 	h3.tittle.reg {
-    font-size: 1.6em;
+    font-size: 1.4em;
 }
 /*-- /single--*/
 p.sub {
@@ -1286,8 +1286,8 @@ p.reply i{
 	font-family: 'Open Sans', sans-serif;
 }
 .coment-form input[type="submit"] {
-    background: #4A245E;
-    border: 1px solid #4A245E;
+    background: #F26649;
+    border: 1px solid #F26649;
     padding: .8em 0;
     width: 30%;
     margin-top: .5em;
@@ -1368,7 +1368,7 @@ p.reply i{
     text-align: left;
 }
 .media-left.response-text-left h5 a {
-    color: #4A245E;
+    color: #000000;
     font-weight: 400;
     line-height: 2em;
 }
@@ -1643,7 +1643,7 @@ ul.bottom i {
 		font-size: 1.6em;
 	}
 	h3.tittle {
-      font-size: 1.8em;
+      font-size: 1.5em;
 	}
 	.top-nav {
 		float: left;
@@ -2669,7 +2669,7 @@ ul.bottom i {
 		line-height: 1.9em;
 	}
 	h3.tittle {
-		font-size: 1.6em;
+		font-size: 1.5em;
 	}
 	.callbacks_tabs a:after {
 		width: 11px;
@@ -2926,7 +2926,7 @@ ul.bottom i {
 		line-height: 1.9em;
 	}
 	h3.tittle {
-		font-size: 1.6em;
+		font-size: 1.5em;
 	}
 	.callbacks_tabs a:after {
 		width: 11px;

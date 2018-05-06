@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * @Author:yangjun
@@ -29,6 +30,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUserNum(String userNum) {
         return userRepository.findByUserNum(userNum);
+    }
+
+    @Override
+    public List<User> findAllUser() {
+        return userRepository.findAll();
     }
 
     @Override

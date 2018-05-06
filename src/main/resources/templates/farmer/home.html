@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<htm1 xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <div th:replace="farmer/header :: header-css"/>
@@ -7,7 +7,6 @@
 </head>
 <body>
 <div th:replace="farmer/header :: header"/>
-
 <div class="col-md-9 main">
     <!-- header-page -->
     <div class="header">
@@ -22,7 +21,6 @@
                     <h5>Password:</h5>
                     <input type="password" value="">
                     <input type="submit" value="Login">
-
                 </form>
                 <a href="#">Forgot Password ?</a>
             </div>
@@ -31,7 +29,7 @@
                 <p>By creating an account with our store, you will be able to move through the checkout process
                     faster, store multiple shipping addresses, view and track your orders in your account and
                     more.</p>
-                <a href="registration.html" class="hvr-bounce-to-bottom button">Create An Account</a>
+                <a href="../registration.html" class="hvr-bounce-to-bottom button">Create An Account</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -79,4 +77,4 @@
 </div>
 <div class="clearfix"></div>
 </body>
-</htm1>
+</html>

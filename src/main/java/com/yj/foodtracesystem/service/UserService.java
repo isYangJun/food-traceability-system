@@ -2,6 +2,8 @@ package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.User;
 
+import java.util.List;
+
 /**
  * @Author:yangjun
  * @Description:
@@ -9,6 +11,6 @@ import com.yj.foodtracesystem.model.User;
  */
 public interface UserService {
     User findUserByUserNum(String userNum);
-
+    List<User> findAllUser();
     void saveUser(User user);
 }
