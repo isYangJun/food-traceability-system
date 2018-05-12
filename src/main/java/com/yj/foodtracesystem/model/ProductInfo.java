@@ -33,4 +33,73 @@ public class ProductInfo {
 
     @Column(name = "PI_COOPERATION_NUM")
     private int coopNum;
+
+    @Override
+    public String toString() {
+        return "ProductInfo{" +
+                "id=" + id +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", filedNum=" + filedNum +
+                ", seedNum=" + seedNum +
+                ", harvTime=" + harvTime +
+                ", coopNum=" + coopNum +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getProNum() {
+        return proNum;
+    }
+
+    public void setProNum(String proNum) {
+        this.proNum = proNum;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+
+    public int getFiledNum() {
+        return filedNum;
+    }
+
+    public void setFiledNum(int filedNum) {
+        this.filedNum = filedNum;
+    }
+
+    public int getSeedNum() {
+        return seedNum;
+    }
+
+    public void setSeedNum(int seedNum) {
+        this.seedNum = seedNum;
+    }
+
+    public Date getHarvTime() {
+        return harvTime;
+    }
+
+    public void setHarvTime(Date harvTime) {
+        this.harvTime = harvTime;
+    }
+
+    public int getCoopNum() {
+        return coopNum;
+    }
+
+    public void setCoopNum(int coopNum) {
+        this.coopNum = coopNum;
+    }
 }

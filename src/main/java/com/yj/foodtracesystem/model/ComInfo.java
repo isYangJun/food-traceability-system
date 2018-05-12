@@ -30,4 +30,64 @@ public class ComInfo {
 
     @Column(name = "CI_REGISTER_TIME")
     private Date comRegTime;
+
+    @Override
+    public String toString() {
+        return "ComInfo{" +
+                "id=" + id +
+                ", comNum='" + comNum + '\'' +
+                ", comName='" + comName + '\'' +
+                ", comRole=" + comRole +
+                ", comRoleInfo='" + comRoleInfo + '\'' +
+                ", comRegTime=" + comRegTime +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getComNum() {
+        return comNum;
+    }
+
+    public void setComNum(String comNum) {
+        this.comNum = comNum;
+    }
+
+    public String getComName() {
+        return comName;
+    }
+
+    public void setComName(String comName) {
+        this.comName = comName;
+    }
+
+    public int getComRole() {
+        return comRole;
+    }
+
+    public void setComRole(int comRole) {
+        this.comRole = comRole;
+    }
+
+    public String getComRoleInfo() {
+        return comRoleInfo;
+    }
+
+    public void setComRoleInfo(String comRoleInfo) {
+        this.comRoleInfo = comRoleInfo;
+    }
+
+    public Date getComRegTime() {
+        return comRegTime;
+    }
+
+    public void setComRegTime(Date comRegTime) {
+        this.comRegTime = comRegTime;
+    }
 }

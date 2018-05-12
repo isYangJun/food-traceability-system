@@ -3,6 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <div th:replace="farmer/header :: header-css"/>
+    <script>
+        /*  var form = new FormData(document.getElementById("hisPara"));
+          /!*form.append("username","zxj");
+          form.append("password",123456);*!/
+          var req = new XMLHttpRequest();
+          req.open("post", "${pageContext.request.contextPath}/public/testupload", false);
+          req.send(form);*/
+    </script>
     <style>
         .content {
             height: 35px;
@@ -11,6 +19,8 @@
         }
     </style>
     <title>Cult_Man</title>
+
+
 </head>
 <body>
 <div th:replace="farmer/header :: header"/>
@@ -22,10 +32,15 @@
                 <div>
                     <div class="content"><h5>地块选择:</h5></div>
                     <div class="content">
-                        <select name="fieldId">
+                        <!--<select name="fieldId">
                             <option>请选择地块</option>
                             <option th:each="list:${session.list}" th:value="${list.userNum}"
                                     th:text="${list.userNum}"></option>
+                        </select>-->
+                        <select name="fieldId">
+                            <option>请选择地块</option>
+                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.filedName}"
+                                    th:text="${filedInfoList.id}+${filedInfoList.filedName}"></option>
                         </select>
                     </div>
                 </div>
@@ -34,19 +49,108 @@
                     <div class="content">
                         <select name="operaId">
                             <option>请选择操作类型</option>
-                            <option th:each="list:${session.list}" th:value="${list.userNum}"
-                                    th:text="${list.userNum }"></option>
+                            <option th:each="operationTypeList:${operationTypeList}"
+                                    th:value="${operationTypeList.operationName}"
+                                    th:text="${operationTypeList.id }+${operationTypeList.operationName }"></option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div class="content"><h5>备注:</h5></div>
-                    <div ><input type="text" value=""></div>
+                    <div><input type="text" value=""></div>
                 </div>
                 <div><input class="content" type="submit" value="提交"></div>
             </form>
         </div>
+
+        <div class="col-md-6 log">
+            <h3>查询历史记录</h3>
+            <!--th:action="@{/farmer/queryHisCoop}"-->
+            <form autocomplete="off"
+                  th:object="${operationHisPara}" th:action="@{/farmer/queryHisCoop}" method="post" class="form-horizontal"
+                  role="form" id="hisPara" name="hisPara">
+                <div>
+                    <div class="content"><h5>起始时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>终止时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>地块选择:</h5></div>
+                    <div class="content">
+                        <select name="filedId" th:filed="*{filedId}">
+                            <option>请选择地块</option>
+                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.id}"
+                                    th:text="${filedInfoList.id}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+
         <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div class="col-md-6 log">
+        <!-- <table border="1">
+             <thead>
+             <tr>
+                 <th>姓</th>
+                 <th>名</th>
+                 <th>编号</th>
+             </tr>
+             </thead>
+             <tr data-th-each="userList:${userList}">
+                 <td data-th-text="${userList.name}"></td>
+                 <td data-th-text="${userList.id}"></td>
+                 <td data-th-text="${userList.userNum}"></td>
+             </tr>
+
+         </table>-->
+        <table border="1">
+            <thead>
+            <tr>
+                <th>地块编号</th>
+                <th>地块名称</th>
+                <th>操作人员编号</th>
+                <th>操作人员名称</th>
+                <th>操作名称</th>
+                <th>操作对象</th>
+                <th>操作时间</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr data-th-each="operationHisResList:${operationHisResList}">
+                <td data-th-text="${operationHisResList.filedId}"></td>
+                <td data-th-text="${operationHisResList.filedName}"></td>
+                <td data-th-text="${operationHisResList.userNum}"></td>
+                <td data-th-text="${operationHisResList.userName}"></td>
+                <td data-th-text="${operationHisResList.operaInfo}"></td>
+                <td data-th-text="${operationHisResList.seedName}"></td>
+                <td data-th-text="${operationHisResList.operationTime}"></td>
+                <td data-th-text="${operationHisResList.memo}"></td>
+            </tr>-->
+            <tr th:each="operationHisRes:${operationHisResList}">
+                <td th:text="${operationHisRes.filedId}"></td>
+                <td th:text="${operationHisRes.filedName}"></td>
+                <td th:text="${operationHisRes.userNum}"></td>
+                <td th:text="${operationHisRes.userName}"></td>
+                <td th:text="${operationHisRes.operaInfo}"></td>
+                <td th:text="${operationHisRes.seedName}"></td>
+                <td th:text="${operationHisRes.operationTime}"></td>
+                <td th:text="${operationHisRes.memo}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <!--  </div>-->
 

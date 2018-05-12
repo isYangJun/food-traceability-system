@@ -19,4 +19,36 @@ public class SeedInfo {
     @Column(name = "SI_VALIDATE_TIME")
     private String validateTime;
 
+    @Override
+    public String toString() {
+        return "SeedInfo{" +
+                "id=" + id +
+                ", seedName='" + seedName + '\'' +
+                ", validateTime='" + validateTime + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSeedName() {
+        return seedName;
+    }
+
+    public void setSeedName(String seedName) {
+        this.seedName = seedName;
+    }
+
+    public String getValidateTime() {
+        return validateTime;
+    }
+
+    public void setValidateTime(String validateTime) {
+        this.validateTime = validateTime;
+    }
 }

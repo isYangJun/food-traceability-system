@@ -19,20 +19,69 @@ public class FiledOperation {
     @Column(name = "FO_OPERATION_ID")
     private int operateTypeId;
 
+    public String getOperationName() {
+        return operationName;
+    }
+
+    @Override
+    public String toString() {
+        return "FiledOperation{" +
+                "id=" + id +
+                ", operateTypeId=" + operateTypeId +
+                ", operationName='" + operationName + '\'' +
+                ", userId=" + userId +
+                ", filedId=" + filedId +
+                ", filedName='" + filedName + '\'' +
+                ", operateTime=" + operateTime +
+                ", seedId=" + seedId +
+                ", seedName='" + seedName + '\'' +
+                ", operationMemo='" + operationMemo + '\'' +
+                '}';
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
+
+    public String getFiledName() {
+        return filedName;
+    }
+
+    public void setFiledName(String filedName) {
+        this.filedName = filedName;
+    }
+
+    @Column(name = "FO_OPERATION_NAME")
+    private String operationName;
+
     @Column(name = "FO_USER_ID")
     private int userId;
 
     @Column(name = "FO_FILED_ID")
     private int filedId;
 
+    @Column(name = "FO_FILED_NAME")
+    private String filedName;
+
     @Column(name = "FO_OPERATION_TIME")
     private Date operateTime;
 
-    @Column(name = "FO_SEED_NUM")
+    @Column(name = "FO_SEED_ID")
     private int seedId;
 
     @Column(name = "FO_SEED_NAME")
     private String seedName;
+
+    @Column(name = "FO_OPERATION_MEMO")
+    private String operationMemo;
+
+    public String getOperationMemo() {
+        return operationMemo;
+    }
+
+    public void setOperationMemo(String operationMemo) {
+        this.operationMemo = operationMemo;
+    }
 
     public int getId() {
         return id;
@@ -90,16 +139,4 @@ public class FiledOperation {
         this.seedName = seedName;
     }
 
-    @Override
-    public String toString() {
-        return "FiledOperation{" +
-                "id=" + id +
-                ", operateTypeId=" + operateTypeId +
-                ", userId=" + userId +
-                ", filedId=" + filedId +
-                ", operateTime=" + operateTime +
-                ", seedId=" + seedId +
-                ", seedName='" + seedName + '\'' +
-                '}';
-    }
 }

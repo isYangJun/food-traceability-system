@@ -12,7 +12,7 @@ import java.util.Set;
  * @Date: Created in 22:50 2018/4/18
  */
 @Entity
-@Table(name = "user")
+@Table(name = "tbl_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,9 +38,6 @@ public class User {
         this.userNum = userNum;
     }
 
-    @Column(name = "last_name")
-    @NotEmpty(message = "*Please provide your last name")
-    private String lastName;
     @Column(name = "active")
     private int active;
 
@@ -71,15 +68,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
 
     public int getActive() {
         return active;

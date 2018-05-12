@@ -17,4 +17,28 @@ public class ComRole {
 
     @Column(name = "CR_ROLE_NAME")
     private String comRoleName;
+
+    @Override
+    public String toString() {
+        return "ComRole{" +
+                "id=" + id +
+                ", comRoleName='" + comRoleName + '\'' +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getComRoleName() {
+        return comRoleName;
+    }
+
+    public void setComRoleName(String comRoleName) {
+        this.comRoleName = comRoleName;
+    }
 }
