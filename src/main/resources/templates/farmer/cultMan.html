@@ -3,14 +3,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <div th:replace="farmer/header :: header-css"/>
-    <script>
-        /*  var form = new FormData(document.getElementById("hisPara"));
-          /!*form.append("username","zxj");
-          form.append("password",123456);*!/
-          var req = new XMLHttpRequest();
-          req.open("post", "${pageContext.request.contextPath}/public/testupload", false);
-          req.send(form);*/
-    </script>
     <style>
         .content {
             height: 35px;
@@ -20,7 +12,6 @@
     </style>
     <title>Cult_Man</title>
 
-
 </head>
 <body>
 <div th:replace="farmer/header :: header"/>
@@ -28,38 +19,50 @@
     <div class="header-grids">
         <div class="col-md-6 log">
             <h3>新增操作记录</h3>
-            <form>
+            <form  autocomplete="off"
+                   th:object="${filedOperation}" th:action="@{/farmer/addFiledOpera}" method="post" class="form-horizontal"
+                  role="form" id="addFiledOpera" name="addFiledOpera">
                 <div>
                     <div class="content"><h5>地块选择:</h5></div>
+                    <div class="content">
+                        <select name="filedId" th:filed="*{filedId}">
+                            <option>请选择地块</option>
+                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.id}"
+                                    th:text="${filedInfoList.id}+${filedInfoList.filedName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>作物选择:</h5></div>
                     <div class="content">
                         <!--<select name="fieldId">
                             <option>请选择地块</option>
                             <option th:each="list:${session.list}" th:value="${list.userNum}"
                                     th:text="${list.userNum}"></option>
                         </select>-->
-                        <select name="fieldId">
-                            <option>请选择地块</option>
-                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.filedName}"
-                                    th:text="${filedInfoList.id}+${filedInfoList.filedName}"></option>
+                        <select name="seedId" th:filed="*{seedId}">
+                            <option>请选择作物</option>
+                            <option th:each="seedInfoList:${seedInfoList}" th:value="${seedInfoList.id}"
+                                    th:text="${seedInfoList.id}+${seedInfoList.seedName}"></option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div class="content"><h5>操作选择:</h5></div>
                     <div class="content">
-                        <select name="operaId">
+                        <select name="operateTypeId" th:filed="*{operateTypeId}">
                             <option>请选择操作类型</option>
                             <option th:each="operationTypeList:${operationTypeList}"
-                                    th:value="${operationTypeList.operationName}"
+                                    th:value="${operationTypeList.id}"
                                     th:text="${operationTypeList.id }+${operationTypeList.operationName }"></option>
                         </select>
                     </div>
                 </div>
                 <div>
                     <div class="content"><h5>备注:</h5></div>
-                    <div><input type="text" value=""></div>
+                    <div><input type="text" value="" name="operationMemo" th:filed="*{operationMemo}"></div>
                 </div>
-                <div><input class="content" type="submit" value="提交"></div>
+                <div><input class="content" type="submit" value="提交" ></div>
             </form>
         </div>
 

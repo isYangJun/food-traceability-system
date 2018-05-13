@@ -29,7 +29,7 @@ public class ComInfo {
     private String comRoleInfo;
 
     @Column(name = "CI_REGISTER_TIME")
-    private Date comRegTime;
+    private String comRegTime;
 
     @Override
     public String toString() {
@@ -83,11 +83,11 @@ public class ComInfo {
         this.comRoleInfo = comRoleInfo;
     }
 
-    public Date getComRegTime() {
+    public String getComRegTime() {
         return comRegTime;
     }
 
-    public void setComRegTime(Date comRegTime) {
+    public void setComRegTime(String comRegTime) {
         this.comRegTime = comRegTime;
     }
 }

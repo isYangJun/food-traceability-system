@@ -1,10 +1,12 @@
 package com.yj.foodtracesystem.repository;
 
 import com.yj.foodtracesystem.model.FiledInfo;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author:yangjun
@@ -15,4 +17,5 @@ import java.util.List;
 public interface FiledInfoRepository extends JpaRepository<FiledInfo,Integer> {
     @Override
     List<FiledInfo> findAll();
+    FiledInfo findById(int id);
 }

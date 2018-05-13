@@ -1,12 +1,13 @@
 package com.yj.foodtracesystem.service;
 
-import com.yj.foodtracesystem.model.FiledInfo;
-import com.yj.foodtracesystem.model.FiledOperationType;
-import com.yj.foodtracesystem.model.OperationHisPara;
-import com.yj.foodtracesystem.model.OperationHisResult;
+import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.model.TempModel.OperationAddPara;
+import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
+import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.repository.FiledInfoRepository;
 import com.yj.foodtracesystem.repository.FiledOperationRepository;
 import com.yj.foodtracesystem.repository.FiledOperationTypeRepository;
+import com.yj.foodtracesystem.repository.SeedInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ public class FarmerServiceImp implements FarmerService {
     private FiledInfoRepository filedInfoRepository;
     @Autowired
     private FiledOperationTypeRepository filedOperationTypeRepository;
+    @Autowired
+    private SeedInfoRepository seedInfoRepository;
     @Autowired
     private PublicService publicService;
 
@@ -66,5 +69,21 @@ public class FarmerServiceImp implements FarmerService {
                 "' and '" + endTime + "'";
         List<Object> list1 = entityManager.createNativeQuery(sql1).getResultList();*/
         return operationHisResultList;
+    }
+
+    @Override
+    public void saveFiledOperation(FiledOperation filedOperation) {
+       String seedName=seedInfoRepository.findById(filedOperation.getSeedId()).getSeedName();
+       String filedName=filedInfoRepository.findById(filedOperation.getFiledId()).getFiledName();
+       String operationName=filedOperationTypeRepository.findById(filedOperation.getOperateTypeId()).getOperationName();
+       filedOperation.setSeedName(seedName);
+       filedOperation.setFiledName(filedName);
+       filedOperation.setOperationName(operationName);
+       filedOperationRepository.save(filedOperation);
+    }
+
+    @Override
+    public List<SeedInfo> findAllSeedInfo() {
+        return seedInfoRepository.findAll();
     }
 }

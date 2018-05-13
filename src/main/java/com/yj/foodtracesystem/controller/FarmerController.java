@@ -1,8 +1,11 @@
 package com.yj.foodtracesystem.controller;
 
 import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
+import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.repository.UserRepository;
 import com.yj.foodtracesystem.service.FarmerService;
+import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,6 +33,8 @@ public class FarmerController {
     private FarmerService farmerService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PublicService publicService;
 
     @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
     public ModelAndView home() {
@@ -66,56 +71,50 @@ public class FarmerController {
 
     @GetMapping("/farmer/cultMan")
     public ModelAndView culMan(HttpSession session) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        /*List<User> list=userService.findAllUser();
-        session.setAttribute("list",list);
-        modelAndView.addObject("userList",list);*/
-        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
-        List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
-        modelAndView.addObject("filedInfoList", filedInfoList);
-        modelAndView.addObject("operationTypeList", operationTypeList);
+        ModelAndView modelAndView = initialFarmerPage();
         OperationHisPara operationHisPara = new OperationHisPara();
         modelAndView.addObject("operationHisPara", operationHisPara);
-       /* operationHisPara.startTime = "2018-05-01 00:00";
-        operationHisPara.endTime = "2018-05-11 00:00";
-        operationHisPara.filedId = 0;
-        List<OperationHisResult> operationHisResList = farmerService.findOperaHisByPara(operationHisPara);
-        modelAndView.addObject("operationHisResList", operationHisResList);*/
         modelAndView.setViewName("farmer/cultMan");
         return modelAndView;
     }
-
-   /* @RequestMapping(value = "/farmer/queryHisCoop", method = RequestMethod.POST)
-    @ResponseBody
-    public List<OperationHisResult> queryHisCoop(OperationHisPara operationHisPara) throws Exception {
-        List<OperationHisResult> operationHisResList = farmerService.findOperaHisByPara(operationHisPara);
-        return operationHisResList;
-    }*/
 
     @PostMapping(value = "/farmer/queryHisCoop")
     public ModelAndView queryHisCoop(OperationHisPara operationHisPara) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
-        List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
-        modelAndView.addObject("filedInfoList", filedInfoList);
-        modelAndView.addObject("operationTypeList", operationTypeList);
+        ModelAndView modelAndView = initialFarmerPage();
         List<OperationHisResult> operationHisResList = farmerService.findOperaHisByPara(operationHisPara);
-        modelAndView.addObject("operationHisResList",operationHisResList);
+        modelAndView.addObject("operationHisResList", operationHisResList);
         modelAndView.setViewName("farmer/cultMan");
         return modelAndView;
     }
 
-    @GetMapping("/farmer/test")
-    public String test() {
-        return "farmer/test";
+    @PostMapping(value = "/farmer/addFiledOpera")
+    public ModelAndView addFiledOpera(FiledOperation filedOperation) throws Exception {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        filedOperation.setUserId(Integer.parseInt(user.getUserNum()));
+        filedOperation.setOperateTime(publicService.getStringDate());
+        farmerService.saveFiledOperation(filedOperation);
+        ModelAndView modelAndView = initialFarmerPage();
+        OperationHisPara operationHisPara = new OperationHisPara();
+        modelAndView.addObject("operationHisPara", operationHisPara);
+        modelAndView.setViewName("farmer/cultMan");
+        return modelAndView;
+    }
+
+    private ModelAndView initialFarmerPage() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+        modelAndView.addObject("operationTypeList", operationTypeList);
+        FiledOperation filedOperation = new FiledOperation();
+        modelAndView.addObject("filedOperation", filedOperation);
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList", seedInfoList);
+        return modelAndView;
     }
 
 }

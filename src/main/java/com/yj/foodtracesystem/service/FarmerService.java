@@ -1,6 +1,9 @@
 package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.model.TempModel.OperationAddPara;
+import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
+import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 
 import java.util.List;
 
@@ -14,4 +17,7 @@ public interface FarmerService {
     List<FiledInfo> findAllFiledInfo();
     List<FiledOperationType> findAllFiledOperationType();
     List<OperationHisResult> findOperaHisByPara(OperationHisPara operationHisPara)throws Exception;
+    List<SeedInfo> findAllSeedInfo();
+    void saveFiledOperation(FiledOperation filedOperation);
+
 }

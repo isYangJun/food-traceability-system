@@ -29,7 +29,7 @@ public class ProductInfo {
     private int seedNum;
 
     @Column(name = "PI_HARVEST_TIME")
-    private Date harvTime;
+    private String harvTime;
 
     @Column(name = "PI_COOPERATION_NUM")
     private int coopNum;
@@ -87,11 +87,11 @@ public class ProductInfo {
         this.seedNum = seedNum;
     }
 
-    public Date getHarvTime() {
+    public String getHarvTime() {
         return harvTime;
     }
 
-    public void setHarvTime(Date harvTime) {
+    public void setHarvTime(String harvTime) {
         this.harvTime = harvTime;
     }
 

@@ -1,9 +1,12 @@
 package com.yj.foodtracesystem.service;
 
-import com.yj.foodtracesystem.model.OperationHisResult;
+import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import org.springframework.stereotype.Service;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,5 +32,16 @@ public class PublicService {
             operationHisResultList.add(operationHisResult);
         }
         return operationHisResultList;
+    }
+/**
+ * @Author:yangjun
+ * @Description:@return返回字符串格式 yyyy-MM-dd HH:mm:ss
+ * @Date: Created in 15:51 2018/5/13
+ */
+    public  String getStringDate() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(currentTime);
+        return dateString;
     }
 }

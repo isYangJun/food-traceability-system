@@ -64,7 +64,7 @@ public class FiledOperation {
     private String filedName;
 
     @Column(name = "FO_OPERATION_TIME")
-    private Date operateTime;
+    private String operateTime;
 
     @Column(name = "FO_SEED_ID")
     private int seedId;
@@ -115,11 +115,11 @@ public class FiledOperation {
         this.filedId = filedId;
     }
 
-    public Date getOperateTime() {
+    public String getOperateTime() {
         return operateTime;
     }
 
-    public void setOperateTime(Date operateTime) {
+    public void setOperateTime(String operateTime) {
         this.operateTime = operateTime;
     }
 

@@ -22,7 +22,7 @@ public class FiledInfo {
     @Column(name = "FI_FILED_ADD")
     private String filedAdd;
     @Column(name = "FI_REGISTER_TIME")
-    private Date filedRegTime;
+    private String filedRegTime;
 
     @Override
     public String toString() {
@@ -67,11 +67,11 @@ public class FiledInfo {
         this.filedAdd = filedAdd;
     }
 
-    public Date getFiledRegTime() {
+    public String getFiledRegTime() {
         return filedRegTime;
     }
 
-    public void setFiledRegTime(Date filedRegTime) {
+    public void setFiledRegTime(String filedRegTime) {
         this.filedRegTime = filedRegTime;
     }
 }

@@ -1,4 +1,4 @@
-package com.yj.foodtracesystem.model;
+package com.yj.foodtracesystem.model.TempModel;
 
 import java.util.Date;
 
