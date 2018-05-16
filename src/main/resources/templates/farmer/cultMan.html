@@ -68,7 +68,6 @@
 
         <div class="col-md-6 log">
             <h3>查询历史记录</h3>
-            <!--th:action="@{/farmer/queryHisCoop}"-->
             <form autocomplete="off"
                   th:object="${operationHisPara}" th:action="@{/farmer/queryHisCoop}" method="post" class="form-horizontal"
                   role="form" id="hisPara" name="hisPara">
@@ -103,21 +102,6 @@
 
     <!--表格显示-->
     <div class="col-md-6 log">
-        <!-- <table border="1">
-             <thead>
-             <tr>
-                 <th>姓</th>
-                 <th>名</th>
-                 <th>编号</th>
-             </tr>
-             </thead>
-             <tr data-th-each="userList:${userList}">
-                 <td data-th-text="${userList.name}"></td>
-                 <td data-th-text="${userList.id}"></td>
-                 <td data-th-text="${userList.userNum}"></td>
-             </tr>
-
-         </table>-->
         <table border="1">
             <thead>
             <tr>
@@ -132,16 +116,6 @@
             </tr>
             </thead>
             <tbody>
-            <!--<tr data-th-each="operationHisResList:${operationHisResList}">
-                <td data-th-text="${operationHisResList.filedId}"></td>
-                <td data-th-text="${operationHisResList.filedName}"></td>
-                <td data-th-text="${operationHisResList.userNum}"></td>
-                <td data-th-text="${operationHisResList.userName}"></td>
-                <td data-th-text="${operationHisResList.operaInfo}"></td>
-                <td data-th-text="${operationHisResList.seedName}"></td>
-                <td data-th-text="${operationHisResList.operationTime}"></td>
-                <td data-th-text="${operationHisResList.memo}"></td>
-            </tr>-->
             <tr th:each="operationHisRes:${operationHisResList}">
                 <td th:text="${operationHisRes.filedId}"></td>
                 <td th:text="${operationHisRes.filedName}"></td>
@@ -155,7 +129,6 @@
             </tbody>
         </table>
     </div>
-    <!--  </div>-->
 
     <div class="clearfix"></div>
 </div>

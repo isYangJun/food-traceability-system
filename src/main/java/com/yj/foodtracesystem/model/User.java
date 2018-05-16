@@ -30,6 +30,41 @@ public class User {
     @NotEmpty(message = "*Please provide your name")
     private String name;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userNum='" + userNum + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", userComp='" + userComp + '\'' +
+                ", userCompName='" + userCompName + '\'' +
+                ", active=" + active +
+                ", roles=" + roles +
+                '}';
+    }
+
+    public String getUserCompName() {
+        return userCompName;
+    }
+
+    public void setUserCompName(String userCompName) {
+        this.userCompName = userCompName;
+    }
+
+    public String getUserComp() {
+        return userComp;
+    }
+
+    public void setUserComp(String userComp) {
+        this.userComp = userComp;
+    }
+
+    @Column(name = "user_comp")
+    private String userComp;
+    @Column(name = "user_comp_name")
+    private String userCompName;
+
     public String getUserNum() {
         return userNum;
     }

@@ -19,5 +19,8 @@ public interface FarmerService {
     List<OperationHisResult> findOperaHisByPara(OperationHisPara operationHisPara)throws Exception;
     List<SeedInfo> findAllSeedInfo();
     void saveFiledOperation(FiledOperation filedOperation);
+    void saveFiledInfo(FiledInfo filedInfo);
+    List<FiledInfo> findFiledInfoById(int id);
+    List<FiledInfo> findByTime(String startTime,String endTime);
 
 }

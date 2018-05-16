@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,5 +86,22 @@ public class FarmerServiceImp implements FarmerService {
     @Override
     public List<SeedInfo> findAllSeedInfo() {
         return seedInfoRepository.findAll();
+    }
+
+    @Override
+    public void saveFiledInfo(FiledInfo filedInfo) {
+        filedInfoRepository.save(filedInfo);
+    }
+
+    @Override
+    public List<FiledInfo> findFiledInfoById(int id) {
+        List<FiledInfo> filedInfoList=new ArrayList<>();
+        filedInfoList.add(filedInfoRepository.findById(id)) ;
+        return filedInfoList;
+    }
+
+    @Override
+    public List<FiledInfo> findByTime(String startTime, String endTime) {
+        return filedInfoRepository.findByFiledRegTimeBetween(startTime,endTime);
     }
 }

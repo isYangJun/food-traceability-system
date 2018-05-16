@@ -39,9 +39,21 @@ public class ComInfo {
                 ", comName='" + comName + '\'' +
                 ", comRole=" + comRole +
                 ", comRoleInfo='" + comRoleInfo + '\'' +
-                ", comRegTime=" + comRegTime +
+                ", comRegTime='" + comRegTime + '\'' +
+                ", comAdd='" + comAdd + '\'' +
                 '}';
     }
+
+    public String getComAdd() {
+        return comAdd;
+    }
+
+    public void setComAdd(String comAdd) {
+        this.comAdd = comAdd;
+    }
+
+    @Column(name = "CI_COMPANY_ADD")
+    private String comAdd;
 
     public int getId() {
         return id;

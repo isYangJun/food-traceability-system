@@ -47,42 +47,74 @@ public class FarmerController {
         return modelAndView;
     }
 
-    @GetMapping("/farmer/filedMan")
-    public ModelAndView filedMan() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("farmer/filedMan");
-        return modelAndView;
-    }
-
     @GetMapping("/farmer/seedMan")
     public ModelAndView seedMan() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        ModelAndView modelAndView = initialCultManPage();
+        OperationHisPara operationHisPara = new OperationHisPara();
+        modelAndView.addObject("operationHisPara", operationHisPara);
         modelAndView.setViewName("farmer/seedMan");
         return modelAndView;
     }
 
-    @GetMapping("/farmer/cultMan")
-    public ModelAndView culMan(HttpSession session) throws Exception {
-        ModelAndView modelAndView = initialFarmerPage();
-        OperationHisPara operationHisPara = new OperationHisPara();
-        modelAndView.addObject("operationHisPara", operationHisPara);
-        modelAndView.setViewName("farmer/cultMan");
+    /*****************************************地块管理记录******************************************/
+    @GetMapping("/farmer/filedMan")
+    public ModelAndView filedMan() {
+        ModelAndView modelAndView = initialFiledMan();
+        modelAndView.setViewName("farmer/filedMan");
         return modelAndView;
     }
 
-    @PostMapping(value = "/farmer/queryHisCoop")
-    public ModelAndView queryHisCoop(OperationHisPara operationHisPara) throws Exception {
-        ModelAndView modelAndView = initialFarmerPage();
-        List<OperationHisResult> operationHisResList = farmerService.findOperaHisByPara(operationHisPara);
-        modelAndView.addObject("operationHisResList", operationHisResList);
+    @PostMapping(value = "/farmer/queryFiledInfoByTime")
+    public ModelAndView queryFiledInfoByTime(OperationHisPara operationHisPara) throws Exception {
+        ModelAndView modelAndView = initialFiledMan();
+        List<FiledInfo> filedInfoResList=farmerService.findByTime(operationHisPara.startTime,operationHisPara.endTime);
+        modelAndView.addObject("filedInfoResList",filedInfoResList);
+        modelAndView.setViewName("farmer/filedMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/farmer/queryFiledInfoById")
+    public ModelAndView queryFiledInfoById(OperationHisPara operationHisPara) throws Exception {
+        ModelAndView modelAndView = initialFiledMan();
+        List<FiledInfo> filedInfoResList=farmerService.findFiledInfoById(operationHisPara.filedId);
+        modelAndView.addObject("filedInfoResList",filedInfoResList);
+        modelAndView.setViewName("farmer/filedMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/farmer/addFiledInfo")
+    public ModelAndView addFiledInfo(FiledInfo filedInfo) throws Exception {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        filedInfo.setFiledCompNum(user.getUserComp());
+        filedInfo.setFiledCompName(user.getUserCompName());
+        filedInfo.setFiledRegTime(publicService.getStringDate());
+        farmerService.saveFiledInfo(filedInfo);
+        ModelAndView modelAndView = initialFiledMan();
+        modelAndView.setViewName("farmer/filedMan");
+        return modelAndView;
+    }
+
+    private ModelAndView initialFiledMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
+        FiledInfo filedInfo = new FiledInfo();
+        modelAndView.addObject("filedInfo", filedInfo);
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+        OperationHisPara operationHisPara = new OperationHisPara();
+        modelAndView.addObject("operationHisPara", operationHisPara);
+        return modelAndView;
+    }
+
+    /*****************************************种植管理记录******************************************/
+    @GetMapping("/farmer/cultMan")
+    public ModelAndView culMan(HttpSession session) throws Exception {
+        ModelAndView modelAndView = initialCultManPage();
+        OperationHisPara operationHisPara = new OperationHisPara();
+        modelAndView.addObject("operationHisPara", operationHisPara);
         modelAndView.setViewName("farmer/cultMan");
         return modelAndView;
     }
@@ -94,14 +126,23 @@ public class FarmerController {
         filedOperation.setUserId(Integer.parseInt(user.getUserNum()));
         filedOperation.setOperateTime(publicService.getStringDate());
         farmerService.saveFiledOperation(filedOperation);
-        ModelAndView modelAndView = initialFarmerPage();
+        ModelAndView modelAndView = initialCultManPage();
         OperationHisPara operationHisPara = new OperationHisPara();
         modelAndView.addObject("operationHisPara", operationHisPara);
         modelAndView.setViewName("farmer/cultMan");
         return modelAndView;
     }
 
-    private ModelAndView initialFarmerPage() {
+    @PostMapping(value = "/farmer/queryHisCoop")
+    public ModelAndView queryHisCoop(OperationHisPara operationHisPara) throws Exception {
+        ModelAndView modelAndView = initialCultManPage();
+        List<OperationHisResult> operationHisResList = farmerService.findOperaHisByPara(operationHisPara);
+        modelAndView.addObject("operationHisResList", operationHisResList);
+        modelAndView.setViewName("farmer/cultMan");
+        return modelAndView;
+    }
+
+    private ModelAndView initialCultManPage() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());

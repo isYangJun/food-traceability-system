@@ -18,4 +18,5 @@ public interface FiledInfoRepository extends JpaRepository<FiledInfo,Integer> {
     @Override
     List<FiledInfo> findAll();
     FiledInfo findById(int id);
+    List<FiledInfo> findByFiledRegTimeBetween(String startTime, String endTime);
 }

@@ -23,6 +23,8 @@ public class FiledInfo {
     private String filedAdd;
     @Column(name = "FI_REGISTER_TIME")
     private String filedRegTime;
+    @Column(name = "FI_COMP_NUM")
+    private String filedCompNum;
 
     @Override
     public String toString() {
@@ -31,9 +33,32 @@ public class FiledInfo {
                 ", filedArea=" + filedArea +
                 ", filedName='" + filedName + '\'' +
                 ", filedAdd='" + filedAdd + '\'' +
-                ", filedRegTime=" + filedRegTime +
+                ", filedRegTime='" + filedRegTime + '\'' +
+                ", filedCompNum='" + filedCompNum + '\'' +
+                ", filedCompName='" + filedCompName + '\'' +
                 '}';
     }
+
+    public String getFiledCompName() {
+        return filedCompName;
+    }
+
+    public void setFiledCompName(String filedCompName) {
+        this.filedCompName = filedCompName;
+    }
+
+    @Column(name = "FI_COMP_NAME")
+    private String filedCompName;
+
+    public String getFiledCompNum() {
+        return filedCompNum;
+    }
+
+    public void setFiledCompNum(String filedCompNum) {
+        this.filedCompNum = filedCompNum;
+    }
+
+
 
     public int getId() {
         return id;

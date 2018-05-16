@@ -2,76 +2,111 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <title>Filed_Man</title>
     <div th:replace="farmer/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+    <title>Filed_Man</title>
+
 </head>
 <body>
 <div th:replace="farmer/header :: header"/>
 <div class="col-md-9 main">
-    <!-- header-page -->
-    <div class="header">
-        <div class="header-grids">
-            <div class="col-md-6 log">
-                <h3 class="tittle">Login <i class="glyphicon glyphicon-lock"></i></h3>
-                <p>Welcome, please enter the following to continue.</p>
-                <p>If you have previously Login with us, <a href="#">click here</a></p>
-                <form>
-                    <h5>User Name:</h5>
-                    <input type="text" value="">
-                    <h5>Password:</h5>
-                    <input type="password" value="">
-                    <input type="submit" value="Login">
-
-                </form>
-                <a href="#">Forgot Password ?</a>
-            </div>
-            <div class="col-md-6 header-right">
-                <h3 class="tittle">New Registration <i class="glyphicon glyphicon-file"></i></h3>
-                <p>By creating an account with our store, you will be able to move through the checkout process
-                    faster, store multiple shipping addresses, view and track your orders in your account and
-                    more.</p>
-                <a href="registration.html" class="hvr-bounce-to-bottom button">Create An Account</a>
-            </div>
-            <div class="clearfix"></div>
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>新增地块</h3>
+            <form autocomplete="off"
+                  th:object="${filedInfo}" th:action="@{/farmer/addFiledInfo}" method="post" class="form-horizontal"
+                  role="form" id="addFiledInfo" name="addFiledInfo">
+                <div>
+                    <div class="content"><h5>地块地址:</h5></div>
+                    <div><input type="text" value="" name="filedAdd" th:filed="*{filedAdd}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>地块名称:</h5></div>
+                    <div><input type="text" value="" name="filedName" th:filed="*{filedName}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>地块面积:</h5></div>
+                    <div><input type="text" value="" name="filedArea" th:filed="*{filedArea}"></div>
+                </div>
+                <div><input class="content" type="submit" value="提交"></div>
+            </form>
         </div>
+
+        <div class="col-md-6 log">
+            <h3>查询地块信息</h3>
+            <form autocomplete="off"
+                  th:object="${operationHisPara}" th:action="@{/farmer/queryFiledInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="queryFiledInfoById" name="queryFiledInfoById">
+                <div>
+                    <div class="content"><h5>地块选择:</h5></div>
+                    <div class="content">
+                        <select name="filedId" th:filed="*{filedId}">
+                            <option>请选择地块</option>
+                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.id}"
+                                    th:text="${filedInfoList.id}+${filedInfoList.filedName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="col-md-6 log">
+            <form autocomplete="off"
+                  th:object="${operationHisPara}" th:action="@{/farmer/queryFiledInfoByTime}" method="post"
+                  class="form-horizontal"
+                  role="form" id="queryFiledInfoByTime" name="queryFiledInfoByTime">
+                <div>
+                    <div class="content"><h5>起始时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>终止时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+
+        <div class="clearfix"></div>
     </div>
 
-    <!-- //header-page -->
-    <div class="clearfix"></div>
-
-    <!--/footer-->
-    <div class="footer">
-        <div class="footer-top">
-            <div class="col-md-4 footer-grid">
-                <h4>Lorem sadipscing </h4>
-                <ul class="bottom">
-                    <li>Consetetur sadipscing elitr</li>
-                    <li>Magna aliquyam eratsed diam</li>
-                </ul>
-            </div>
-            <div class="col-md-4 footer-grid">
-                <h4>Message Us Now</h4>
-                <ul class="bottom">
-                    <li><i class="glyphicon glyphicon-home"></i>Available 24/7</li>
-                    <li><i class="glyphicon glyphicon-envelope"></i><a
-                            href="mailto:info@example.com">mail@example.com</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-4 footer-grid">
-                <h4>Address Location</h4>
-                <ul class="bottom">
-                    <li><i class="glyphicon glyphicon-map-marker"></i>2901 Glassgow Road, WA 98122-1090</li>
-                    <li><i class="glyphicon glyphicon-earphone"></i>phone: (888) 123-456-7899</li>
-                </ul>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-
-    <div class="copy">
-        <p>&copy; 2016 Blogger. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a>
-        </p>
+    <!--表格显示-->
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>地块编号</th>
+                <th>地块名称</th>
+                <th>地块地址</th>
+                <th>地块面积</th>
+                <th>所属公司名称</th>
+                <th>所属公司编号</th>
+                <th>登记时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="filedInfoRes:${filedInfoResList}">
+                <td th:text="${filedInfoRes.id}"></td>
+                <td th:text="${filedInfoRes.filedName}"></td>
+                <td th:text="${filedInfoRes.filedAdd}"></td>
+                <td th:text="${filedInfoRes.filedArea}"></td>
+                <td th:text="${filedInfoRes.filedCompName}"></td>
+                <td th:text="${filedInfoRes.filedCompNum}"></td>
+                <td th:text="${filedInfoRes.filedRegTime}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="clearfix"></div>
