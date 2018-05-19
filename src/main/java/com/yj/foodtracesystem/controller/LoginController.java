@@ -45,7 +45,7 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByUserNum(user.getUserNum());
@@ -63,22 +63,17 @@ public class LoginController {
             modelAndView.setViewName("registration");
         }
         return modelAndView;
-    }
+    }*/
 
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome "+user.getUserCompName()+": " + user.getName() + " (" + user.getUserNum() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;
-    }
-    @RequestMapping(value = "/admin/qrcode", method = RequestMethod.GET)
-    public String toQrcode() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "/admin/qrcode";
     }
 
    /* @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)

@@ -19,8 +19,9 @@
     <div class="header-grids">
         <div class="col-md-6 log">
             <h3>新增操作记录</h3>
-            <form  autocomplete="off"
-                   th:object="${filedOperation}" th:action="@{/farmer/addFiledOpera}" method="post" class="form-horizontal"
+            <form autocomplete="off"
+                  th:object="${filedOperation}" th:action="@{/farmer/addFiledOpera}" method="post"
+                  class="form-horizontal"
                   role="form" id="addFiledOpera" name="addFiledOpera">
                 <div>
                     <div class="content"><h5>地块选择:</h5></div>
@@ -62,14 +63,15 @@
                     <div class="content"><h5>备注:</h5></div>
                     <div><input type="text" value="" name="operationMemo" th:filed="*{operationMemo}"></div>
                 </div>
-                <div><input class="content" type="submit" value="提交" ></div>
+                <div><input class="content" type="submit" value="提交"></div>
             </form>
         </div>
 
         <div class="col-md-6 log">
             <h3>查询历史记录</h3>
             <form autocomplete="off"
-                  th:object="${operationHisPara}" th:action="@{/farmer/queryHisCoop}" method="post" class="form-horizontal"
+                  th:object="${operationHisPara}" th:action="@{/farmer/queryHisCoop}" method="post"
+                  class="form-horizontal"
                   role="form" id="hisPara" name="hisPara">
                 <div>
                     <div class="content"><h5>起始时间:</h5></div>

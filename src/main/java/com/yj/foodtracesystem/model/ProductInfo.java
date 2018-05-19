@@ -25,15 +25,6 @@ public class ProductInfo {
     @Column(name = "PI_FILED_NUM")
     private int filedNum;
 
-    @Column(name = "PI_SEED_NUM")
-    private int seedNum;
-
-    @Column(name = "PI_HARVEST_TIME")
-    private String harvTime;
-
-    @Column(name = "PI_COOPERATION_NUM")
-    private int coopNum;
-
     @Override
     public String toString() {
         return "ProductInfo{" +
@@ -42,10 +33,43 @@ public class ProductInfo {
                 ", proName='" + proName + '\'' +
                 ", filedNum=" + filedNum +
                 ", seedNum=" + seedNum +
-                ", harvTime=" + harvTime +
+                ", seedName='" + seedName + '\'' +
+                ", harvTime='" + harvTime + '\'' +
                 ", coopNum=" + coopNum +
+                ", coopName='" + coopName + '\'' +
                 '}';
     }
+
+    @Column(name = "PI_SEED_NUM")
+    private int seedNum;
+
+    public String getSeedName() {
+        return seedName;
+    }
+
+    public void setSeedName(String seedName) {
+        this.seedName = seedName;
+    }
+
+    @Column(name = "PI_SEED_NAME")
+    private String seedName;
+
+    @Column(name = "PI_HARVEST_TIME")
+    private String harvTime;
+
+    @Column(name = "PI_COOPERATION_NUM")
+    private String coopNum;
+
+    public String getCoopName() {
+        return coopName;
+    }
+
+    public void setCoopName(String coopName) {
+        this.coopName = coopName;
+    }
+
+    @Column(name = "PI_COOPERATION_NAME")
+    private String coopName;
 
     public int getId() {
         return id;
@@ -95,11 +119,11 @@ public class ProductInfo {
         this.harvTime = harvTime;
     }
 
-    public int getCoopNum() {
+    public String  getCoopNum() {
         return coopNum;
     }
 
-    public void setCoopNum(int coopNum) {
+    public void setCoopNum(String coopNum) {
         this.coopNum = coopNum;
     }
 }

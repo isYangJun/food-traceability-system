@@ -30,6 +30,14 @@ public class User {
     @NotEmpty(message = "*Please provide your name")
     private String name;
 
+    @Column(name = "sex")
+    private String sex;
+    @Column(name = "idNum")
+    private String idNum;
+
+    @Column(name = "regTime")
+    private String regTime;
+
     @Override
     public String toString() {
         return "User{" +
@@ -37,11 +45,38 @@ public class User {
                 ", userNum='" + userNum + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", idNum='" + idNum + '\'' +
+                ", regTime='" + regTime + '\'' +
                 ", userComp='" + userComp + '\'' +
                 ", userCompName='" + userCompName + '\'' +
                 ", active=" + active +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public String getRegTime() {
+        return regTime;
+    }
+
+    public void setRegTime(String regTime) {
+        this.regTime = regTime;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getIdNum() {
+        return idNum;
+    }
+
+    public void setIdNum(String idNum) {
+        this.idNum = idNum;
     }
 
     public String getUserCompName() {

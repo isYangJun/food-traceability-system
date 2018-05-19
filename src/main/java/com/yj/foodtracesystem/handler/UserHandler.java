@@ -53,7 +53,7 @@ public class UserHandler extends SimpleUrlAuthenticationSuccessHandler {
         } else if (isFarmer(roles)) {
             url = "/farmer/cultMan";
         } else if (isCoo(roles)) {
-            url = "/cooperator/home";
+            url = "/cooperator/farmerMan";
         } else {
             url = "/accessDenied";
         }

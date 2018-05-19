@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface UserService {
     User findUserByUserNum(String userNum);
+    List<User> findByUserNumOrName(String num,String name,String compNum);
     List<User> findAllUser();
+    List<User> findByTime(String startTime,String endTime);
     void saveUser(User user);
 }

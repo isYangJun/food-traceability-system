@@ -22,5 +22,6 @@ public interface FarmerService {
     void saveFiledInfo(FiledInfo filedInfo);
     List<FiledInfo> findFiledInfoById(int id);
     List<FiledInfo> findByTime(String startTime,String endTime);
+    SeedInfo findBySeedId(int id);
 
 }

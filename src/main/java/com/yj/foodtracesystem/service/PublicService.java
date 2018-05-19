@@ -1,9 +1,12 @@
 package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
+import com.yj.foodtracesystem.model.User;
 import org.springframework.stereotype.Service;
 
-import java.text.ParsePosition;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,32 +19,83 @@ import java.util.List;
  */
 @Service("publicService")
 public class PublicService {
+    /**
+     * @Author:yangjun
+     * @Description:将查询的object值返回为对应类型
+     * @Date: Created in 8:24 2018/5/17
+     */
+    public <T> T convertToType(List<Object[]> list, String typeName) {
+        if (typeName.contains("OperationHisResult")) {
+            List<OperationHisResult> operationHisResultList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                OperationHisResult operationHisResult = new OperationHisResult();
+                operationHisResult.filedId = list.get(i)[0].toString();
+                operationHisResult.filedName = list.get(i)[1].toString();
+                operationHisResult.userNum = list.get(i)[2].toString();
+                operationHisResult.userName = list.get(i)[3].toString();
+                operationHisResult.operaInfo = list.get(i)[4].toString();
+                operationHisResult.seedName = list.get(i)[5].toString();
+                operationHisResult.operationTime = list.get(i)[6].toString().replace(".0", "");
+                operationHisResult.memo = list.get(i)[7].toString();
+                operationHisResultList.add(operationHisResult);
+            }
+            return (T) operationHisResultList;
+        }
+        if(typeName.contains("User")){
+            List<User> userList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                User userREs=new User();
+                userREs.setName(list.get(i)[0].toString());
+                userREs.setUserNum(list.get(i)[1].toString());
+                userREs.setIdNum(list.get(i)[2].toString());
+                userREs.setSex(list.get(i)[3].toString());
+                userREs.setRegTime(list.get(i)[4].toString().replace(".0", ""));
+                userREs.setActive(Integer.parseInt(list.get(i)[5].toString()));
+                userList.add(userREs);
+            }
+            return (T) userList;
+        }else {
+            return null;
+        }
+    }
 
-    public List<OperationHisResult> convertToType( List<Object[]> list) {
-        List<OperationHisResult> operationHisResultList=new ArrayList<>();
-        for(int i=0;i<list.size();i++){
-            OperationHisResult operationHisResult=new OperationHisResult();
-            operationHisResult.filedId=list.get(i)[0].toString();
-            operationHisResult.filedName=list.get(i)[1].toString();
-            operationHisResult.userNum=list.get(i)[2].toString();
-            operationHisResult.userName=list.get(i)[3].toString();
-            operationHisResult.operaInfo=list.get(i)[4].toString();
-            operationHisResult.seedName=list.get(i)[5].toString();
-            operationHisResult.operationTime=list.get(i)[6].toString().replace(".0","");
-            operationHisResult.memo=list.get(i)[7].toString();
+    /*public List<OperationHisResult> convertToType(List<Object[]> list) {
+        List<OperationHisResult> operationHisResultList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            OperationHisResult operationHisResult = new OperationHisResult();
+            operationHisResult.filedId = list.get(i)[0].toString();
+            operationHisResult.filedName = list.get(i)[1].toString();
+            operationHisResult.userNum = list.get(i)[2].toString();
+            operationHisResult.userName = list.get(i)[3].toString();
+            operationHisResult.operaInfo = list.get(i)[4].toString();
+            operationHisResult.seedName = list.get(i)[5].toString();
+            operationHisResult.operationTime = list.get(i)[6].toString().replace(".0", "");
+            operationHisResult.memo = list.get(i)[7].toString();
             operationHisResultList.add(operationHisResult);
         }
         return operationHisResultList;
-    }
-/**
- * @Author:yangjun
- * @Description:@return返回字符串格式 yyyy-MM-dd HH:mm:ss
- * @Date: Created in 15:51 2018/5/13
- */
-    public  String getStringDate() {
+    }*/
+
+    /**
+     * @Author:yangjun
+     * @Description:@return返回字符串格式 yyyy-MM-dd HH:mm:ss
+     * @Date: Created in 15:51 2018/5/13
+     */
+    public String getStringDate() {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = formatter.format(currentTime);
         return dateString;
     }
+    public String formatTime(String initialTime){
+        return initialTime.replaceAll("T", " ");
+    }
+    public String getTimeStamp(){
+       return String.valueOf(System.currentTimeMillis());
+    }
+
+    /*
+    * */
+
+
 }

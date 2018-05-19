@@ -65,7 +65,7 @@ public class FarmerServiceImp implements FarmerService {
                 "' and '" + endTime + "'";
         Query nativeQuery = entityManager.createNativeQuery(sql);
         List<Object[]> list = nativeQuery.getResultList();
-        List<OperationHisResult> operationHisResultList = publicService.convertToType(list);
+        List<OperationHisResult> operationHisResultList = publicService.convertToType(list,OperationHisResult.class.getName());
        /* String sql1 = "select * from tbl_filed_operation where fo_operation_time between '" + startTime +
                 "' and '" + endTime + "'";
         List<Object> list1 = entityManager.createNativeQuery(sql1).getResultList();*/
@@ -103,5 +103,10 @@ public class FarmerServiceImp implements FarmerService {
     @Override
     public List<FiledInfo> findByTime(String startTime, String endTime) {
         return filedInfoRepository.findByFiledRegTimeBetween(startTime,endTime);
+    }
+
+    @Override
+    public SeedInfo findBySeedId(int id) {
+        return seedInfoRepository.findById(id);
     }
 }

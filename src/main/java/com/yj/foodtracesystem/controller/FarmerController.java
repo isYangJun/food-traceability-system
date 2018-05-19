@@ -41,7 +41,7 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome " +user.getUserCompName()+": "+ user.getName() + " (" + user.getUserNum() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("farmer/header");
         return modelAndView;
@@ -99,7 +99,7 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome "+user.getUserCompName()+": " + user.getName() + " (" + user.getUserNum() + ")");
         FiledInfo filedInfo = new FiledInfo();
         modelAndView.addObject("filedInfo", filedInfo);
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
@@ -146,7 +146,7 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome "+user.getUserCompName()+": " + user.getName() + " (" + user.getUserNum() + ")");
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
         List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
         modelAndView.addObject("filedInfoList", filedInfoList);

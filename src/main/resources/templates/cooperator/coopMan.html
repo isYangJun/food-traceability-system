@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="cooperator/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+    <title>Coop_Man</title>
+
+</head>
+<body>
+<div th:replace="cooperator/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>查看合作社信息</h3>
+            <form autocomplete="off"
+                  th:object="${comInfoView}" th:action="@{/cooperator/viewComInfo}" method="post"
+                  class="form-horizontal"
+                  role="form" id="viewComInfo" name="viewComInfo">
+                <div>
+                    <div class="content"><h5>合作社编号:</h5></div>
+                    <div class="content">
+                        <select name="comNum" th:filed="*{comNum}">
+                            <option>请选择合作社编号:</option>
+                            <option th:each="comInfoPre:${comInfoPreList}" th:value="${comInfoPre.comNum}"
+                                    th:text="${comInfoPre.comNum}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>合作社地址:</h5></div>
+                    <div class="content">
+                        <select name="comAdd" th:filed="*{comAdd}">
+                            <option>合作社地址</option>
+                            <option th:each="comAddRes:${comAddList}" th:value="${comAddRes}"
+                                    th:text="${comAddRes}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查看"></div>
+            </form>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>修改合作社信息</h3>
+            <form autocomplete="off"
+                  th:object="${comInfoPara}" th:action="@{/cooperator/queryComInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="queryComInfoById" name="queryComInfoById">
+                <div>
+                    <div class="content"><h5>合作社名称:</h5></div>
+                    <div class="content">
+                        <input type="text" name="comName" th:filed="*{comName}">
+                    </div>
+                </div>
+               <!-- <div>
+                    <div class="content"><h5>合作社编号:</h5></div>
+                    <div class="content">
+                        <input type="text" name="comNum" th:filed="*{comNum}">
+                    </div>
+                </div>-->
+                <div>
+                    <div class="content"><h5>合作社编号:</h5></div>
+                    <div class="content">
+                        <select name="comNum" th:filed="*{comNum}">
+                            <option  th:text="${compNum}" th:value="${compNum}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>合作社地址:</h5></div>
+                    <div class="content">
+                        <input type="text" name="comAdd" th:filed="*{comAdd}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="修改"></div>
+            </form>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>合作社名称</th>
+                <th>地址</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comInfoRes:${comInfoResList}">
+                <td th:text="${comInfoRes.comName}"></td>
+                <td th:text="${comInfoRes.comAdd}"></td>
+                <td th:text="${comInfoRes.comRegTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+</body>
+</html>
