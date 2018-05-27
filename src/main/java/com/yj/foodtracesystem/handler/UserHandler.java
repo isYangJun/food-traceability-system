@@ -54,7 +54,12 @@ public class UserHandler extends SimpleUrlAuthenticationSuccessHandler {
             url = "/farmer/cultMan";
         } else if (isCoo(roles)) {
             url = "/cooperator/farmerMan";
-        } else {
+        } else if(isTransporter(roles)){
+            url="/transporter/transMan";
+        } else if(isTransAdmin(roles)){
+            url="/transadmin/transStationMan";
+        }
+        else {
             url = "/accessDenied";
         }
         return url;
@@ -76,6 +81,20 @@ public class UserHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private boolean isCoo(String roles) {
         if (roles.contains("COOPERATOR")) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTransporter(String roles) {
+        if (roles.contains("TRANSPORTER")) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTransAdmin(String roles) {
+        if (roles.contains("TRANS_ADMIN")) {
             return true;
         }
         return false;

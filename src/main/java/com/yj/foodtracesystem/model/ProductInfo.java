@@ -1,7 +1,6 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @Author:yangjun
@@ -25,6 +24,12 @@ public class ProductInfo {
     @Column(name = "PI_FILED_NUM")
     private int filedNum;
 
+    @Column(name = "PI_SEED_NUM")
+    private int seedNum;
+
+    @Column(name = "PI_IS_TRANSED")
+    private int isTransed;//0为未操作，1为操作完成
+
     @Override
     public String toString() {
         return "ProductInfo{" +
@@ -33,15 +38,21 @@ public class ProductInfo {
                 ", proName='" + proName + '\'' +
                 ", filedNum=" + filedNum +
                 ", seedNum=" + seedNum +
+                ", isTransed=" + isTransed +
                 ", seedName='" + seedName + '\'' +
                 ", harvTime='" + harvTime + '\'' +
-                ", coopNum=" + coopNum +
+                ", coopNum='" + coopNum + '\'' +
                 ", coopName='" + coopName + '\'' +
                 '}';
     }
 
-    @Column(name = "PI_SEED_NUM")
-    private int seedNum;
+    public int getIsTransed() {
+        return isTransed;
+    }
+
+    public void setIsTransed(int isTransed) {
+        this.isTransed = isTransed;
+    }
 
     public String getSeedName() {
         return seedName;
@@ -119,11 +130,12 @@ public class ProductInfo {
         this.harvTime = harvTime;
     }
 
-    public String  getCoopNum() {
+    public String getCoopNum() {
         return coopNum;
     }
 
     public void setCoopNum(String coopNum) {
         this.coopNum = coopNum;
     }
+
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>二维码生成器</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .txt {
+            border-bottom: 1px solid #e6e6e6;
+            background: #f1f1f1;
+            line-height: 50px;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 0 100px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .mt20 {
+            margin-top: 20px
+        }
+
+        .txt input {
+            vertical-align: middle;
+            height: 28px;
+            line-height: 28px;
+            margin: 0 10px;
+        }
+
+        input#qrvalue {
+            color: #666;
+            border: 1px solid #999;
+            width: 300px;
+            padding: 0 10px;
+            margin: 10px;
+        }
+
+        input#qrsize {
+            width: 60px;
+            text-align: center;
+        }
+
+        input#creat {
+            background: #666;
+            color: #fff;
+            border: none;
+            padding: 0 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        a.download {
+            width: 100px;
+            text-align: center;
+            display: block;
+            color: #333;
+            text-decoration: none;
+            background: #efefef;
+            border: 1px solid #ccc;
+            height: 30px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="txt"><p class="content">请输入要生成的链接：<input type="text" id="qrvalue" name="qrvalue" th:value="${URL}"/>生成尺寸：<input
+        type="text" id="qrsize" value="100"/>(宽或高)<input type="button" value="生成" id="creat" onclick="creatqr()"/></p>
+</div>
+<div id="qrcodess" class="content mt20"></div>
+<div class="content mt20"><a href="javascript:;" class="download">下载二维码</a></div>
+<script type="text/javascript" src="//apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    function creatqr() {
+        var qrtxt = $("#qrvalue").val();
+        var srsize = $("#qrsize").val();
+        $("#qrcodess").html("");
+        $('#qrcodess').qrcode({width: srsize, height: srsize, text: qrtxt});
+    }
+
+    function exportCanvasAsPNG(canvas, fileName) {
+        var MIME_TYPE = "image/png";
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = canvas.toDataURL("image/png");
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.href].join(':');
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    }
+
+    $(function () {
+        creatqr();
+
+        $(".download").click(function () {
+            exportCanvasAsPNG($("#qrcodess").find("canvas")[0], "qrcoder.png");
+        });
+    });
+</script>
+</body>
+</html>

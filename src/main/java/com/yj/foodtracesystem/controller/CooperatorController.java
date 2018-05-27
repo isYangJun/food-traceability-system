@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
@@ -171,6 +172,7 @@ public class CooperatorController {
         modelAndView.addObject("compName", user.getUserCompName());
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
         modelAndView.addObject("filedInfoList", filedInfoList);
+        modelAndView.addObject("creatQRCode",new ProductInfo());
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
@@ -190,8 +192,8 @@ public class CooperatorController {
         proNum += publicService.getTimeStamp();
         productInfo.setProNum(proNum);
         productInfo.setHarvTime(publicService.formatTime(productInfo.getHarvTime()));
-        productInfo.setProName(farmerService.findBySeedId(productInfo.getId()).getSeedName());
-        productInfo.setSeedName(farmerService.findBySeedId(productInfo.getId()).getSeedName());
+        productInfo.setProName(farmerService.findBySeedId(productInfo.getSeedNum()).getSeedName());
+        productInfo.setSeedName(farmerService.findBySeedId(productInfo.getSeedNum()).getSeedName());
         coopService.saveProInfo(productInfo);
         modelAndView.addObject("productInfo", new ProductInfo());
         modelAndView.addObject("compNum", user.getUserComp());
@@ -199,6 +201,7 @@ public class CooperatorController {
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
         modelAndView.addObject("filedInfoList", filedInfoList);
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
@@ -218,6 +221,7 @@ public class CooperatorController {
         modelAndView.addObject("compNum", user.getUserComp());
         modelAndView.addObject("compName", user.getUserCompName());
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.addObject("filedInfoList", filedInfoList);
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
@@ -235,7 +239,7 @@ public class CooperatorController {
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         List<ProductInfo> proInfoResList = coopService.findByHarvTime(proInfoByTime.startTime, proInfoByTime.endTime);
         modelAndView.addObject("proInfoResList", proInfoResList);
-
+modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.addObject("productInfo", new ProductInfo());
         modelAndView.addObject("compNum", user.getUserComp());
         modelAndView.addObject("compName", user.getUserCompName());
@@ -249,5 +253,23 @@ public class CooperatorController {
         return modelAndView;
     }
 
+    /*@GetMapping("/cooperator/creatQRCode")
+    public ModelAndView testQRCode(@RequestParam("proNum") String proNum) {
+        ModelAndView modelAndView = new ModelAndView();
+        String url="http://www.tjagriculture/queryPro?proNum="+proNum;
+        modelAndView.addObject("URL",url);
+       modelAndView.addObject("proNum",proNum);
+        modelAndView.setViewName("cooperator/creatQRCode");
+        return modelAndView;
+    }*/
 
+    @PostMapping("/cooperator/creatQRCode")
+    public ModelAndView testQRCode(ProductInfo creatQRCode) {
+        ModelAndView modelAndView = new ModelAndView();
+        String url="http://www.tjagriculture/queryPro?proNum="+creatQRCode.getProNum();
+        modelAndView.addObject("URL",url);
+        modelAndView.addObject("proNum",creatQRCode.getProNum());
+        modelAndView.setViewName("cooperator/creatQRCode");
+        return modelAndView;
+    }
 }

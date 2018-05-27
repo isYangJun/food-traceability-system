@@ -31,6 +31,9 @@ public class ComInfo {
     @Column(name = "CI_REGISTER_TIME")
     private String comRegTime;
 
+    @Column(name = "CI_COMPANY_ADD")
+    private String comAdd;
+
     @Override
     public String toString() {
         return "ComInfo{" +
@@ -51,9 +54,6 @@ public class ComInfo {
     public void setComAdd(String comAdd) {
         this.comAdd = comAdd;
     }
-
-    @Column(name = "CI_COMPANY_ADD")
-    private String comAdd;
 
     public int getId() {
         return id;

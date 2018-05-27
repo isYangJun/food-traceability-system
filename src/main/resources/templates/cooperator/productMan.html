@@ -10,6 +10,7 @@
             float: left;
         }
     </style>
+
     <title>Product_Man</title>
 
 </head>
@@ -26,9 +27,7 @@
                     <div class="content"><h5>合作社名称:</h5></div>
                     <select name="coopNum" th:filed="*{coopNum}">
                         <option>合作社名称</option>
-                        <!--<option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.id}"
-                                th:text="${filedInfoList.id}+${filedInfoList.filedName}"></option>-->
-                        <option  th:text="${compNum}+${compName}" th:value="${compNum}"></option>
+                        <option th:text="${compNum}+${compName}" th:value="${compNum}"></option>
                     </select>
                 </div>
                 <div>
@@ -111,7 +110,6 @@
                 <div><input class="content" type="submit" value="查询"></div>
             </form>
         </div>
-
         <div class="clearfix"></div>
     </div>
 
@@ -126,25 +124,42 @@
                 <th>所属地块</th>
                 <th>收获时间</th>
                 <th>生成二维码</th>
+                <!--  <th>生成二维码</th>-->
             </tr>
             </thead>
             <tbody>
             <tr th:each="proInfoRes:${proInfoResList}">
                 <td th:text="${proInfoRes.proName}"></td>
-                <td th:text="${proInfoRes.proNum}"></td>
+                <td class="mouse_hover" value="${proInfoRes.proNum}" th:text="${proInfoRes.proNum}"></td>
                 <td th:text="${proInfoRes.coopNum}"></td>
                 <td th:text="${proInfoRes.filedNum}"></td>
                 <td th:text="${proInfoRes.harvTime}"></td>
                 <td>
-                    <button> 生成二维码</button>
+                    <form autocomplete="off"
+                          th:object="${creatQRCode}" th:action="@{/cooperator/creatQRCode}" method="post"
+                          class="form-horizontal"
+                          role="form" id="qrCode" name="qrCode">
+                            <div><input  name="proNum" th:filed="*{proNum}"  th:value="${proInfoRes.proNum}"></div>
+                            <div><input class="content" type="submit" value="生成"></div>
+                    </form>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-
     <div class="clearfix"></div>
 </div>
 <div class="clearfix"></div>
+<!--<script>
+    $(document).ready(function () {
+        $(".mouse_hover").click(function () {
+            alert("将此食品编号生成二维码" + $(this).text());
+            var proNum = $(this).text();
+            var str = "生成二维码"
+            document.write(str.link("creatQRCode.html?proNum=" + proNum))
+        })
+
+    });
+</script>-->
 </body>
 </html>

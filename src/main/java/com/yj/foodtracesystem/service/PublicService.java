@@ -1,15 +1,27 @@
 package com.yj.foodtracesystem.service;
 
+import com.google.zxing.*;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.yj.foodtracesystem.model.ComInfo;
+import com.yj.foodtracesystem.model.ProductInfo;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
+import com.yj.foodtracesystem.model.TransStationInfo;
 import com.yj.foodtracesystem.model.User;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,10 +53,10 @@ public class PublicService {
             }
             return (T) operationHisResultList;
         }
-        if(typeName.contains("User")){
+        if (typeName.contains("User")) {
             List<User> userList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
-                User userREs=new User();
+                User userREs = new User();
                 userREs.setName(list.get(i)[0].toString());
                 userREs.setUserNum(list.get(i)[1].toString());
                 userREs.setIdNum(list.get(i)[2].toString());
@@ -54,6 +66,24 @@ public class PublicService {
                 userList.add(userREs);
             }
             return (T) userList;
+        }if(typeName.contains("ComInfo")){
+            List<ComInfo> comInfoList=new ArrayList<>();
+            for(int i=0;i<list.size();i++){
+                ComInfo comInfo=new ComInfo();
+                comInfo.setComNum(list.get(i)[0].toString());
+                comInfo.setComName(list.get(i)[1].toString());
+                comInfoList.add(comInfo);
+            }
+            return (T)comInfoList;
+        } if(typeName.contains("ProductInfo")){
+            List<ProductInfo> productInfoList=new ArrayList<>();
+            for(int i=0;i<list.size();i++){
+                ProductInfo productInfo=new ProductInfo();
+                productInfo.setProNum(list.get(i)[0].toString());
+                productInfo.setProName(list.get(i)[1].toString());
+                productInfoList.add(productInfo);
+            }
+            return (T)productInfoList;
         }else {
             return null;
         }
@@ -87,15 +117,57 @@ public class PublicService {
         String dateString = formatter.format(currentTime);
         return dateString;
     }
-    public String formatTime(String initialTime){
+
+    public String formatTime(String initialTime) {
         return initialTime.replaceAll("T", " ");
     }
-    public String getTimeStamp(){
-       return String.valueOf(System.currentTimeMillis());
+
+    public String getTimeStamp() {
+        return String.valueOf(System.currentTimeMillis());
     }
 
+    public void createQRCode() {
+        int width = 300;
+        int height = 300;
+        String format = "png";
+        String contents = "www.baidu.com";
+        HashMap map = new HashMap();
+        map.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        map.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+        map.put(EncodeHintType.MARGIN, 0);
+        try {
+            BitMatrix bm = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height);
+            Path file = new File("D:/img.png").toPath();
+            MatrixToImageWriter.writeToPath(bm, format, file);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readQRCode() {
+        try {
+            MultiFormatReader reader = new MultiFormatReader();//需要详细了解MultiFormatReader的小伙伴可以点我一下官方去看文档
+            File f = new File("D:/img.png");
+            BufferedImage image = ImageIO.read(f);
+            BinaryBitmap bb = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(image)));
+            HashMap map = new HashMap();
+            map.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            Result result = reader.decode(bb, map);
+            System.out.println("解析结果：" + result.toString());
+            System.out.println("二维码格式类型：" + result.getBarcodeFormat());
+            System.out.println("二维码文本内容：" + result.getText());
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /*
-    * */
+     * */
 
 
 }
