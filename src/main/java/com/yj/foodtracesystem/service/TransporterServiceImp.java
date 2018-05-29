@@ -70,6 +70,8 @@ public class TransporterServiceImp implements TransporterService {
         return transporterRepository.findByRecordedTimeBetween(startTime,endTime);
     }
 
-
-
+    @Override
+    public void saveTransInfo(TransportInfo transportInfo) {
+        transporterRepository.save(transportInfo);
+    }
 }

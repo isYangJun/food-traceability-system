@@ -29,7 +29,7 @@
                     <div class="content">
                         <select name="proNum" th:filed="*{proNum}">
                             <option>产品编号</option>
-                            <option th:each="proNumName:${proNumNameList}" th:value="${proNum}"
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
                                     th:text="${proNumName.proNum}+${proNumName.proName}"></option>
                         </select>
                     </div>
@@ -39,16 +39,16 @@
                 <div class="content">
                     <select name="carNum" th:filed="*{carNum}">
                         <option>请选择运输车编号</option>
-                        <option th:each="transStationInfo:${transStationInfo}" th:value="${carNum}"
+                        <option th:each="transStationInfo:${transStationInfo}" th:value="${transStationInfo.carNum}"
                                 th:text="${transStationInfo.carNum}+${transStationInfo.carName}"></option>
                     </select>
                 </div>
                 <div>
                     <div class="content"><h5>运输起点:</h5></div>
                     <div class="content">
-                        <select name="destinationNum" th:filed="*{destinationNum}">
+                        <select name="comNum" th:filed="*{comNum}">
                             <option>运输起点</option>
-                            <option th:text="${startStationNum}+${startStationName}" th:value="${comNum}"></option>
+                            <option th:text="${startStationNum}+${startStationName}" th:value="${startStationNum}"></option>
                         </select>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                     <div class="content">
                         <select name="proNum" th:filed="*{proNum}">
                             <option>产品编号</option>
-                            <option th:each="proNumName:${proNumNameList}" th:value="${proNum}"
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
                                     th:text="${proNumName.proNum}+${proNumName.proName}"></option>
                         </select>
                     </div>

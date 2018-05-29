@@ -98,4 +98,9 @@ public class CoopServiceImp implements CoopService {
     public List<ProductInfo> findByHarvTime(String startTime, String endTime) {
         return productIndoRepository.findByHarvTimeBetween(startTime,endTime);
     }
+
+    @Override
+    public ProductInfo findByProductNum(String productNum) {
+        return productIndoRepository.findByProNum(productNum);
+    }
 }
