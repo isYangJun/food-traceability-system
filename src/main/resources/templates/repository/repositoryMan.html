@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="repository/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+
+    <title>Trans_Man</title>
+
+</head>
+<body>
+<div th:replace="repository/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>登记产品入站信息</h3>
+            <form autocomplete="off"
+                  th:object="${addTransInfo}" th:action="@{/transporter/addTransInfo}" method="post"
+                  class="form-horizontal"
+                  role="form" id="addTransInfo" name="addTransInfo">
+                <div>
+                    <div class="content"><h5>产品编号:</h5></div>
+                    <div class="content">
+                        <select name="proNum" th:filed="*{proNum}">
+                            <option>产品编号</option>
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
+                                    th:text="${proNumName.proNum}+${proNumName.proName}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="content"><h5>运输车编号:</h5></div>
+                <div class="content">
+                    <select name="carNum" th:filed="*{carNum}">
+                        <option>请选择运输车编号</option>
+                        <option th:each="transStationInfo:${transStationInfo}" th:value="${transStationInfo.carNum}"
+                                th:text="${transStationInfo.carNum}+${transStationInfo.carName}"></option>
+                    </select>
+                </div>
+                <div>
+                    <div class="content"><h5>运输起点:</h5></div>
+                    <div class="content">
+                        <select name="comNum" th:filed="*{comNum}">
+                            <option>运输起点</option>
+                            <option th:text="${startStationNum}+${startStationName}" th:value="${startStationNum}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>运输终点:</h5></div>
+                    <div class="content">
+                        <select name="destinationNum" th:filed="*{destinationNum}">
+                            <option>运输终点</option>
+                            <option th:each="comInfoList:${comInfoList}" th:value="${comInfoList.comNum}"
+                                    th:text="${comInfoList.comNum}+${comInfoList.comName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>起运时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="recordedTime" th:filed="*{recordedTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="提交"></div>
+            </form>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>查询产品运输信息</h3>
+            <form autocomplete="off"
+                  th:object="${transInfoById}" th:action="@{/transporter/transInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="queryTransInfoById" name="queryTransInfoById">
+                <div>
+                    <!-- <div class="content"><h5>按产品编号:</h5></div>-->
+                    <div class="content">
+                        <select name="proNum" th:filed="*{proNum}">
+                            <option>产品编号</option>
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
+                                    th:text="${proNumName.proNum}+${proNumName.proName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="col-md-6 log">
+            <h3>查询产品运输信息</h3>
+            <form autocomplete="off"
+                  th:object="${transInfoByTime}" th:action="@{/transporter/transInfoByTime}" method="post"
+                  class="form-horizontal"
+                  role="form" id="transInfoByTime" name="transInfoByTime">
+                <!--  <div class="content"><h5>按录入时间:</h5></div>-->
+                <div>
+                    <div class="content"><h5>录入时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>录入时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>产品编号</th>
+                <th>产品名称</th>
+                <th>运输站点编号</th>
+                <th>运输站点名称</th>
+                <th>是否登记</th>
+                <th>运输终点编号</th>
+                <th>运输终点名称</th>
+                <th>起运时间</th>
+                <th>运输车编号</th>
+                <!--  <th>生成二维码</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transInfoRes:${transInfoResList}">
+                <td th:text="${transInfoRes.proNum}"></td>
+                <td th:text="${transInfoRes.proName}"></td>
+                <td th:text="${transInfoRes.comNum}"></td>
+                <td th:text="${transInfoRes.comName}"></td>
+                <td th:text="${transInfoRes.inRecorded}"></td>
+                <td th:text="${transInfoRes.destinationNum}"></td>
+                <td th:text="${transInfoRes.destinationName}"></td>
+                <td th:text="${transInfoRes.recordedTime}"></td>
+                <td th:text="${transInfoRes.carNum}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+</body>
+</html>

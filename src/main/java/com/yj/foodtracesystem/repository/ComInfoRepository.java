@@ -2,10 +2,12 @@ package com.yj.foodtracesystem.repository;
 
 import com.yj.foodtracesystem.model.ComInfo;
 import com.yj.foodtracesystem.model.FiledInfo;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author:yangjun
@@ -18,4 +20,5 @@ public interface ComInfoRepository extends JpaRepository<ComInfo,Integer> {
     List<ComInfo> findAll();
     List<ComInfo> findByComNum(String comNum);
     List<ComInfo>findByComAdd(String comAdd);
+
 }

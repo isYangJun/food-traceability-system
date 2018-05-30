@@ -55,7 +55,7 @@ public class TransController {
         ProductInfo productInfo = coopService.findByProductNum(addTransInfo.getProNum());
         addTransInfo.setProName(productInfo.getProName());
         addTransInfo.setInRecorded(1);
-        List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getComNum());
+        List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getDestinationNum());
         addTransInfo.setDestinationName(comInfoList.get(0).getComName());
         transporterService.saveTransInfo(addTransInfo);
         initialParaModel(modelAndView, user);
