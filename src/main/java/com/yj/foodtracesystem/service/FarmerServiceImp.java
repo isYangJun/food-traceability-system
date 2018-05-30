@@ -92,6 +92,8 @@ public class FarmerServiceImp implements FarmerService {
     public void saveFiledInfo(FiledInfo filedInfo) {
         filedInfoRepository.save(filedInfo);
     }
+    @Override
+    public void saveSeedInfo(SeedInfo seedInfo) {seedInfoRepository.save(seedInfo);}
 
     @Override
     public List<FiledInfo> findFiledInfoById(int id) {
@@ -104,9 +106,20 @@ public class FarmerServiceImp implements FarmerService {
     public List<FiledInfo> findByTime(String startTime, String endTime) {
         return filedInfoRepository.findByFiledRegTimeBetween(startTime,endTime);
     }
+    @Override
+    public List<SeedInfo> findSeedByTime(String startTime,String endTime){
+        return seedInfoRepository.findBySeedRegTimeBetween(startTime, endTime);
+    }
 
+    @Override
+    public List<SeedInfo> findSeedInfoById(int id){
+        List<SeedInfo> seedInfoList= new ArrayList<>();
+        seedInfoList.add(seedInfoRepository.findById(id));
+        return seedInfoList;
+    }
     @Override
     public SeedInfo findBySeedId(int id) {
         return seedInfoRepository.findById(id);
     }
+
 }

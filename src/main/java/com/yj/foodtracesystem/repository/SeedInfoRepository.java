@@ -18,5 +18,6 @@ import java.util.Optional;
 public interface SeedInfoRepository extends JpaRepository<SeedInfo,Integer> {
     @Override
     List<SeedInfo> findAll();
-   SeedInfo findById(int id);
+    SeedInfo findById(int id);
+    List<SeedInfo> findBySeedRegTimeBetween(String startTime,String endTime);
 }

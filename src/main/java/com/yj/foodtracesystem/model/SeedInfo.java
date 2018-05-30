@@ -16,15 +16,30 @@ public class SeedInfo {
     private int id;
     @Column(name = "SI_SEED_NAME")
     private String seedName;
+    @Column(name = "SI_SEED_PRODUCER")
+    private String seedProducer;
+    @Column(name = "SI_PRODUCE_PLACE")
+    private String seedRroPlace;
+    @Column(name = "SI_PRODUCE_TIME")
+    private String seedProTime;
     @Column(name = "SI_VALIDATE_TIME")
-    private String validateTime;
+    private String seedValTime;
+    @Column(name = "SI_REGISTER_TIME")
+    private String seedRegTime;
+    @Column(name = "SI_SEED_WEIGHT")
+    private String seedWeight;
 
     @Override
     public String toString() {
         return "SeedInfo{" +
                 "id=" + id +
                 ", seedName='" + seedName + '\'' +
-                ", validateTime='" + validateTime + '\'' +
+                ", seedProducer='" + seedProducer + '\'' +
+                ", seedRroPlace='" + seedRroPlace + '\'' +
+                ", seedProTime='" + seedProTime + '\'' +
+                ", seedValTime='" + seedValTime + '\'' +
+                ", seedRegTime='" + seedRegTime + '\'' +
+                ", seedWeight='" + seedWeight + '\'' +
                 '}';
     }
 
@@ -44,11 +59,31 @@ public class SeedInfo {
         this.seedName = seedName;
     }
 
-    public String getValidateTime() {
-        return validateTime;
+    public String getSeedProducer() { return seedProducer;}
+
+    public void setSeedProducer(String seedProducer) { this.seedProducer = seedProducer; }
+
+    public String getSeedProPlace() { return seedRroPlace;}
+
+    public void setSeedProPlace(String seedRroPlace) { this.seedRroPlace = seedRroPlace; }
+
+    public String getSeedProTime() { return seedProTime; }
+
+    public void setSeedProTime(String seedProTime) { this.seedProTime = seedProTime; }
+
+    public String getSeedValTime() {
+        return seedValTime;
     }
 
-    public void setValidateTime(String validateTime) {
-        this.validateTime = validateTime;
+    public void setSeedValTime(String seedValTime) {
+        this.seedValTime = seedValTime;
     }
+
+    public String getSeedRegTime() { return seedRegTime; }
+
+    public void setSeedRegTime(String seedRegTime) { this.seedRegTime = seedRegTime; }
+
+    public String getSeedWeight() { return seedWeight; }
+
+    public void setSeedWeight(String seedWeight) { this.seedWeight = seedWeight; }
 }

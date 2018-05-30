@@ -18,59 +18,35 @@
 <div class="col-md-9 main">
     <div class="header-grids">
         <div class="col-md-6 log">
-            <h3>新增操作记录</h3>
-            <form  autocomplete="off"
-                   th:object="${filedOperation}" th:action="@{/farmer/addFiledOpera}" method="post" class="form-horizontal"
-                   role="form" id="addFiledOpera" name="addFiledOpera">
+            <h3>新增种子</h3>
+            <form autocomplete="off"
+                  th:object="${seedInfo}" th:action="@{/farmer/addSeedInfo}" method="post" class="form-horizontal"
+                  role="form" id="addSeedInfo" name="addSeedInfo">
                 <div>
-                    <div class="content"><h5>地块选择:</h5></div>
-                    <div class="content">
-                        <select name="filedId" th:filed="*{filedId}">
-                            <option>请选择地块</option>
-                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.id}"
-                                    th:text="${filedInfoList.id}+${filedInfoList.filedName}"></option>
-                        </select>
-                    </div>
+                    <div class="content"><h5>种子名称:</h5></div>
+                    <div><input type="text" value="" name="seedName" th:filed="*{seedName}"></div>
                 </div>
                 <div>
-                    <div class="content"><h5>作物选择:</h5></div>
-                    <div class="content">
-                        <!--<select name="fieldId">
-                            <option>请选择地块</option>
-                            <option th:each="list:${session.list}" th:value="${list.userNum}"
-                                    th:text="${list.userNum}"></option>
-                        </select>-->
-                        <select name="seedId" th:filed="*{seedId}">
-                            <option>请选择作物</option>
-                            <option th:each="seedInfoList:${seedInfoList}" th:value="${seedInfoList.id}"
-                                    th:text="${seedInfoList.id}+${seedInfoList.seedName}"></option>
-                        </select>
-                    </div>
+                    <div class="content"><h5>种子重量:</h5></div>
+                    <div><input type="text" value="" name="seedWeight" th:filed="*{seedWeight}"></div>
                 </div>
                 <div>
-                    <div class="content"><h5>操作选择:</h5></div>
-                    <div class="content">
-                        <select name="operateTypeId" th:filed="*{operateTypeId}">
-                            <option>请选择操作类型</option>
-                            <option th:each="operationTypeList:${operationTypeList}"
-                                    th:value="${operationTypeList.id}"
-                                    th:text="${operationTypeList.id }+${operationTypeList.operationName }"></option>
-                        </select>
-                    </div>
+                    <div class="content"><h5>种子产商:</h5></div>
+                    <div><input type="text" value="" name="seedProducer" th:filed="*{seedProducer}"></div>
                 </div>
                 <div>
-                    <div class="content"><h5>备注:</h5></div>
-                    <div><input type="text" value="" name="operationMemo" th:filed="*{operationMemo}"></div>
+                    <div class="content"><h5>保质期限:</h5></div>
+                    <div><input type="text" value="" name="seedValTime" th:filed="*{seedValTime}"></div>
                 </div>
-                <div><input class="content" type="submit" value="提交" ></div>
+                <div><input class="content" type="submit" value="提交"></div>
             </form>
         </div>
 
         <div class="col-md-6 log">
-            <h3>查询历史记录</h3>
             <form autocomplete="off"
-                  th:object="${operationHisPara}" th:action="@{/farmer/queryHisCoop}" method="post" class="form-horizontal"
-                  role="form" id="hisPara" name="hisPara">
+                  th:object="${operationHerPara}" th:action="@{/farmer/querySeedInfoByTime}" method="post"
+                  class="form-horizontal"
+                  role="form" id="querySeedInfoByTime" name="querySeedInfoByTime">
                 <div>
                     <div class="content"><h5>起始时间:</h5></div>
                     <div class="content">
@@ -83,13 +59,20 @@
                         <input type="datetime-local" name="endTime" th:filed="*{endTime}">
                     </div>
                 </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form><div class="col-md-6 log">
+            <h3>查询种子信息</h3>
+            <form autocomplete="off"
+                  th:object="${operationHerPara}" th:action="@{/farmer/querySeedInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="querySeedInfoById" name="querySeedInfoById">
                 <div>
-                    <div class="content"><h5>地块选择:</h5></div>
+                    <div class="content"><h5>种子选择:</h5></div>
                     <div class="content">
-                        <select name="filedId" th:filed="*{filedId}">
-                            <option>请选择地块</option>
-                            <option th:each="filedInfoList:${filedInfoList}" th:value="${filedInfoList.id}"
-                                    th:text="${filedInfoList.id}"></option>
+                        <select name="seedId" th:filed="*{seedId}">
+                            <option>请选择种子</option>
+                            <option th:each="seedInfoList:${seedInfoList}" th:value="${seedInfoList.id}"
+                                    th:text="${seedInfoList.id}+${seedInfoList.seedName}"></option>
                         </select>
                     </div>
                 </div>
@@ -100,35 +83,31 @@
         <div class="clearfix"></div>
     </div>
 
-    <!--表格显示-->
-    <div class="col-md-6 log">
-        <table border="1">
-            <thead>
-            <tr>
-                <th>地块编号</th>
-                <th>地块名称</th>
-                <th>操作人员编号</th>
-                <th>操作人员名称</th>
-                <th>操作名称</th>
-                <th>操作对象</th>
-                <th>操作时间</th>
-                <th>备注</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="operationHisRes:${operationHisResList}">
-                <td th:text="${operationHisRes.filedId}"></td>
-                <td th:text="${operationHisRes.filedName}"></td>
-                <td th:text="${operationHisRes.userNum}"></td>
-                <td th:text="${operationHisRes.userName}"></td>
-                <td th:text="${operationHisRes.operaInfo}"></td>
-                <td th:text="${operationHisRes.seedName}"></td>
-                <td th:text="${operationHisRes.operationTime}"></td>
-                <td th:text="${operationHisRes.memo}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <!--表格显示-->
+        <div class="col-md-6 log">
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>种子编号</th>
+                    <th>种子名称</th>
+                    <th>生产商</th>
+                    <th>保质期限</th>
+                    <th>种子重量</th>
+                    <th>登记时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="seedInfoRes:${seedInfoResList}">
+                    <td th:text="${seedInfoRes.id}"></td>
+                    <td th:text="${seedInfoRes.seedName}"></td>
+                    <td th:text="${seedInfoRes.seedProducer}"></td>
+                    <td th:text="${seedInfoRes.seedValTime}"></td>
+                    <td th:text="${seedInfoRes.seedWeight}"></td>
+                    <td th:text="${seedInfoRes.seedRegTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
     <div class="clearfix"></div>
 </div>

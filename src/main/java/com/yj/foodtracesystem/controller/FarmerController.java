@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.controller;
 
 import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.model.TempModel.OperationHerPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.repository.UserRepository;
@@ -47,12 +48,50 @@ public class FarmerController {
         return modelAndView;
     }
 
+    /************************************种子管理***********************************************/
     @GetMapping("/farmer/seedMan")
     public ModelAndView seedMan() {
-        ModelAndView modelAndView = initialCultManPage();
-        OperationHisPara operationHisPara = new OperationHisPara();
-        modelAndView.addObject("operationHisPara", operationHisPara);
+        ModelAndView modelAndView = initialSeedMan();
         modelAndView.setViewName("farmer/seedMan");
+        return modelAndView;
+    }
+    @PostMapping(value ="/farmer/querySeedInfoByTime")
+    public ModelAndView querySeedInfoByTime(OperationHerPara operationHerPara) throws Exception {
+        ModelAndView modelAndView = initialSeedMan();
+        List<SeedInfo> seedInfoResList = farmerService.findSeedByTime(operationHerPara.startTime,operationHerPara.endTime);
+        modelAndView.addObject("seedInfoResList",seedInfoResList);
+        modelAndView.setViewName("farmer/seedMan");
+        return  modelAndView;
+    }
+    @PostMapping(value="/farmer/querySeedInfoById")
+    public  ModelAndView querySeedInfoById(OperationHerPara operationHerPara) throws Exception{
+        ModelAndView modelAndView=initialSeedMan();
+        List<SeedInfo> seedInfoResList = farmerService.findSeedInfoById(operationHerPara.seedId);
+        modelAndView.addObject("seedInfoResList",seedInfoResList);
+        modelAndView.setViewName("farmer/seedMan");
+        return modelAndView;
+    }
+    @PostMapping(value = "/farmer/addSeedInfo")
+    public ModelAndView addSeedInfo(SeedInfo seedInfo) throws Exception{
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        seedInfo.setSeedRegTime(publicService.getStringDate());
+        farmerService.saveSeedInfo(seedInfo);
+        ModelAndView modelAndView = initialSeedMan();
+        modelAndView.setViewName("farmer/seedMan");
+        return modelAndView;
+    }
+
+    private ModelAndView initialSeedMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName","welcome "+ user.getUserCompName() + ":" + user.getName() + "(" +user.getUserNum()+ ")");
+        SeedInfo seedInfo = new SeedInfo();
+        modelAndView.addObject("seedInfo",seedInfo);
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList",seedInfoList);
+        OperationHerPara operationHerPara = new OperationHerPara();
+        modelAndView.addObject("operationHerPara",operationHerPara);
         return modelAndView;
     }
 

@@ -20,8 +20,11 @@ public interface FarmerService {
     List<SeedInfo> findAllSeedInfo();
     void saveFiledOperation(FiledOperation filedOperation);
     void saveFiledInfo(FiledInfo filedInfo);
+    void saveSeedInfo(SeedInfo seedInfo);
     List<FiledInfo> findFiledInfoById(int id);
     List<FiledInfo> findByTime(String startTime,String endTime);
+    List<SeedInfo> findSeedByTime(String startTime,String endTime);
+    List<SeedInfo> findSeedInfoById(int id);
     SeedInfo findBySeedId(int id);
 
 }
