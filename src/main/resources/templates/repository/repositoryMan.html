@@ -19,11 +19,11 @@
 <div class="col-md-9 main">
     <div class="header-grids">
         <div class="col-md-6 log">
-            <h3>登记产品入站信息</h3>
+            <h3>登记产品入库信息</h3>
             <form autocomplete="off"
-                  th:object="${addTransInfo}" th:action="@{/transporter/addTransInfo}" method="post"
+                  th:object="${addReposInfo}" th:action="@{/transporter/addReposInfo}" method="post"
                   class="form-horizontal"
-                  role="form" id="addTransInfo" name="addTransInfo">
+                  role="form" id="addReposInfo" name="addReposInfo">
                 <div>
                     <div class="content"><h5>产品编号:</h5></div>
                     <div class="content">
@@ -35,35 +35,17 @@
                     </div>
                 </div>
 
-                <div class="content"><h5>运输车编号:</h5></div>
+                <div class="content"><h5>仓库编号:</h5></div>
                 <div class="content">
-                    <select name="carNum" th:filed="*{carNum}">
-                        <option>请选择运输车编号</option>
+                    <select name="warehouseNum" th:filed="*{warehouseNum}">
+                        <option>请选择仓库编号</option>
                         <option th:each="transStationInfo:${transStationInfo}" th:value="${transStationInfo.carNum}"
                                 th:text="${transStationInfo.carNum}+${transStationInfo.carName}"></option>
                     </select>
                 </div>
+
                 <div>
-                    <div class="content"><h5>运输起点:</h5></div>
-                    <div class="content">
-                        <select name="comNum" th:filed="*{comNum}">
-                            <option>运输起点</option>
-                            <option th:text="${startStationNum}+${startStationName}" th:value="${startStationNum}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div class="content"><h5>运输终点:</h5></div>
-                    <div class="content">
-                        <select name="destinationNum" th:filed="*{destinationNum}">
-                            <option>运输终点</option>
-                            <option th:each="comInfoList:${comInfoList}" th:value="${comInfoList.comNum}"
-                                    th:text="${comInfoList.comNum}+${comInfoList.comName}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div class="content"><h5>起运时间:</h5></div>
+                    <div class="content"><h5>贮藏时间:</h5></div>
                     <div class="content">
                         <input type="datetime-local" name="recordedTime" th:filed="*{recordedTime}">
                     </div>
@@ -73,11 +55,11 @@
         </div>
 
         <div class="col-md-6 log">
-            <h3>查询产品运输信息</h3>
+            <h3>查询产品贮藏信息</h3>
             <form autocomplete="off"
-                  th:object="${transInfoById}" th:action="@{/transporter/transInfoById}" method="post"
+                  th:object="${reposInfoById}" th:action="@{/repository/reposInfoById}" method="post"
                   class="form-horizontal"
-                  role="form" id="queryTransInfoById" name="queryTransInfoById">
+                  role="form" id="queryReposInfoById" name="queryReposInfoById">
                 <div>
                     <!-- <div class="content"><h5>按产品编号:</h5></div>-->
                     <div class="content">
@@ -92,20 +74,20 @@
             </form>
         </div>
         <div class="col-md-6 log">
-            <h3>查询产品运输信息</h3>
+            <h3>查询产品贮藏信息</h3>
             <form autocomplete="off"
-                  th:object="${transInfoByTime}" th:action="@{/transporter/transInfoByTime}" method="post"
+                  th:object="${reposInfoByTime}" th:action="@{/repository/reposInfoByTime}" method="post"
                   class="form-horizontal"
-                  role="form" id="transInfoByTime" name="transInfoByTime">
+                  role="form" id="queryReposInfoByTime" name="queryReposInfoByTime">
                 <!--  <div class="content"><h5>按录入时间:</h5></div>-->
                 <div>
-                    <div class="content"><h5>录入时间:</h5></div>
+                    <div class="content"><h5>贮藏起始时间:</h5></div>
                     <div class="content">
                         <input type="datetime-local" name="startTime" th:filed="*{startTime}">
                     </div>
                 </div>
                 <div>
-                    <div class="content"><h5>录入时间:</h5></div>
+                    <div class="content"><h5>贮藏起始时间:</h5></div>
                     <div class="content">
                         <input type="datetime-local" name="endTime" th:filed="*{endTime}">
                     </div>
@@ -123,27 +105,23 @@
             <tr>
                 <th>产品编号</th>
                 <th>产品名称</th>
-                <th>运输站点编号</th>
-                <th>运输站点名称</th>
+                <th>贮藏仓库编号</th>
+                <th>贮藏仓库名称</th>
                 <th>是否登记</th>
-                <th>运输终点编号</th>
-                <th>运输终点名称</th>
-                <th>起运时间</th>
-                <th>运输车编号</th>
+                <th>贮藏起始时间</th>
+                <th>贮藏温度</th>
                 <!--  <th>生成二维码</th>-->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="transInfoRes:${transInfoResList}">
-                <td th:text="${transInfoRes.proNum}"></td>
-                <td th:text="${transInfoRes.proName}"></td>
-                <td th:text="${transInfoRes.comNum}"></td>
-                <td th:text="${transInfoRes.comName}"></td>
-                <td th:text="${transInfoRes.inRecorded}"></td>
-                <td th:text="${transInfoRes.destinationNum}"></td>
-                <td th:text="${transInfoRes.destinationName}"></td>
-                <td th:text="${transInfoRes.recordedTime}"></td>
-                <td th:text="${transInfoRes.carNum}"></td>
+            <tr th:each="reposInfoRes:${reposInfoResList}">
+                <td th:text="${reposInfoRes.proNum}"></td>
+                <td th:text="${reposInfoRes.proName}"></td>
+                <td th:text="${reposInfoRes.warehouseNum}"></td>
+                <td th:text="${reposInfoRes.warehouseName}"></td>
+                <td th:text="${reposInfoRes.inRecorded}"></td>
+                <td th:text="${reposInfoRes.recordedTime}"></td>
+                <td th:text="${reposInfoRes.saveTemp}"></td>
             </tr>
             </tbody>
         </table>

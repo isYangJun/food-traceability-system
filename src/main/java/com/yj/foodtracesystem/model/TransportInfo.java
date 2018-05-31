@@ -42,7 +42,6 @@ public class TransportInfo {
     @Column(name = "TI_CAR_NUM")
     private String carNum;
 
-
     public String getCarNum() {
         return carNum;
     }
