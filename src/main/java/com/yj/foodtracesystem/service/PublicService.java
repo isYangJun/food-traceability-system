@@ -6,11 +6,8 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.yj.foodtracesystem.model.ComInfo;
-import com.yj.foodtracesystem.model.ProductInfo;
+import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
-import com.yj.foodtracesystem.model.TransStationInfo;
-import com.yj.foodtracesystem.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -84,7 +81,17 @@ public class PublicService {
                 productInfoList.add(productInfo);
             }
             return (T)productInfoList;
-        }else {
+        }if(typeName.contains("TransportInfo")){
+            List<TransportInfo> transportInfoList=new ArrayList<>();
+            for(int i=0;i<list.size();i++){
+                TransportInfo transportInfo=new TransportInfo();
+                transportInfo.setProNum(list.get(i)[0].toString());
+                transportInfo.setProName(list.get(i)[1].toString());
+                transportInfoList.add(transportInfo);
+            }
+            return (T)transportInfoList;
+        }
+        else {
             return null;
         }
     }

@@ -4,6 +4,8 @@ import com.yj.foodtracesystem.model.RepositoryInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Author:yangjun
  * @Description:
@@ -11,5 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("reposInfoRepository")
 public interface ReposInfoRepository extends JpaRepository<RepositoryInfo,Integer> {
-
+    List<RepositoryInfo> findByProNum(String proNum);
+    List<RepositoryInfo> findByRecordedTimeBetween(String startTime,String endTime);
 }

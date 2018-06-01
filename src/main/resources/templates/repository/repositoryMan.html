@@ -21,7 +21,7 @@
         <div class="col-md-6 log">
             <h3>登记产品入库信息</h3>
             <form autocomplete="off"
-                  th:object="${addReposInfo}" th:action="@{/transporter/addReposInfo}" method="post"
+                  th:object="${addReposInfo}" th:action="@{/repository/addReposInfo}" method="post"
                   class="form-horizontal"
                   role="form" id="addReposInfo" name="addReposInfo">
                 <div>
@@ -39,8 +39,8 @@
                 <div class="content">
                     <select name="warehouseNum" th:filed="*{warehouseNum}">
                         <option>请选择仓库编号</option>
-                        <option th:each="transStationInfo:${transStationInfo}" th:value="${transStationInfo.carNum}"
-                                th:text="${transStationInfo.carNum}+${transStationInfo.carName}"></option>
+                        <option th:each="repositoryStationInfo:${repositoryStationInfoList}" th:value="${repositoryStationInfo.warehouseNum}"
+                                th:text="${repositoryStationInfo.warehouseNum}+${repositoryStationInfo.warehouseName}"></option>
                     </select>
                 </div>
 
@@ -114,14 +114,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="reposInfoRes:${reposInfoResList}">
-                <td th:text="${reposInfoRes.proNum}"></td>
-                <td th:text="${reposInfoRes.proName}"></td>
-                <td th:text="${reposInfoRes.warehouseNum}"></td>
-                <td th:text="${reposInfoRes.warehouseName}"></td>
-                <td th:text="${reposInfoRes.inRecorded}"></td>
-                <td th:text="${reposInfoRes.recordedTime}"></td>
-                <td th:text="${reposInfoRes.saveTemp}"></td>
+            <tr th:each="repositoryInfo:${repositoryInfoList}">
+                <td th:text="${repositoryInfo.proNum}"></td>
+                <td th:text="${repositoryInfo.proName}"></td>
+                <td th:text="${repositoryInfo.warehouseNum}"></td>
+                <td th:text="${repositoryInfo.warehouseName}"></td>
+                <td th:text="${repositoryInfo.inRecorded}"></td>
+                <td th:text="${repositoryInfo.recordedTime}"></td>
+                <td th:text="${repositoryInfo.saveTemp}"></td>
             </tr>
             </tbody>
         </table>

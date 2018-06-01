@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author:yangjun
@@ -15,4 +16,7 @@ import java.util.List;
 public interface ReposStationInfoRepository extends JpaRepository<RepositoryStationInfo,Integer> {
     @Override
     List<RepositoryStationInfo> findAll();
+
+    RepositoryStationInfo findByWarehouseNum(String warehouseNum);
+    List<RepositoryStationInfo> findByRepositoryNumIn(String comNum);
 }

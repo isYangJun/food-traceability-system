@@ -16,13 +16,13 @@ public class RepositoryStationInfo {
     private int id;
 
     @Column(name = "RSI_REPOSITORY_NUM")
-    private String repositoryNum;
+    private String repositoryNum; //仓储公司编号
 
     @Column(name = "RSI_REPOSITORY_NAME")
     private String repositoryName;
 
     @Column(name = "RSI_WAREHOUSE_NUM")
-    private String warehouseNum;
+    private String warehouseNum;  //所包含仓库编号
 
     @Column(name = "RSI_WAREHOUSE_NAME")
     private String warehouseName;
@@ -33,8 +33,6 @@ public class RepositoryStationInfo {
     @Column(name = "RSI_SAVE_TEMP")
     private String saveTemp;
 
-    @Column(name = "RSI_SAVE_TIME")
-    private String saveTime;
 
     public int getId() {
         return id;
@@ -92,14 +90,6 @@ public class RepositoryStationInfo {
         this.saveTemp = saveTemp;
     }
 
-    public String getSaveTime() {
-        return saveTime;
-    }
-
-    public void setSaveTime(String saveTime) {
-        this.saveTime = saveTime;
-    }
-
     @Override
     public String toString() {
         return "RepositoryStationInfo{" +
@@ -110,7 +100,6 @@ public class RepositoryStationInfo {
                 ", warehouseName='" + warehouseName + '\'' +
                 ", warehouseSetUpTime='" + warehouseSetUpTime + '\'' +
                 ", saveTemp='" + saveTemp + '\'' +
-                ", saveTime='" + saveTime + '\'' +
                 '}';
     }
 }
