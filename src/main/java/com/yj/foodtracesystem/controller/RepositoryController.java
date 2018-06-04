@@ -36,14 +36,7 @@ public class RepositoryController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
-        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
-        modelAndView.addObject("proNumNameList", proNumNameList);
-       // List<RepositoryStationInfo> repositoryStationInfoList = reposService.findAllRepositoryStationInfo();
-        List<RepositoryStationInfo> repositoryStationInfoList = reposService.findReposStationInfoByReposNum(user.getUserComp());
-        modelAndView.addObject("repositoryStationInfoList", repositoryStationInfoList);
-        modelAndView.addObject("addReposInfo", new RepositoryInfo());
-        modelAndView.addObject("reposInfoById", new RepositoryInfo());
-        modelAndView.addObject("reposInfoByTime", new QueryPara());
+        initalModelView(modelAndView, user);
         modelAndView.setViewName("repository/repositoryMan");
         return modelAndView;
     }
@@ -60,13 +53,7 @@ public class RepositoryController {
         repositoryInfo.setProName(reposService.findByProNum(repositoryInfo.getProNum()));
         repositoryInfo.setSaveTemp(reposService.findSaveTempByWarehouseNum(repositoryInfo.getWarehouseNum()));
         reposService.saveRepositoryInfo(repositoryInfo);
-        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
-        modelAndView.addObject("proNumNameList", proNumNameList);
-        List<RepositoryStationInfo> repositoryStationInfoList =reposService.findReposStationInfoByReposNum(user.getUserComp());
-        modelAndView.addObject("repositoryStationInfoList", repositoryStationInfoList);
-        modelAndView.addObject("addReposInfo", new RepositoryInfo());
-        modelAndView.addObject("reposInfoById", new RepositoryInfo());
-        modelAndView.addObject("reposInfoByTime", new QueryPara());
+        initalModelView(modelAndView, user);
         modelAndView.setViewName("repository/repositoryMan");
         return modelAndView;
     }
@@ -77,17 +64,9 @@ public class RepositoryController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+        initalModelView(modelAndView, user);
         List<RepositoryInfo> repositoryInfoList = reposService.findRepositoryInfoByProNum(repositoryInfo.getProNum());
         modelAndView.addObject("repositoryInfoList", repositoryInfoList);
-
-        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
-        modelAndView.addObject("proNumNameList", proNumNameList);
-        List<RepositoryStationInfo> repositoryStationInfoList = reposService.findReposStationInfoByReposNum(user.getUserComp());
-        modelAndView.addObject("repositoryStationInfoList", repositoryStationInfoList);
-        modelAndView.addObject("addReposInfo", new RepositoryInfo());
-        modelAndView.addObject("reposInfoById", new RepositoryInfo());
-        modelAndView.addObject("reposInfoByTime", new QueryPara());
-
         modelAndView.setViewName("repository/repositoryMan");
         return modelAndView;
     }
@@ -98,9 +77,14 @@ public class RepositoryController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
-        List<RepositoryInfo> repositoryInfoList = reposService.findRepositoryInfoByTime(queryPara.getStartTime(),queryPara.getEndTime());
+        initalModelView(modelAndView, user);
+        List<RepositoryInfo> repositoryInfoList = reposService.findRepositoryInfoByTime(queryPara.getStartTime(), queryPara.getEndTime());
         modelAndView.addObject("repositoryInfoList", repositoryInfoList);
+        modelAndView.setViewName("repository/repositoryMan");
+        return modelAndView;
+    }
 
+    private void initalModelView(ModelAndView modelAndView, User user) {
         List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
         modelAndView.addObject("proNumNameList", proNumNameList);
         List<RepositoryStationInfo> repositoryStationInfoList = reposService.findReposStationInfoByReposNum(user.getUserComp());
@@ -108,8 +92,5 @@ public class RepositoryController {
         modelAndView.addObject("addReposInfo", new RepositoryInfo());
         modelAndView.addObject("reposInfoById", new RepositoryInfo());
         modelAndView.addObject("reposInfoByTime", new QueryPara());
-
-        modelAndView.setViewName("repository/repositoryMan");
-        return modelAndView;
     }
 }

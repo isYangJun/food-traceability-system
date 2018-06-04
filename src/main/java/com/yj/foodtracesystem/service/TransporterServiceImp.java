@@ -58,8 +58,6 @@ public class TransporterServiceImp implements TransporterService {
         return comInfoList;
     }
 
-
-
     @Override
     public List<TransportInfo> findTransInfoByProNum(String proNum) {
         return transporterRepository.findByProNum(proNum);

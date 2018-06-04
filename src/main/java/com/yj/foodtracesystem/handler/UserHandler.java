@@ -65,12 +65,29 @@ public class UserHandler extends SimpleUrlAuthenticationSuccessHandler {
         else if(isReposiyoryAdmin(roles)){
             url="/reposadmin/repositoryStationMan";
         }
+        else if(isSaleman(roles)){
+            url="/saleman/saleMan";
+        }
+        else if(isSaleAdmin(roles)){
+            url="/saleadmin/saleAdminMan";
+        }
         else {
             url = "/accessDenied";
         }
         return url;
     }
-
+    private boolean isSaleman(String roles){
+        if (roles.equals("SALEMAN")) {
+            return true;
+        }
+        return false;
+    }
+    private boolean isSaleAdmin(String roles){
+        if (roles.equals("SALE_ADMIN")) {
+            return true;
+        }
+        return false;
+    }
     private boolean isReposiyory(String roles){
         if (roles.equals("REPOSITORY")) {
             return true;

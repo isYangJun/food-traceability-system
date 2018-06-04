@@ -6,11 +6,19 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.model.ComInfo;
+import com.yj.foodtracesystem.model.ProductInfo;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
+import com.yj.foodtracesystem.model.TempModel.ProductPara;
+import com.yj.foodtracesystem.model.TransportInfo;
+import com.yj.foodtracesystem.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +36,20 @@ import java.util.List;
  */
 @Service("publicService")
 public class PublicService {
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
+    @Autowired
+    private PublicService publicService;
+
+    public List<ProductPara> findSaleProFromTransAndRepos(String comNum) {
+        String sql = "SELECT ti_product_num,ti_product_name FROM tbl_transport_info WHERE ti_destination_num='" + comNum + "'";
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+        List<Object[]> list = nativeQuery.getResultList();
+        List<ProductPara> productParaList = publicService.convertToType(list, ProductPara.class.getName());
+        return productParaList;
+    }
+
     /**
      * @Author:yangjun
      * @Description:将查询的object值返回为对应类型
@@ -63,35 +85,47 @@ public class PublicService {
                 userList.add(userREs);
             }
             return (T) userList;
-        }if(typeName.contains("ComInfo")){
-            List<ComInfo> comInfoList=new ArrayList<>();
-            for(int i=0;i<list.size();i++){
-                ComInfo comInfo=new ComInfo();
+        }
+        if (typeName.contains("ComInfo")) {
+            List<ComInfo> comInfoList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                ComInfo comInfo = new ComInfo();
                 comInfo.setComNum(list.get(i)[0].toString());
                 comInfo.setComName(list.get(i)[1].toString());
                 comInfoList.add(comInfo);
             }
-            return (T)comInfoList;
-        } if(typeName.contains("ProductInfo")){
-            List<ProductInfo> productInfoList=new ArrayList<>();
-            for(int i=0;i<list.size();i++){
-                ProductInfo productInfo=new ProductInfo();
+            return (T) comInfoList;
+        }
+        if (typeName.contains("ProductInfo")) {
+            List<ProductInfo> productInfoList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                ProductInfo productInfo = new ProductInfo();
                 productInfo.setProNum(list.get(i)[0].toString());
                 productInfo.setProName(list.get(i)[1].toString());
                 productInfoList.add(productInfo);
             }
-            return (T)productInfoList;
-        }if(typeName.contains("TransportInfo")){
-            List<TransportInfo> transportInfoList=new ArrayList<>();
-            for(int i=0;i<list.size();i++){
-                TransportInfo transportInfo=new TransportInfo();
+            return (T) productInfoList;
+        }
+        if (typeName.contains("TransportInfo")) {
+            List<TransportInfo> transportInfoList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                TransportInfo transportInfo = new TransportInfo();
                 transportInfo.setProNum(list.get(i)[0].toString());
                 transportInfo.setProName(list.get(i)[1].toString());
                 transportInfoList.add(transportInfo);
             }
-            return (T)transportInfoList;
+            return (T) transportInfoList;
         }
-        else {
+        if (typeName.contains("ProductPara")) {
+            List<ProductPara> productParaList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                ProductPara productPara = new ProductPara();
+                productPara.proNum = list.get(i)[0].toString();
+                productPara.proName = list.get(i)[1].toString();
+                productParaList.add(productPara);
+            }
+            return (T) productParaList;
+        } else {
             return null;
         }
     }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="saleman/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+
+    <title>Sale_Man</title>
+
+</head>
+<body>
+<div th:replace="saleman/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>登记产品入站信息</h3>
+            <form autocomplete="off"
+                  th:object="${addSaleInfo}" th:action="@{/saleman/addSaleInfo}" method="post"
+                  class="form-horizontal"
+                  role="form" id="addSaleInfo" name="addSaleInfo">
+                <div>
+                    <div class="content"><h5>产品编号:</h5></div>
+                    <div class="content">
+                        <select name="proNum" th:filed="*{proNum}">
+                            <option>产品编号</option>
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
+                                    th:text="${proNumName.proNum}+${proNumName.proName}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="content"><h5>销售商编号:</h5></div>
+                <div class="content">
+                    <select name="comNum" th:filed="*{comNum}">
+                        <option>销售商编号</option>
+                        <option  th:value="${comNum}"
+                                th:text="${comNum}+${comName}"></option>
+                    </select>
+                </div>
+                <div>
+                    <div class="content"><h5>上架时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="recordedTime" th:filed="*{recordedTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="提交"></div>
+            </form>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>查询商品信息</h3>
+            <form autocomplete="off"
+                  th:object="${saleInfoById}" th:action="@{/saleman/saleInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="querySaleInfoById" name="querySaleInfoById">
+                <div>
+                   <!-- <div class="content"><h5>按产品编号:</h5></div>-->
+                    <div class="content">
+                        <select name="proNum" th:filed="*{proNum}">
+                            <option>产品编号</option>
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
+                                    th:text="${proNumName.proNum}+${proNumName.proName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="col-md-6 log">
+            <h3>查询产品运输信息</h3>
+            <form autocomplete="off"
+                  th:object="${saleInfoByTime}" th:action="@{/saleman/saleInfoByTime}" method="post"
+                  class="form-horizontal"
+                  role="form" id="saleInfoByTime" name="saleInfoByTime">
+              <!--  <div class="content"><h5>按录入时间:</h5></div>-->
+                <div>
+                    <div class="content"><h5>录入时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>录入时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>产品编号</th>
+                <th>产品名称</th>
+                <th>销售站点编号</th>
+                <th>销售站点名称</th>
+                <th>是否登记</th>
+                <th>上架时间</th>
+                <th>操作员编号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="saleInfoRes:${saleInfoResList}">
+                <td th:text="${saleInfoRes.proNum}"></td>
+                <td th:text="${saleInfoRes.proName}"></td>
+                <td th:text="${saleInfoRes.comNum}"></td>
+                <td th:text="${saleInfoRes.comName}"></td>
+                <td th:text="${saleInfoRes.inRecorded}"></td>
+                <td th:text="${saleInfoRes.recordedTime}"></td>
+                <td th:text="${saleInfoRes.operatorNum}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+</body>
+</html>
