@@ -102,29 +102,4 @@ public class TransController {
         modelAndView.addObject("transInfoById", new TransportInfo());
         modelAndView.addObject("transInfoByTime", new QueryPara());
     }
-
-    /*private ModelAndView initialTransMan() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
-
-        modelAndView.addObject("addTransInfo", new TransportInfo());
-        List<ProductInfo> proNumNameList = transporterService.findTranstedProductInfo();
-        modelAndView.addObject("proNumNameList", proNumNameList);
-        List<TransStationInfo> transStationInfo = transporterService.findTransStationInfo();
-        modelAndView.addObject("transStationInfo", transStationInfo);
-
-        modelAndView.addObject("startStationNum", user.getUserComp());
-        modelAndView.addObject("startStationName", user.getUserCompName());
-        List<ComInfo> comInfoList = transporterService.findTransOrReposInfo();
-        modelAndView.addObject("comInfoList", comInfoList);
-        modelAndView.addObject("transInfoById", new TransportInfo());
-        modelAndView.addObject("transInfoByTime", new QueryPara());
-
-        modelAndView.setViewName("transporter/transMan");
-        return modelAndView;
-    }*/
-
-
 }

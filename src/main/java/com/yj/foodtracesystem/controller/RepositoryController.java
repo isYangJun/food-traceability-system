@@ -1,11 +1,10 @@
 package com.yj.foodtracesystem.controller;
 
-import com.yj.foodtracesystem.model.RepositoryInfo;
-import com.yj.foodtracesystem.model.RepositoryStationInfo;
+import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
-import com.yj.foodtracesystem.model.TransportInfo;
-import com.yj.foodtracesystem.model.User;
+import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.ReposService;
+import com.yj.foodtracesystem.service.TransporterService;
 import com.yj.foodtracesystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,9 +25,13 @@ import java.util.List;
 public class RepositoryController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ReposService reposService;
+    private ReposService reposService;
+    @Autowired
+    private TransporterService transporterService;
+    @Autowired
+    private CoopService coopService;
 
     @GetMapping("/repository/repositoryMan")
     public ModelAndView repositoryMan() {
@@ -93,4 +96,126 @@ public class RepositoryController {
         modelAndView.addObject("reposInfoById", new RepositoryInfo());
         modelAndView.addObject("reposInfoByTime", new QueryPara());
     }
+    /***************************************************repository transport Man*****************************************/
+    /**
+     * @Author:yangjun
+     * @Description:
+     * @Date: Created in 19:21 2018/6/4
+     */
+    @GetMapping("/repository/repoTransMan")
+    public ModelAndView repoTransMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
+        modelAndView.addObject("proNumNameList", proNumNameList);
+        List<TransStationInfo> transStationInfo = transporterService.findTransStationInfo();
+        modelAndView.addObject("transStationInfo", transStationInfo);
+
+        modelAndView.addObject("startStationNum", user.getUserComp());
+        modelAndView.addObject("startStationName", user.getUserCompName());
+
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        modelAndView.addObject("transInfoById", new TransportInfo());
+        modelAndView.addObject("transInfoByTime", new QueryPara());
+
+        List<ComInfo> comInfoList = transporterService.findTransOrReposInfo();
+        modelAndView.addObject("comInfoList", comInfoList);
+
+
+        modelAndView.setViewName("repository/repoTransMan");
+        return modelAndView;
+    }
+
+    @PostMapping("/repository/addTransInfo")
+    public ModelAndView addTransInfo(TransportInfo addTransInfo) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+
+        addTransInfo.setComNum(user.getUserComp());
+        addTransInfo.setComName(user.getUserCompName());
+        ProductInfo productInfo = coopService.findByProductNum(addTransInfo.getProNum());
+        addTransInfo.setProName(productInfo.getProName());
+        addTransInfo.setInRecorded(1);
+        List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getDestinationNum());
+        addTransInfo.setDestinationName(comInfoList.get(0).getComName());
+        transporterService.saveTransInfo(addTransInfo);
+
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
+        modelAndView.addObject("proNumNameList", proNumNameList);
+        List<TransStationInfo> transStationInfo = transporterService.findTransStationInfo();
+        modelAndView.addObject("transStationInfo", transStationInfo);
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        modelAndView.addObject("transInfoById", new TransportInfo());
+        modelAndView.addObject("transInfoByTime", new QueryPara());
+        modelAndView.addObject("startStationNum", user.getUserComp());
+        modelAndView.addObject("startStationName", user.getUserCompName());
+
+        comInfoList = transporterService.findTransOrReposInfo();
+        modelAndView.addObject("comInfoList", comInfoList);
+
+        modelAndView.setViewName("repository/repoTransMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/repository/transInfoById")
+    public ModelAndView transInfoById(TransportInfo transInfoById) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+        List<TransportInfo> transInfoResList = transporterService.findTransInfoByProNum(transInfoById.getProNum());
+        modelAndView.addObject("transInfoResList", transInfoResList);
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
+        modelAndView.addObject("proNumNameList", proNumNameList);
+
+        List<TransStationInfo> transStationInfo = transporterService.findTransStationInfo();
+        modelAndView.addObject("transStationInfo", transStationInfo);
+        modelAndView.addObject("startStationNum", user.getUserComp());
+
+        modelAndView.addObject("startStationName", user.getUserCompName());
+
+        List<ComInfo> comInfoList = transporterService.findTransOrReposInfo();
+        modelAndView.addObject("comInfoList", comInfoList);
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        modelAndView.addObject("transInfoById", new TransportInfo());
+        modelAndView.addObject("transInfoByTime", new QueryPara());
+        modelAndView.setViewName("repository/repoTransMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/repository/transInfoByTime")
+    public ModelAndView transInfoByTime(QueryPara queryPara) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+        List<TransportInfo> transInfoResList = transporterService.findTransInfoByTime(queryPara.getStartTime(), queryPara.getEndTime());
+        modelAndView.addObject("transInfoResList", transInfoResList);
+
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        List<TransportInfo> proNumNameList = reposService.findOwnedTransportInfo(user.getUserComp());
+        modelAndView.addObject("proNumNameList", proNumNameList);
+        List<TransStationInfo> transStationInfo = transporterService.findTransStationInfo();
+        modelAndView.addObject("transStationInfo", transStationInfo);
+
+        modelAndView.addObject("startStationNum", user.getUserComp());
+        modelAndView.addObject("startStationName", user.getUserCompName());
+
+        List<ComInfo> comInfoList = transporterService.findTransOrReposInfo();
+        modelAndView.addObject("comInfoList", comInfoList);
+
+        modelAndView.addObject("addTransInfo", new TransportInfo());
+        modelAndView.addObject("transInfoById", new TransportInfo());
+        modelAndView.addObject("transInfoByTime", new QueryPara());
+        modelAndView.setViewName("repository/repoTransMan");
+        return modelAndView;
+    }
+
 }

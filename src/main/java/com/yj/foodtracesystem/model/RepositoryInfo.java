@@ -39,20 +39,6 @@ public class RepositoryInfo {
     @Column(name = "RI_REPOSITORY_NUM")
     private String repositoryNum;//所属公司编号
 
-    @Override
-    public String toString() {
-        return "RepositoryInfo{" +
-                "id=" + id +
-                ", warehouseNum='" + warehouseNum + '\'' +
-                ", warehouseName='" + warehouseName + '\'' +
-                ", proNum='" + proNum + '\'' +
-                ", proName='" + proName + '\'' +
-                ", inRecorded=" + inRecorded +
-                ", recordedTime='" + recordedTime + '\'' +
-                ", saveTemp='" + saveTemp + '\'' +
-                ", repositoryNum='" + repositoryNum + '\'' +
-                '}';
-    }
 
     public String getRepositoryNum() {
         return repositoryNum;
@@ -126,4 +112,18 @@ public class RepositoryInfo {
         this.saveTemp = saveTemp;
     }
 
+    @Override
+    public String toString() {
+        return "RepositoryInfo{" +
+                "id=" + id +
+                ", warehouseNum='" + warehouseNum + '\'' +
+                ", warehouseName='" + warehouseName + '\'' +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", inRecorded=" + inRecorded +
+                ", recordedTime='" + recordedTime + '\'' +
+                ", saveTemp='" + saveTemp + '\'' +
+                ", repositoryNum='" + repositoryNum + '\'' +
+                '}';
+    }
 }
