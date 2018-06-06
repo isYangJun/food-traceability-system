@@ -194,6 +194,7 @@ public class CooperatorController {
         productInfo.setHarvTime(publicService.formatTime(productInfo.getHarvTime()));
         productInfo.setProName(farmerService.findBySeedId(productInfo.getSeedNum()).getSeedName());
         productInfo.setSeedName(farmerService.findBySeedId(productInfo.getSeedNum()).getSeedName());
+        productInfo.setOperatorNum(user.getUserNum());
         coopService.saveProInfo(productInfo);
         modelAndView.addObject("productInfo", new ProductInfo());
         modelAndView.addObject("compNum", user.getUserComp());

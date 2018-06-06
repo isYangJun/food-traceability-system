@@ -28,6 +28,8 @@ public class SeedInfo {
     private String seedRegTime;
     @Column(name = "SI_SEED_WEIGHT")
     private String seedWeight;
+    @Column(name = "SI_OPERATOR_NUM")
+    private String operatorNum;
 
     @Override
     public String toString() {
@@ -40,7 +42,24 @@ public class SeedInfo {
                 ", seedValTime='" + seedValTime + '\'' +
                 ", seedRegTime='" + seedRegTime + '\'' +
                 ", seedWeight='" + seedWeight + '\'' +
+                ", operatorNum='" + operatorNum + '\'' +
                 '}';
+    }
+
+    public String getSeedRroPlace() {
+        return seedRroPlace;
+    }
+
+    public void setSeedRroPlace(String seedRroPlace) {
+        this.seedRroPlace = seedRroPlace;
+    }
+
+    public String getOperatorNum() {
+        return operatorNum;
+    }
+
+    public void setOperatorNum(String operatorNum) {
+        this.operatorNum = operatorNum;
     }
 
     public int getId() {

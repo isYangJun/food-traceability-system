@@ -25,6 +25,8 @@ public class FiledInfo {
     private String filedRegTime;
     @Column(name = "FI_COMP_NUM")
     private String filedCompNum;
+    @Column(name = "PI_OPERATOR_NUM")
+    private String operatorNum;
 
     @Override
     public String toString() {
@@ -35,8 +37,17 @@ public class FiledInfo {
                 ", filedAdd='" + filedAdd + '\'' +
                 ", filedRegTime='" + filedRegTime + '\'' +
                 ", filedCompNum='" + filedCompNum + '\'' +
+                ", operatorNum='" + operatorNum + '\'' +
                 ", filedCompName='" + filedCompName + '\'' +
                 '}';
+    }
+
+    public String getOperatorNum() {
+        return operatorNum;
+    }
+
+    public void setOperatorNum(String operatorNum) {
+        this.operatorNum = operatorNum;
     }
 
     public String getFiledCompName() {
@@ -57,8 +68,6 @@ public class FiledInfo {
     public void setFiledCompNum(String filedCompNum) {
         this.filedCompNum = filedCompNum;
     }
-
-
 
     public int getId() {
         return id;

@@ -57,6 +57,7 @@ public class TransController {
         addTransInfo.setInRecorded(1);
         List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getDestinationNum());
         addTransInfo.setDestinationName(comInfoList.get(0).getComName());
+        addTransInfo.setOperatorNum(user.getUserNum());
         transporterService.saveTransInfo(addTransInfo);
         initialParaModel(modelAndView, user);
         modelAndView.setViewName("transporter/transMan");

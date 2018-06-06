@@ -74,7 +74,9 @@ public class FarmerController {
     @PostMapping(value = "/farmer/addSeedInfo")
     public ModelAndView addSeedInfo(SeedInfo seedInfo) throws Exception{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
         seedInfo.setSeedRegTime(publicService.getStringDate());
+        seedInfo.setOperatorNum(user.getUserNum());
         farmerService.saveSeedInfo(seedInfo);
         ModelAndView modelAndView = initialSeedMan();
         modelAndView.setViewName("farmer/seedMan");
@@ -128,6 +130,7 @@ public class FarmerController {
         filedInfo.setFiledCompNum(user.getUserComp());
         filedInfo.setFiledCompName(user.getUserCompName());
         filedInfo.setFiledRegTime(publicService.getStringDate());
+        filedInfo.setOperatorNum(user.getUserNum());
         farmerService.saveFiledInfo(filedInfo);
         ModelAndView modelAndView = initialFiledMan();
         modelAndView.setViewName("farmer/filedMan");

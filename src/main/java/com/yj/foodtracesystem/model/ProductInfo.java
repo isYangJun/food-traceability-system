@@ -30,6 +30,9 @@ public class ProductInfo {
     @Column(name = "PI_IS_TRANSED")
     private int isTransed;//0为未操作，1为操作完成
 
+    @Column(name = "PI_OPERATOR_NUM")
+    private String operatorNum;
+
     @Override
     public String toString() {
         return "ProductInfo{" +
@@ -39,11 +42,20 @@ public class ProductInfo {
                 ", filedNum=" + filedNum +
                 ", seedNum=" + seedNum +
                 ", isTransed=" + isTransed +
+                ", operatorNum='" + operatorNum + '\'' +
                 ", seedName='" + seedName + '\'' +
                 ", harvTime='" + harvTime + '\'' +
                 ", coopNum='" + coopNum + '\'' +
                 ", coopName='" + coopName + '\'' +
                 '}';
+    }
+
+    public String getOperatorNum() {
+        return operatorNum;
+    }
+
+    public void setOperatorNum(String operatorNum) {
+        this.operatorNum = operatorNum;
     }
 
     public int getIsTransed() {

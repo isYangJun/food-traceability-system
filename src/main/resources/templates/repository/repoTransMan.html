@@ -79,7 +79,6 @@
                   class="form-horizontal"
                   role="form" id="queryTransInfoById" name="queryTransInfoById">
                 <div>
-                   <!-- <div class="content"><h5>按产品编号:</h5></div>-->
                     <div class="content">
                         <select name="proNum" th:filed="*{proNum}">
                             <option>产品编号</option>
@@ -97,7 +96,6 @@
                   th:object="${transInfoByTime}" th:action="@{/repository/transInfoByTime}" method="post"
                   class="form-horizontal"
                   role="form" id="transInfoByTime" name="transInfoByTime">
-              <!--  <div class="content"><h5>按录入时间:</h5></div>-->
                 <div>
                     <div class="content"><h5>录入时间:</h5></div>
                     <div class="content">
@@ -125,6 +123,7 @@
                 <th>产品名称</th>
                 <th>运输站点编号</th>
                 <th>运输站点名称</th>
+                <th>操作人员编号</th>
                 <th>是否登记</th>
                 <th>运输终点编号</th>
                 <th>运输终点名称</th>
@@ -139,6 +138,7 @@
                 <td th:text="${transInfoRes.proName}"></td>
                 <td th:text="${transInfoRes.comNum}"></td>
                 <td th:text="${transInfoRes.comName}"></td>
+                <td th:text="${transInfoRes.operatorNum}"></td>
                 <td th:text="${transInfoRes.inRecorded}"></td>
                 <td th:text="${transInfoRes.destinationNum}"></td>
                 <td th:text="${transInfoRes.destinationName}"></td>

@@ -55,6 +55,7 @@ public class RepositoryController {
         repositoryInfo.setWarehouseName(reposService.findWareNameByWarehouseNum(repositoryInfo.getWarehouseNum()));
         repositoryInfo.setProName(reposService.findByProNum(repositoryInfo.getProNum()));
         repositoryInfo.setSaveTemp(reposService.findSaveTempByWarehouseNum(repositoryInfo.getWarehouseNum()));
+        repositoryInfo.setOperatorNum(user.getUserNum());
         reposService.saveRepositoryInfo(repositoryInfo);
         initalModelView(modelAndView, user);
         modelAndView.setViewName("repository/repositoryMan");
@@ -143,6 +144,7 @@ public class RepositoryController {
         addTransInfo.setInRecorded(1);
         List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getDestinationNum());
         addTransInfo.setDestinationName(comInfoList.get(0).getComName());
+        addTransInfo.setOperatorNum(user.getUserNum());
         transporterService.saveTransInfo(addTransInfo);
 
         modelAndView.addObject("addTransInfo", new TransportInfo());

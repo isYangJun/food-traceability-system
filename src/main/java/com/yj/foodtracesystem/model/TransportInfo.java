@@ -42,6 +42,34 @@ public class TransportInfo {
     @Column(name = "TI_CAR_NUM")
     private String carNum;
 
+    @Column(name = "TI_OPERATOR_NUM")
+    private String operatorNum;
+
+    @Override
+    public String toString() {
+        return "TransportInfo{" +
+                "id=" + id +
+                ", comNum='" + comNum + '\'' +
+                ", comName='" + comName + '\'' +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", inRecorded=" + inRecorded +
+                ", recordedTime='" + recordedTime + '\'' +
+                ", destinationNum='" + destinationNum + '\'' +
+                ", destinationName='" + destinationName + '\'' +
+                ", carNum='" + carNum + '\'' +
+                ", operatorNum='" + operatorNum + '\'' +
+                '}';
+    }
+
+    public String getOperatorNum() {
+        return operatorNum;
+    }
+
+    public void setOperatorNum(String operatorNum) {
+        this.operatorNum = operatorNum;
+    }
+
     public String getCarNum() {
         return carNum;
     }
@@ -122,19 +150,4 @@ public class TransportInfo {
         this.recordedTime = recordedTime;
     }
 
-    @Override
-    public String toString() {
-        return "TransportInfo{" +
-                "id=" + id +
-                ", comNum='" + comNum + '\'' +
-                ", comName='" + comName + '\'' +
-                ", proNum='" + proNum + '\'' +
-                ", proName='" + proName + '\'' +
-                ", inRecorded=" + inRecorded +
-                ", recordedTime='" + recordedTime + '\'' +
-                ", destinationNum='" + destinationNum + '\'' +
-                ", destinationName='" + destinationName + '\'' +
-                ", carNum='" + carNum + '\'' +
-                '}';
-    }
 }
