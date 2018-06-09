@@ -53,6 +53,7 @@ public class SaleController {
         saleInfo.setProName(saleService.findProNameByProNum(saleInfo.getProNum()));
         saleInfo.setInRecorded(1);
         saleInfo.setOperatorNum(user.getUserNum());
+        saleInfo.setRecordedTime(publicService.formatTime(saleInfo.getRecordedTime()));
         saleService.saveSaleInfo(saleInfo);
 
         initialModel(modelAndView, user);

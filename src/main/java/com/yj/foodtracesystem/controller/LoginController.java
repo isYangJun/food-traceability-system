@@ -45,25 +45,6 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
-    /*@RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByUserNum(user.getUserNum());
-        if (userExists != null) {
-            bindingResult
-                    .rejectValue("userNum", "error.user",
-                            "There is already a user registered with the userNum provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
-        } else {
-            userService.saveUser(user);
-            modelAndView.addObject("successMessage", "user has been registered successfully");
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
-        }
-        return modelAndView;
-    }*/
 
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
     public ModelAndView home() {
@@ -76,11 +57,6 @@ public class LoginController {
         return modelAndView;
     }
 
-   /* @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
-    public String toUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "/farmer/home";
-    }*/
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     public String toHeader() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

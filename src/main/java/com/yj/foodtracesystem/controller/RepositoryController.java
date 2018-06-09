@@ -2,10 +2,7 @@ package com.yj.foodtracesystem.controller;
 
 import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
-import com.yj.foodtracesystem.service.CoopService;
-import com.yj.foodtracesystem.service.ReposService;
-import com.yj.foodtracesystem.service.TransporterService;
-import com.yj.foodtracesystem.service.UserService;
+import com.yj.foodtracesystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +29,8 @@ public class RepositoryController {
     private TransporterService transporterService;
     @Autowired
     private CoopService coopService;
+    @Autowired
+    private PublicService publicService;
 
     @GetMapping("/repository/repositoryMan")
     public ModelAndView repositoryMan() {
@@ -56,6 +55,7 @@ public class RepositoryController {
         repositoryInfo.setProName(reposService.findByProNum(repositoryInfo.getProNum()));
         repositoryInfo.setSaveTemp(reposService.findSaveTempByWarehouseNum(repositoryInfo.getWarehouseNum()));
         repositoryInfo.setOperatorNum(user.getUserNum());
+        repositoryInfo.setRecordedTime(publicService.formatTime(repositoryInfo.getRecordedTime()));
         reposService.saveRepositoryInfo(repositoryInfo);
         initalModelView(modelAndView, user);
         modelAndView.setViewName("repository/repositoryMan");
@@ -145,6 +145,7 @@ public class RepositoryController {
         List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getDestinationNum());
         addTransInfo.setDestinationName(comInfoList.get(0).getComName());
         addTransInfo.setOperatorNum(user.getUserNum());
+        addTransInfo.setRecordedTime(publicService.formatTime(addTransInfo.getRecordedTime()));
         transporterService.saveTransInfo(addTransInfo);
 
         modelAndView.addObject("addTransInfo", new TransportInfo());

@@ -33,7 +33,6 @@ public class CooperatorController {
     private PublicService publicService;
     @Autowired
     private CoopService coopService;
-
     @Autowired
     private FarmerService farmerService;
 
@@ -253,16 +252,6 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
-
-    /*@GetMapping("/cooperator/creatQRCode")
-    public ModelAndView testQRCode(@RequestParam("proNum") String proNum) {
-        ModelAndView modelAndView = new ModelAndView();
-        String url="http://www.tjagriculture/queryPro?proNum="+proNum;
-        modelAndView.addObject("URL",url);
-       modelAndView.addObject("proNum",proNum);
-        modelAndView.setViewName("cooperator/creatQRCode");
-        return modelAndView;
-    }*/
 
     @PostMapping("/cooperator/creatQRCode")
     public ModelAndView testQRCode(ProductInfo creatQRCode) {

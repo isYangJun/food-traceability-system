@@ -49,7 +49,15 @@ public class RequestQRCodeController {
 
         List<SaleInfo> saleInfoResList = saleService.findSaleInfoByProNum(proNum);
         modelAndView.addObject("saleInfoResList", saleInfoResList);
-
+        if (proInfoResList.size() > 0) {
+            modelAndView.addObject("proName", proInfoResList.get(0).getProName());
+            modelAndView.addObject("coopName", proInfoResList.get(0).getCoopName());
+            modelAndView.addObject("harvTime", proInfoResList.get(0).getHarvTime());
+        }
+        if (saleInfoResList.size() > 0) {
+            modelAndView.addObject("comName", saleInfoResList.get(0).getComName());
+            modelAndView.addObject("recordedTime", saleInfoResList.get(0).getRecordedTime());
+        }
         modelAndView.setViewName("QRCodeRes");
         return modelAndView;
     }

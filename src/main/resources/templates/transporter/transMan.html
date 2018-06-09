@@ -97,7 +97,6 @@
                   th:object="${transInfoByTime}" th:action="@{/transporter/transInfoByTime}" method="post"
                   class="form-horizontal"
                   role="form" id="transInfoByTime" name="transInfoByTime">
-              <!--  <div class="content"><h5>按录入时间:</h5></div>-->
                 <div>
                     <div class="content"><h5>录入时间:</h5></div>
                     <div class="content">
@@ -131,7 +130,6 @@
                 <th>运输终点名称</th>
                 <th>起运时间</th>
                 <th>运输车编号</th>
-                <!--  <th>生成二维码</th>-->
             </tr>
             </thead>
             <tbody>
@@ -153,16 +151,5 @@
     <div class="clearfix"></div>
 </div>
 <div class="clearfix"></div>
-<!--<script>
-    $(document).ready(function () {
-        $(".mouse_hover").click(function () {
-            alert("将此食品编号生成二维码" + $(this).text());
-            var proNum = $(this).text();
-            var str = "生成二维码"
-            document.write(str.link("creatQRCode.html?proNum=" + proNum))
-        })
-
-    });
-</script>-->
 </body>
 </html>

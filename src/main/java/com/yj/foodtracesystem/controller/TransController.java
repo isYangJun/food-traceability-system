@@ -3,6 +3,7 @@ package com.yj.foodtracesystem.controller;
 import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
 import com.yj.foodtracesystem.service.CoopService;
+import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.TransporterService;
 import com.yj.foodtracesystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class TransController {
     @Autowired
     CoopService coopService;
 
+    @Autowired
+    PublicService publicService;
+
     @GetMapping("/transporter/transMan")
     public ModelAndView transMan() {
         ModelAndView modelAndView = new ModelAndView();
@@ -58,6 +62,7 @@ public class TransController {
         List<ComInfo> comInfoList = coopService.findComInfoByComNum(addTransInfo.getDestinationNum());
         addTransInfo.setDestinationName(comInfoList.get(0).getComName());
         addTransInfo.setOperatorNum(user.getUserNum());
+        addTransInfo.setRecordedTime(publicService.formatTime(addTransInfo.getRecordedTime()));
         transporterService.saveTransInfo(addTransInfo);
         initialParaModel(modelAndView, user);
         modelAndView.setViewName("transporter/transMan");
