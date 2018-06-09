@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+    <title>农产品追溯平台</title>
+</head>
+<body>
+<div >
+
+    <div class="col-md-6 log">
+        <h3>产品种植信息</h3>
+    </div>
+
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>种子编号</th>
+                <th>种子名称</th>
+                <th>生产商</th>
+                <th>保质期限</th>
+                <th>种子重量</th>
+                <th>登记时间</th>
+                <th>登记人员编号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="seedInfoRes:${seedInfoResList}">
+                <td th:text="${seedInfoRes.id}"></td>
+                <td th:text="${seedInfoRes.seedName}"></td>
+                <td th:text="${seedInfoRes.seedProducer}"></td>
+                <td th:text="${seedInfoRes.seedValTime}"></td>
+                <td th:text="${seedInfoRes.seedWeight}"></td>
+                <td th:text="${seedInfoRes.seedRegTime}"></td>
+                <td th:text="${seedInfoRes.operatorNum}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>地块编号</th>
+                <th>地块名称</th>
+                <th>操作人员编号</th>
+                <th>操作名称</th>
+                <th>操作对象</th>
+                <th>操作时间</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="operationHisRes:${operationHisResList}">
+                <td th:text="${operationHisRes.filedId}"></td>
+                <td th:text="${operationHisRes.filedName}"></td>
+                <td th:text="${operationHisRes.userId}"></td>
+                <td th:text="${operationHisRes.operationName}"></td>
+                <td th:text="${operationHisRes.seedName}"></td>
+                <td th:text="${operationHisRes.operateTime}"></td>
+                <td th:text="${operationHisRes.operationMemo}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>产品名称</th>
+                <th>编号</th>
+                <th>所属合作社</th>
+                <th>所属地块</th>
+                <th>收获时间</th>
+                <th>操作人员编号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="proInfoRes:${proInfoResList}">
+                <td th:text="${proInfoRes.proName}"></td>
+                <td th:text="${proInfoRes.proNum}"></td>
+                <td th:text="${proInfoRes.coopNum}"></td>
+                <td th:text="${proInfoRes.filedNum}"></td>
+                <td th:text="${proInfoRes.harvTime}"></td>
+                <td th:text="${proInfoRes.operatorNum}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6 log">
+        <h3>产品物流信息</h3>
+    </div>
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>产品编号</th>
+                <th>产品名称</th>
+                <th>运输站点编号</th>
+                <th>运输站点名称</th>
+                <th>操作人员编号</th>
+                <th>是否登记</th>
+                <th>运输终点编号</th>
+                <th>运输终点名称</th>
+                <th>起运时间</th>
+                <th>运输车编号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transInfoRes:${transInfoResList}">
+                <td th:text="${transInfoRes.proNum}"></td>
+                <td th:text="${transInfoRes.proName}"></td>
+                <td th:text="${transInfoRes.comNum}"></td>
+                <td th:text="${transInfoRes.comName}"></td>
+                <td th:text="${transInfoRes.operatorNum}"></td>
+                <td th:text="${transInfoRes.inRecorded}"></td>
+                <td th:text="${transInfoRes.destinationNum}"></td>
+                <td th:text="${transInfoRes.destinationName}"></td>
+                <td th:text="${transInfoRes.recordedTime}"></td>
+                <td th:text="${transInfoRes.carNum}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="col-md-6 log">
+            <h3>产品仓储信息</h3>
+        </div>
+        <div class="col-md-6 log">
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>产品编号</th>
+                    <th>产品名称</th>
+                    <th>贮藏仓库编号</th>
+                    <th>贮藏仓库名称</th>
+                    <th>是否登记</th>
+                    <th>贮藏起始时间</th>
+                    <th>贮藏温度</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="repositoryInfo:${repositoryInfoList}">
+                    <td th:text="${repositoryInfo.proNum}"></td>
+                    <td th:text="${repositoryInfo.proName}"></td>
+                    <td th:text="${repositoryInfo.warehouseNum}"></td>
+                    <td th:text="${repositoryInfo.warehouseName}"></td>
+                    <td th:text="${repositoryInfo.inRecorded}"></td>
+                    <td th:text="${repositoryInfo.recordedTime}"></td>
+                    <td th:text="${repositoryInfo.saveTemp}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>产品销售信息</h3>
+        </div>
+        <div class="col-md-6 log">
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>产品编号</th>
+                    <th>产品名称</th>
+                    <th>销售站点编号</th>
+                    <th>销售站点名称</th>
+                    <th>是否登记</th>
+                    <th>上架时间</th>
+                    <th>操作员编号</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="saleInfoRes:${saleInfoResList}">
+                    <td th:text="${saleInfoRes.proNum}"></td>
+                    <td th:text="${saleInfoRes.proName}"></td>
+                    <td th:text="${saleInfoRes.comNum}"></td>
+                    <td th:text="${saleInfoRes.comName}"></td>
+                    <td th:text="${saleInfoRes.inRecorded}"></td>
+                    <td th:text="${saleInfoRes.recordedTime}"></td>
+                    <td th:text="${saleInfoRes.operatorNum}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</body>
+</html>

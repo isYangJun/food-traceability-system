@@ -66,9 +66,6 @@ public class FarmerServiceImp implements FarmerService {
         Query nativeQuery = entityManager.createNativeQuery(sql);
         List<Object[]> list = nativeQuery.getResultList();
         List<OperationHisResult> operationHisResultList = publicService.convertToType(list,OperationHisResult.class.getName());
-       /* String sql1 = "select * from tbl_filed_operation where fo_operation_time between '" + startTime +
-                "' and '" + endTime + "'";
-        List<Object> list1 = entityManager.createNativeQuery(sql1).getResultList();*/
         return operationHisResultList;
     }
 
@@ -122,4 +119,8 @@ public class FarmerServiceImp implements FarmerService {
         return seedInfoRepository.findById(id);
     }
 
+    @Override
+    public List<FiledOperation> findFiledOperationBySeedId(int id) {
+        return filedOperationRepository.findBySeedId(id);
+    }
 }

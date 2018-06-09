@@ -26,5 +26,6 @@ public interface FarmerService {
     List<SeedInfo> findSeedByTime(String startTime,String endTime);
     List<SeedInfo> findSeedInfoById(int id);
     SeedInfo findBySeedId(int id);
+    List<FiledOperation> findFiledOperationBySeedId(int id);
 
 }

@@ -267,7 +267,7 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
     @PostMapping("/cooperator/creatQRCode")
     public ModelAndView testQRCode(ProductInfo creatQRCode) {
         ModelAndView modelAndView = new ModelAndView();
-        String url="http://www.tjagriculture/queryPro?proNum="+creatQRCode.getProNum();
+        String url="http://173919zc58.imwork.net:45167/QRCodeRes?proNum="+creatQRCode.getProNum();
         modelAndView.addObject("URL",url);
         modelAndView.addObject("proNum",creatQRCode.getProNum());
         modelAndView.setViewName("cooperator/creatQRCode");

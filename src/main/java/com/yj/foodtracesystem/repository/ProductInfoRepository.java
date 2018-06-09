@@ -20,4 +20,5 @@ public interface ProductInfoRepository extends JpaRepository<ProductInfo,Integer
     List<ProductInfo> findByFiledNum(int id);
     List<ProductInfo> findByHarvTimeBetween(String startTime,String endTime);
     ProductInfo findByProNum(String proNum);
+    List<ProductInfo> findByProNumIn(String proNum);
 }

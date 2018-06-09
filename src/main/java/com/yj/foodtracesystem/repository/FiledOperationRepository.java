@@ -15,4 +15,5 @@ import java.util.List;
 public interface FiledOperationRepository extends JpaRepository<FiledOperation, Integer> {
     @Override
     List<FiledOperation> findAll();
+    List<FiledOperation> findBySeedId(int id);
 }

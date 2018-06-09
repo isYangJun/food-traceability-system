@@ -100,7 +100,18 @@ public class CoopServiceImp implements CoopService {
     }
 
     @Override
-    public ProductInfo findByProductNum(String productNum) {
+    public  ProductInfo findByProductNum(String productNum) {
         return productIndoRepository.findByProNum(productNum);
+    }
+
+    @Override
+    public List<ProductInfo> findByProductNumIn(String productNum) {
+        return productIndoRepository.findByProNumIn(productNum);
+    }
+
+    @Override
+    public int findSeedIdByProductNum(String productNum) {
+        ProductInfo productInfo=productIndoRepository.findByProNum(productNum);
+        return productInfo.getSeedNum();
     }
 }

@@ -28,7 +28,12 @@ public interface CoopService {
     List<ProductInfo> findBySeedName(String seedName);
 
     List<ProductInfo> findByFiledNum(int id);
-    List<ProductInfo>findByFiledNumOrSeedName(int id,String seedName);
-    List<ProductInfo>findByHarvTime(String startTime,String endTime);
+
+    List<ProductInfo> findByFiledNumOrSeedName(int id, String seedName);
+
+    List<ProductInfo> findByHarvTime(String startTime, String endTime);
+
     ProductInfo findByProductNum(String productNum);
+    List<ProductInfo> findByProductNumIn(String productNum);
+    int findSeedIdByProductNum(String productNum);
 }
