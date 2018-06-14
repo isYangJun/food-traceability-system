@@ -31,7 +31,7 @@ public class RequestQRCodeController {
     @GetMapping("/QRCodeRes")
     public ModelAndView qRCoqdeRes(@RequestParam(value = "proNum") String proNum) {
         ModelAndView modelAndView = new ModelAndView();
-        List<SeedInfo> seedInfoResList = farmerService.findSeedInfoById(coopService.findSeedIdByProductNum(proNum));
+       List<SeedInfo> seedInfoResList = farmerService.findSeedInfoById(coopService.findSeedIdByProductNum(proNum));
         modelAndView.addObject("seedInfoResList", seedInfoResList);
 
         int seedId = coopService.findSeedIdByProductNum(proNum);
