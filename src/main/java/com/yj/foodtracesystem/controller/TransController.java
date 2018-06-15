@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.controller;
 
 import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.model.TempModel.OperationHerPara;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
 import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.PublicService;
@@ -35,6 +36,7 @@ public class TransController {
     @Autowired
     PublicService publicService;
 
+    /****************************************************运输信息管理******************************************************/
     @GetMapping("/transporter/transMan")
     public ModelAndView transMan() {
         ModelAndView modelAndView = new ModelAndView();
@@ -45,7 +47,6 @@ public class TransController {
         modelAndView.setViewName("transporter/transMan");
         return modelAndView;
     }
-
 
 
     @PostMapping(value = "/transporter/addTransInfo")
@@ -107,5 +108,58 @@ public class TransController {
         modelAndView.addObject("comInfoList", comInfoList);
         modelAndView.addObject("transInfoById", new TransportInfo());
         modelAndView.addObject("transInfoByTime", new QueryPara());
+    }
+
+    /***************************************************运输站点管理****************************************************/
+    @GetMapping(value = "/transadmin/transStationMan")
+    public ModelAndView transStationMan() {
+        ModelAndView modelAndView = initialTransStationMan();
+        modelAndView.setViewName("transadmin/transStationMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/transadmin/addTransStationInfo")
+    public ModelAndView addTransStationInfo(TransStationInfo addTransStationInfo) {
+        ModelAndView modelAndView = initialTransStationMan();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        addTransStationInfo.setOperatorNum(user.getUserNum());
+        addTransStationInfo.setCarRegTime(publicService.getStringDate());
+        transporterService.saveTransStationInfo(addTransStationInfo);
+        modelAndView.setViewName("transadmin/transStationMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/transadmin/transStationInfoById")
+    public ModelAndView transStationInfoById(TransStationInfo transStationInfoById) {
+        ModelAndView modelAndView =initialTransStationMan();
+        List<TransStationInfo> transStationInfoResList = transporterService.findTransStationInfoByCarNum(transStationInfoById.getCarNum());
+        modelAndView.addObject("transStationInfoResList", transStationInfoResList);
+        modelAndView.setViewName("transadmin/transStationMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/transadmin/transStationInfoByTime")
+    public ModelAndView transStationInfoByTime(QueryPara queryPara) {
+        ModelAndView modelAndView = initialTransStationMan();
+        List<TransStationInfo> transStationInfoResList = transporterService.findTransStationInfoByTime(queryPara.getStartTime(), queryPara.getEndTime());
+        modelAndView.addObject("transStationInfoResList", transStationInfoResList);
+        modelAndView.setViewName("transadmin/transStationMan");
+        return modelAndView;
+    }
+
+    private ModelAndView initialTransStationMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+        TransStationInfo transStationInfo = new TransStationInfo();
+        modelAndView.addObject("transStationInfo", transStationInfo);
+        List<TransStationInfo> transStationInfoList = transporterService.findAllInfo();
+        modelAndView.addObject("transStationInfoList", transStationInfoList);
+        QueryPara queryPara = new QueryPara();
+        modelAndView.addObject("queryPara", queryPara);
+        return modelAndView;
+
     }
 }

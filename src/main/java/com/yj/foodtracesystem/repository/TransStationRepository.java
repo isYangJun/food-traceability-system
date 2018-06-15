@@ -15,4 +15,7 @@ import java.util.List;
 public interface TransStationRepository extends JpaRepository<TransStationInfo,Integer> {
     @Override
     List<TransStationInfo> findAll();
+    List<TransStationInfo> findTransStationInfoByCarNum(String carNum);
+    List<TransStationInfo> findTransStationInfoByCarRegTimeBetween(String startTime,String endTime);
+
 }

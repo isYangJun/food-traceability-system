@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,4 +73,23 @@ public class TransporterServiceImp implements TransporterService {
     public void saveTransInfo(TransportInfo transportInfo) {
         transporterRepository.save(transportInfo);
     }
+
+    @Override
+    public void saveTransStationInfo(TransStationInfo transStationInfo){transStationRepository.save(transStationInfo);
+    }
+
+    @Override
+    public List<TransStationInfo> findTransStationInfoByCarNum(String carNum){
+        return transStationRepository.findTransStationInfoByCarNum(carNum);
+    }
+    @Override
+    public List<TransStationInfo> findTransStationInfoByTime(String startTime,String endTime){
+        return  transStationRepository.findTransStationInfoByCarRegTimeBetween(startTime,endTime);
+    }
+
+    @Override
+    public List<TransStationInfo> findAllInfo() {
+        return transStationRepository.findAll();
+    }
 }
+

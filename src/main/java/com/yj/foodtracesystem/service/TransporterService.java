@@ -19,4 +19,8 @@ public interface TransporterService {
     List<TransportInfo> findTransInfoByProNum(String proNum);
     List<TransportInfo> findTransInfoByTime(String startTime,String endTime);
     void saveTransInfo(TransportInfo transportInfo);
+    void saveTransStationInfo(TransStationInfo transStationInfo);
+    List<TransStationInfo> findTransStationInfoByCarNum(String carNum);
+    List<TransStationInfo> findTransStationInfoByTime(String startTime,String endTime);
+    List<TransStationInfo> findAllInfo();
 }

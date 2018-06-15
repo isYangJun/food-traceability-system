@@ -24,6 +24,9 @@ public class TransStationInfo {
     private String companyNum;
     @Column(name = "TI_COM_NAME")
     private String companyName;
+    @Column(name = "TI_OPER_NUM")
+    private String operatorNum;
+
 
     public String getCarNum() {
         return carNum;
@@ -65,6 +68,12 @@ public class TransStationInfo {
         this.companyName = companyName;
     }
 
+    public String  getOperatorNum(){return operatorNum;}
+
+    public void setOperatorNum(String operatorNum) { this.operatorNum = operatorNum; }
+
+
+
     @Override
     public String toString() {
         return "TransStationInfo{" +
@@ -73,6 +82,7 @@ public class TransStationInfo {
                 ", carRegTime='" + carRegTime + '\'' +
                 ", companyNum='" + companyNum + '\'' +
                 ", companyName='" + companyName + '\'' +
+                ", operatorNum='" +operatorNum+'\''+
                 '}';
     }
 }
