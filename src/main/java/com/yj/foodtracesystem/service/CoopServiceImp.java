@@ -2,8 +2,10 @@ package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.ComInfo;
 import com.yj.foodtracesystem.model.ProductInfo;
+import com.yj.foodtracesystem.model.SeedInfo;
 import com.yj.foodtracesystem.repository.ComInfoRepository;
 import com.yj.foodtracesystem.repository.ProductInfoRepository;
+import com.yj.foodtracesystem.repository.SeedInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ import java.util.List;
 public class CoopServiceImp implements CoopService {
     @Autowired
     private ComInfoRepository comInfoRepository;
+
+    @Autowired
+    private SeedInfoRepository seedInfoRepository;
 
     @Autowired
     private ProductInfoRepository productIndoRepository;
@@ -86,11 +91,14 @@ public class CoopServiceImp implements CoopService {
 
     @Override
     public List<ProductInfo> findByFiledNumOrSeedName(int id,String seedName) {
-        List<ProductInfo> productInfoList= productIndoRepository.findBySeedName(seedName);
-        List<ProductInfo>productInfoList1=productIndoRepository.findByFiledNum(id);
-        for(ProductInfo productInfo:productInfoList1){
+       List<ProductInfo> productInfoList=productIndoRepository.findBySeedNameInAndFiledNumIn(seedName,id);
+
+       /* List<ProductInfo> productInfoList= productIndoRepository.findBySeedName(seedName);
+        List<ProductInfo>productInfoList1=productIndoRepository.findByFiledNum(id);*/
+
+      /*  for(ProductInfo productInfo:productInfoList1){
             productInfoList.add(productInfo);
-        }
+        }*/
         return productInfoList;
     }
 
@@ -113,5 +121,11 @@ public class CoopServiceImp implements CoopService {
     public int findSeedIdByProductNum(String productNum) {
         ProductInfo productInfo=productIndoRepository.findByProNum(productNum);
         return productInfo.getSeedNum();
+    }
+
+    @Override
+    public String findSeedNameBySeedNum(int seedId) {
+       SeedInfo seedInfo= seedInfoRepository.findById(seedId);
+       return seedInfo.getSeedName();
     }
 }

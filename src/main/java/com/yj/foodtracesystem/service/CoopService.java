@@ -36,4 +36,5 @@ public interface CoopService {
     ProductInfo findByProductNum(String productNum);
     List<ProductInfo> findByProductNumIn(String productNum);
     int findSeedIdByProductNum(String productNum);
+    String findSeedNameBySeedNum(int seedId);
 }

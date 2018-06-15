@@ -215,6 +215,7 @@ public class CooperatorController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+       productInfoById.setSeedName(coopService.findSeedNameBySeedNum(productInfoById.getSeedNum()));
         List<ProductInfo> proInfoResList = coopService.findByFiledNumOrSeedName(productInfoById.getFiledNum(), productInfoById.getSeedName());
         modelAndView.addObject("proInfoResList", proInfoResList);
         modelAndView.addObject("productInfo", new ProductInfo());
