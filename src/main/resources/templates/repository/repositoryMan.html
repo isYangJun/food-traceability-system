@@ -45,7 +45,14 @@
                 </div>
 
                 <div>
-                    <div class="content"><h5>贮藏时间:</h5></div>
+                    <div class="content"><h5>贮藏重量:</h5></div>
+                    <div class="content">
+                        <input type="text" name="proWeight" th:filed="*{proWeight}">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="content"><h5>入库时间:</h5></div>
                     <div class="content">
                         <input type="datetime-local" name="recordedTime" th:filed="*{recordedTime}">
                     </div>
@@ -105,6 +112,7 @@
             <tr>
                 <th>产品编号</th>
                 <th>产品名称</th>
+                <th>贮藏重量</th>
                 <th>贮藏仓库编号</th>
                 <th>贮藏仓库名称</th>
                 <th>是否登记</th>
@@ -117,6 +125,7 @@
             <tr th:each="repositoryInfo:${repositoryInfoList}">
                 <td th:text="${repositoryInfo.proNum}"></td>
                 <td th:text="${repositoryInfo.proName}"></td>
+                <td th:text="${repositoryInfo.proWeight}"></td>
                 <td th:text="${repositoryInfo.warehouseNum}"></td>
                 <td th:text="${repositoryInfo.warehouseName}"></td>
                 <td th:text="${repositoryInfo.inRecorded}"></td>

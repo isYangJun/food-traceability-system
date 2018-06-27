@@ -20,6 +20,34 @@ public class SaleInfo {
     private String proNum;
     @Column(name = "SI_PRO_NAME")
     private String proName;
+
+    public String getProWeight() {
+        return proWeight;
+    }
+
+    public void setProWeight(String proWeight) {
+        this.proWeight = proWeight;
+    }
+
+    @Override
+    public String toString() {
+        return "SaleInfo{" +
+                "id=" + id +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", proWeight='" + proWeight + '\'' +
+                ", recordedTime='" + recordedTime + '\'' +
+                ", comNum='" + comNum + '\'' +
+                ", comName='" + comName + '\'' +
+                ", inRecorded=" + inRecorded +
+                ", operatorNum='" + operatorNum + '\'' +
+                '}';
+    }
+
+    @Column(name = "SI_PRO_WEIGHT")
+    private String proWeight;
+
+
     @Column(name = "SI_RECORDED_TIME")
     private String recordedTime;
     @Column(name = "SI_COM_NUM")
@@ -30,19 +58,6 @@ public class SaleInfo {
     private int inRecorded;
     @Column(name = "SI_OPERATOR_NUM")
     private String operatorNum;
-    @Override
-    public String toString() {
-        return "SaleInfo{" +
-                "id=" + id +
-                ", proNum='" + proNum + '\'' +
-                ", proName='" + proName + '\'' +
-                ", recordedTime='" + recordedTime + '\'' +
-                ", comNum='" + comNum + '\'' +
-                ", comName='" + comName + '\'' +
-                ", inRecorded=" + inRecorded +
-                ", operatorNum='" + operatorNum + '\'' +
-                '}';
-    }
 
     public String getOperatorNum() {
         return operatorNum;

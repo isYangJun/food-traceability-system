@@ -8,7 +8,7 @@ import javax.persistence.*;
  * @Date: Created in 16:19 2018/5/30
  */
 @Entity
-@Table(name="TBL_REPOSITORY_INFO")
+@Table(name = "TBL_REPOSITORY_INFO")
 public class RepositoryInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +27,28 @@ public class RepositoryInfo {
     @Column(name = "RI_PRODUCT_NAME")
     private String proName;
 
+
+    @Override
+    public String toString() {
+        return "RepositoryInfo{" +
+                "id=" + id +
+                ", warehouseNum='" + warehouseNum + '\'' +
+                ", warehouseName='" + warehouseName + '\'' +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", proWeight='" + proWeight + '\'' +
+                ", inRecorded=" + inRecorded +
+                ", recordedTime='" + recordedTime + '\'' +
+                ", saveTemp='" + saveTemp + '\'' +
+                ", repositoryNum='" + repositoryNum + '\'' +
+                ", operatorNum='" + operatorNum + '\'' +
+                '}';
+    }
+
+
+    @Column(name = "RI_PRODUCT_WEIGHT")
+    private String proWeight;
+
     @Column(name = "RI_PRODUCT_INRECORDED")
     private int inRecorded;
 
@@ -42,20 +64,12 @@ public class RepositoryInfo {
     @Column(name = "RI_OPERATOR_NUM")
     private String operatorNum;
 
-    @Override
-    public String toString() {
-        return "RepositoryInfo{" +
-                "id=" + id +
-                ", warehouseNum='" + warehouseNum + '\'' +
-                ", warehouseName='" + warehouseName + '\'' +
-                ", proNum='" + proNum + '\'' +
-                ", proName='" + proName + '\'' +
-                ", inRecorded=" + inRecorded +
-                ", recordedTime='" + recordedTime + '\'' +
-                ", saveTemp='" + saveTemp + '\'' +
-                ", repositoryNum='" + repositoryNum + '\'' +
-                ", operatorNum='" + operatorNum + '\'' +
-                '}';
+    public String getProWeight() {
+        return proWeight;
+    }
+
+    public void setProWeight(String proWeight) {
+        this.proWeight = proWeight;
     }
 
     public String getOperatorNum() {

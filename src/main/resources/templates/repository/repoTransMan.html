@@ -35,6 +35,13 @@
                     </div>
                 </div>
 
+                <div>
+                    <div class="content"><h5>运输重量:</h5></div>
+                    <div class="content">
+                        <input type="text" name="proWeight" th:filed="*{proWeight}">
+                    </div>
+                </div>
+
                 <div class="content"><h5>运输车编号:</h5></div>
                 <div class="content">
                     <select name="carNum" th:filed="*{carNum}">
@@ -123,13 +130,13 @@
                 <th>产品名称</th>
                 <th>运输站点编号</th>
                 <th>运输站点名称</th>
+                <th>运输重量</th>
                 <th>操作人员编号</th>
                 <th>是否登记</th>
                 <th>运输终点编号</th>
                 <th>运输终点名称</th>
                 <th>起运时间</th>
                 <th>运输车编号</th>
-                <!--  <th>生成二维码</th>-->
             </tr>
             </thead>
             <tbody>
@@ -138,6 +145,7 @@
                 <td th:text="${transInfoRes.proName}"></td>
                 <td th:text="${transInfoRes.comNum}"></td>
                 <td th:text="${transInfoRes.comName}"></td>
+                <td th:text="${transInfoRes.proWeight}"></td>
                 <td th:text="${transInfoRes.operatorNum}"></td>
                 <td th:text="${transInfoRes.inRecorded}"></td>
                 <td th:text="${transInfoRes.destinationNum}"></td>

@@ -27,6 +27,9 @@ public class TransportInfo {
     @Column(name = "TI_PRODUCT_NAME")
     private String proName;
 
+    @Column(name = "TI_PRODUCT_WEIGHT")
+    private String proWeight;
+
     @Column(name = "TI_PRODUCT_INRECORDED")
     private int inRecorded;
 
@@ -53,6 +56,7 @@ public class TransportInfo {
                 ", comName='" + comName + '\'' +
                 ", proNum='" + proNum + '\'' +
                 ", proName='" + proName + '\'' +
+                ", proWeight='" + proWeight + '\'' +
                 ", inRecorded=" + inRecorded +
                 ", recordedTime='" + recordedTime + '\'' +
                 ", destinationNum='" + destinationNum + '\'' +
@@ -60,6 +64,13 @@ public class TransportInfo {
                 ", carNum='" + carNum + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
                 '}';
+    }
+
+    public String getProWeight() {
+        return proWeight;
+    }
+    public void setProWeight(String proWeight) {
+        this.proWeight = proWeight;
     }
 
     public String getOperatorNum() {
