@@ -51,6 +51,12 @@
                     </div>
                 </div>
                 <div>
+                    <div class="content"><h5>产品重量:</h5></div>
+                    <div class="content">
+                        <input type="text" name="proWeight" th:filed="*{proWeight}">
+                    </div>
+                </div>
+                <div>
                     <div class="content"><h5>收获时间:</h5></div>
                     <div class="content">
                         <input type="datetime-local" name="harvTime" th:filed="*{harvTime}">
@@ -123,9 +129,9 @@
                 <th>所属合作社</th>
                 <th>所属地块</th>
                 <th>收获时间</th>
+                <th>产品重量</th>
                 <th>操作人员编号</th>
                 <th>生成二维码</th>
-                <!--  <th>生成二维码</th>-->
             </tr>
             </thead>
             <tbody>
@@ -135,6 +141,7 @@
                 <td th:text="${proInfoRes.coopNum}"></td>
                 <td th:text="${proInfoRes.filedNum}"></td>
                 <td th:text="${proInfoRes.harvTime}"></td>
+                <td th:text="${proInfoRes.proWeight}"></td>
                 <td th:text="${proInfoRes.operatorNum}"></td>
                 <td>
                     <form autocomplete="off"

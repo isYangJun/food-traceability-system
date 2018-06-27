@@ -33,6 +33,17 @@ public class ProductInfo {
     @Column(name = "PI_OPERATOR_NUM")
     private String operatorNum;
 
+    public String getProWeight() {
+        return proWeight;
+    }
+
+    public void setProWeight(String proWeight) {
+        this.proWeight = proWeight;
+    }
+
+    @Column(name = "PI_PRODUCT_WEIGHT")
+    private String proWeight;
+
     @Override
     public String toString() {
         return "ProductInfo{" +
@@ -43,6 +54,7 @@ public class ProductInfo {
                 ", seedNum=" + seedNum +
                 ", isTransed=" + isTransed +
                 ", operatorNum='" + operatorNum + '\'' +
+                ", proWeight='" + proWeight + '\'' +
                 ", seedName='" + seedName + '\'' +
                 ", harvTime='" + harvTime + '\'' +
                 ", coopNum='" + coopNum + '\'' +
