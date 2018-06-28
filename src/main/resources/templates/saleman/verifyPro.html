@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="saleman/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+
+    <title>verifyPro</title>
+
+</head>
+<body>
+<div th:replace="saleman/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+
+        <div class="col-md-6 log">
+            <h3>验证商品重量信息</h3>
+            <form autocomplete="off"
+                  th:object="${proWeightById}" th:action="@{/saleman/verifyProWeightById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="proWeightById" name="proWeightById">
+                <div>
+                    <div class="content">
+                        <select name="proNum" th:filed="*{proNum}">
+                            <option>产品编号</option>
+                            <option th:each="proNumName:${proNumNameList}" th:value="${proNumName.proNum}"
+                                    th:text="${proNumName.proNum}+${proNumName.proName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="验证"></div>
+            </form>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div class="col-md-6 log">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>产品编号</th>
+                <th>产品名称</th>
+                <th>产品重量</th>
+                <th>销售站点编号</th>
+                <th>销售站点名称</th>
+                <th>是否登记</th>
+                <th>上架时间</th>
+                <th>操作员编号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="saleInfoRes:${saleInfoResList}">
+                <td th:text="${saleInfoRes.proNum}"></td>
+                <td th:text="${saleInfoRes.proName}"></td>
+                <td th:text="${saleInfoRes.proWeight}"></td>
+                <td th:text="${saleInfoRes.comNum}"></td>
+                <td th:text="${saleInfoRes.comName}"></td>
+                <td th:text="${saleInfoRes.inRecorded}"></td>
+                <td th:text="${saleInfoRes.recordedTime}"></td>
+                <td th:text="${saleInfoRes.operatorNum}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+</body>
+</html>

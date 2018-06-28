@@ -92,6 +92,28 @@ public class SaleController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/saleman/verifyPro")
+    public ModelAndView verifyProWeight() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+        List<ProductPara> proNumNameList = publicService.findSaleProFromTransAndRepos(user.getUserComp());
+        modelAndView.addObject("proNumNameList", proNumNameList);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/saleman/verifyProWeightById")
+    public ModelAndView verifyProWeightById(SaleInfo proWeightById) {
+        countProTotalWeight(String proNum);
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+
+        return modelAndView;
+    }
+
     private void initialModel(ModelAndView modelAndView, User user) {
         modelAndView.addObject("comNum", user.getUserComp());
         modelAndView.addObject("comName", user.getUserCompName());

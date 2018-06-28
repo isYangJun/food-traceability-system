@@ -50,4 +50,9 @@ public class SaleServiceImp implements SaleService {
     public void saveSaleInfo(SaleInfo saleInfo) {
         saleInfoRepository.save(saleInfo);
     }
+
+    @Override
+    public int countProWeight(String proNum) {
+        return 0;
+    }
 }
