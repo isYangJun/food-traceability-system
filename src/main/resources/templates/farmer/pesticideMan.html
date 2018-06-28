@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="farmer/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+    <title>Pesticide_Man</title>
+
+</head>
+<body>
+<div th:replace="farmer/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>新增农药</h3>
+            <form autocomplete="off"
+                  th:object="${pesticideInfo}" th:action="@{/farmer/addPesticideInfo}" method="post" class="form-horizontal"
+                  role="form" id="addPesticideInfo" name="addPesticideInfo">
+                <div>
+                    <div class="content"><h5>农药名称:</h5></div>
+                    <div><input type="text" value="" name="pesticideName" th:filed="*{pesticideName}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>农药种类:</h5></div>
+                    <div><input type="text" value="" name="pesticideType" th:filed="*{pesticideType}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>农药重量:</h5></div>
+                    <div><input type="text" value="" name="pesticideWeight" th:filed="*{pesticideWeight}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>农药产商:</h5></div>
+                    <div><input type="text" value="" name="pesticideProducer" th:filed="*{pesticideProducer}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>保质期限:</h5></div>
+                    <div><input type="text" value="" name="pesticideValTime" th:filed="*{pesticideValTime}"></div>
+                </div>
+                <div><input class="content" type="submit" value="提交"></div>
+            </form>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>查询农药信息</h3>
+            <form autocomplete="off"
+                  th:object="${operationHerPara}" th:action="@{/farmer/queryPesticideInfoByTime}" method="post"
+                  class="form-horizontal"
+                  role="form" id="queryPesticideInfoByTime" name="queryPesticideInfoByTime">
+                <div>
+                    <div class="content"><h5>起始时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>终止时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+
+            <div class="col-md-6 log">
+                <form autocomplete="off"
+                      th:object="${operationHerPara}" th:action="@{/farmer/queryPesticideInfoById}" method="post"
+                      class="form-horizontal"
+                      role="form" id="queryPesticidedInfoById" name="queryPesticideInfoById">
+                    <div>
+                        <div class="content"><h5>农药选择:</h5></div>
+                        <div class="content">
+                            <select name="pesticideId" th:filed="*{pesticideId}">
+                                <option>请选择农药</option>
+                                <option th:each="pesticideInfoList:${pesticideInfoList}" th:value="${pesticideInfoList.id}"
+                                        th:text="${pesticideInfoList.id}+${pesticideInfoList.pesticideName}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div><input class="content" type="submit" value="查询"></div>
+                </form>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <!--表格显示-->
+        <div class="col-md-6 log">
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>农药编号</th>
+                    <th>农药名称</th>
+                    <th>农药种类</th>
+                    <th>生产商</th>
+                    <th>保质期限</th>
+                    <th>农药重量</th>
+                    <th>登记时间</th>
+                    <th>登记人员编号</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pesticideInfoRes:${pesticideInfoResList}">
+                    <td th:text="${pesticideInfoRes.id}"></td>
+                    <td th:text="${pesticideInfoRes.pesticideName}"></td>
+                    <td th:text="${pesticideInfoRes.pesticideType}"></td>
+                    <td th:text="${pesticideInfoRes.pesticideProducer}"></td>
+                    <td th:text="${pesticideInfoRes.pesticideValTime}"></td>
+                    <td th:text="${pesticideInfoRes.pesticideWeight}"></td>
+                    <td th:text="${pesticideInfoRes.pesticideRegTime}"></td>
+                    <td th:text="${pesticideInfoRes.operatorNum}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</body>
+</html>

@@ -6,12 +6,9 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.yj.foodtracesystem.model.ComInfo;
-import com.yj.foodtracesystem.model.ProductInfo;
+import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.model.TempModel.ProductPara;
-import com.yj.foodtracesystem.model.TransportInfo;
-import com.yj.foodtracesystem.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,6 +102,15 @@ public class PublicService {
                 productInfoList.add(productInfo);
             }
             return (T) productInfoList;
+        }
+        if (typeName.contains("CarInfo")){
+            List<Car> carList = new ArrayList<>();
+            for (int i = 0;i<list.size();i++){
+                Car car = new Car();
+                car.setType(list.get(i)[0].toString());
+                carList.add(car);
+            }
+            return(T) carList;
         }
         if (typeName.contains("TransportInfo")) {
             List<TransportInfo> transportInfoList = new ArrayList<>();

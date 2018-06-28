@@ -31,6 +31,14 @@
                     <div class="content"><h5>车辆名称:</h5></div>
                     <div><input type="text" value="" name="carName" th:filed="*{carName}"></div>
                 </div>
+                <div class="content"><h5>运输车类型:</h5></div>
+                <div class="content">
+                    <select name="carType" th:filed="*{carType}">
+                        <option>请选择运输车类型</option>
+                        <option th:each="car:${carList}" th:value="${car.type}"
+                                th:text="${car.id}+${car.type}"></option>
+                    </select>
+                </div>
                 <div>
                     <div class="content"><h5>公司名称:</h5></div>
                     <div><input type="text" value="" name="companyName" th:filed="*{companyName}"></div>
@@ -93,6 +101,7 @@
             <tr>
                 <th>车辆编号</th>
                 <th>车辆名称</th>
+                <th>车辆类型</th>
                 <th>所属公司编号</th>
                 <th>公司名称</th>
                 <th>操作人员编号</th>
@@ -103,6 +112,7 @@
             <tr th:each="transStationInfoRes:${transStationInfoResList}">
                 <td th:text="${transStationInfoRes.carNum}"></td>
                 <td th:text="${transStationInfoRes.carName}"></td>
+                <td th:text="${transStationInfoRes.carType}"></td>
                 <td th:text="${transStationInfoRes.companyNum}"></td>
                 <td th:text="${transStationInfoRes.companyName}"></td>
                 <td th:text="${transStationInfoRes.operatorNum}"></td>

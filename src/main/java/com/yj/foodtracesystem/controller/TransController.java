@@ -155,6 +155,8 @@ public class TransController {
         modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
         TransStationInfo transStationInfo = new TransStationInfo();
         modelAndView.addObject("transStationInfo", transStationInfo);
+        List<Car> carList = transporterService.findCarInfo();
+        modelAndView.addObject("carList", carList);
         List<TransStationInfo> transStationInfoList = transporterService.findAllInfo();
         modelAndView.addObject("transStationInfoList", transStationInfoList);
         QueryPara queryPara = new QueryPara();

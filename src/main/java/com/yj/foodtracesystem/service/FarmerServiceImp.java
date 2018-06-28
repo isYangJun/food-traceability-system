@@ -4,10 +4,7 @@ import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationAddPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
-import com.yj.foodtracesystem.repository.FiledInfoRepository;
-import com.yj.foodtracesystem.repository.FiledOperationRepository;
-import com.yj.foodtracesystem.repository.FiledOperationTypeRepository;
-import com.yj.foodtracesystem.repository.SeedInfoRepository;
+import com.yj.foodtracesystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +33,12 @@ public class FarmerServiceImp implements FarmerService {
     private PublicService publicService;
 
     @Autowired
+    private FertilizerInfoRepository fertilizerInfoRepository;
+    @Autowired
+    private  PesticideInfoRepository pesticideInfoRepository;
+    @Autowired
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     @Override
     public List<FiledInfo> findAllFiledInfo() {
@@ -84,6 +85,10 @@ public class FarmerServiceImp implements FarmerService {
     public List<SeedInfo> findAllSeedInfo() {
         return seedInfoRepository.findAll();
     }
+    @Override
+    public List<FertilizerInfo> findAllFertilizerInfo(){ return  fertilizerInfoRepository.findAll(); }
+    @Override
+    public List<PesticideInfo> findAllPesticideInfo(){ return  pesticideInfoRepository.findAll();}
 
     @Override
     public void saveFiledInfo(FiledInfo filedInfo) {
@@ -91,6 +96,10 @@ public class FarmerServiceImp implements FarmerService {
     }
     @Override
     public void saveSeedInfo(SeedInfo seedInfo) {seedInfoRepository.save(seedInfo);}
+    @Override
+    public void saveFertilizerInfo(FertilizerInfo fertilizerInfo){fertilizerInfoRepository.save(fertilizerInfo);}
+    @Override
+    public void savePesticideInfo(PesticideInfo pesticideInfo){pesticideInfoRepository.save(pesticideInfo);}
 
     @Override
     public List<FiledInfo> findFiledInfoById(int id) {
@@ -113,6 +122,26 @@ public class FarmerServiceImp implements FarmerService {
         List<SeedInfo> seedInfoList= new ArrayList<>();
         seedInfoList.add(seedInfoRepository.findById(id));
         return seedInfoList;
+    }
+    @Override
+    public List<FertilizerInfo> findFertilizerInfoById(int id){
+        List<FertilizerInfo> fertilizerInfoList= new ArrayList<>();
+        fertilizerInfoList.add(fertilizerInfoRepository.findById(id));
+        return fertilizerInfoList;
+    }
+    @Override
+    public List<FertilizerInfo> findFertilizerInfoByTime(String startTime,String endTime){
+        return fertilizerInfoRepository.findByFertilizerRegTimeBetween(startTime,endTime);
+    }
+    @Override
+    public List<PesticideInfo> findPesticideInfoById(int id){
+        List<PesticideInfo> pesticideInfoList= new ArrayList<>();
+        pesticideInfoList.add(pesticideInfoRepository.findById(id));
+        return pesticideInfoList;
+    }
+    @Override
+    public List<PesticideInfo> findPesticideInfoByTime(String startTime,String endTime){
+        return pesticideInfoRepository.findByPesticideRegTimeBetween(startTime,endTime);
     }
     @Override
     public SeedInfo findBySeedId(int id) {
