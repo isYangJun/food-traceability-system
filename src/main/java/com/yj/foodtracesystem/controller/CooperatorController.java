@@ -280,7 +280,6 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
 
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
-        modelAndView.addObject("proBachInfoById", new ProductBatchInfo());
         modelAndView.addObject("proBachInfoByTime", new QueryPara());
         modelAndView.setViewName("cooperator/productBachMan");
         return modelAndView;
@@ -311,7 +310,6 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
 
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
-        modelAndView.addObject("proBachInfoById", new ProductBatchInfo());
         modelAndView.addObject("proBachInfoByTime", new QueryPara());
         modelAndView.setViewName("cooperator/productBachMan");
         return modelAndView;
@@ -324,9 +322,6 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
 
-        List<ProductBatchInfo> proBachInfoResList = coopService.findProBatchInfoByTime(proBachInfoByTime.startTime,proBachInfoByTime.endTime);
-        modelAndView.addObject("proBachInfoResList", proBachInfoResList);
-
         modelAndView.addObject("productBatchInfo", new ProductBatchInfo());
         modelAndView.addObject("compNum", user.getUserComp());
         modelAndView.addObject("compName", user.getUserCompName());
@@ -336,10 +331,11 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
 
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
-        modelAndView.addObject("proBachInfoById", new ProductBatchInfo());
-        modelAndView.addObject("proBachInfoByTime", new QueryPara());
-        modelAndView.setViewName("cooperator/productBachMan");
 
+        List<ProductBatchInfo> proBachInfoResList = coopService.findProBatchInfoByTime(proBachInfoByTime.startTime,proBachInfoByTime.endTime);
+        modelAndView.addObject("proBachInfoResList", proBachInfoResList);
+
+        modelAndView.addObject("proBachInfoByTime", new QueryPara());
         modelAndView.setViewName("cooperator/productBachMan");
         return modelAndView;
     }
