@@ -170,7 +170,7 @@ public class FarmerController {
         modelAndView.setViewName("farmer/pesticideMan");
         return  modelAndView;
     }
-    @PostMapping(value="/farmer/queryFertilizerInfoById")
+    @PostMapping(value="/farmer/queryPesticideInfoById")
     public  ModelAndView queryPesticideInfoById(OperationHerPara operationHerPara) throws Exception{
         ModelAndView modelAndView=initialPesticideMan();
         List<PesticideInfo> pesticideInfoResList = farmerService.findPesticideInfoById(operationHerPara.pesticideId);
