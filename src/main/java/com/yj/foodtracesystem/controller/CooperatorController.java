@@ -176,6 +176,8 @@ public class CooperatorController {
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
+        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -205,6 +207,8 @@ public class CooperatorController {
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
+        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -228,6 +232,8 @@ public class CooperatorController {
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
+        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -250,7 +256,91 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
+        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
+        return modelAndView;
+    }
+
+
+    /**************** add product bach info******************/
+    @GetMapping(value = "/cooperator/productBachMan")
+    public ModelAndView productBachMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+
+        modelAndView.addObject("productBatchInfo", new ProductBatchInfo());
+        modelAndView.addObject("compNum", user.getUserComp());
+        modelAndView.addObject("compName", user.getUserCompName());
+
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList", seedInfoList);
+        modelAndView.addObject("proBachInfoById", new ProductBatchInfo());
+        modelAndView.addObject("proBachInfoByTime", new QueryPara());
+        modelAndView.setViewName("cooperator/productBachMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/cooperator/addProductBachInfo")
+    public ModelAndView addProductBachInfo(ProductBatchInfo productBatchInfo) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+
+        productBatchInfo.setCoopName(user.getUserCompName());
+        String proBatchNum = productBatchInfo.getCoopNum() + String.valueOf(productBatchInfo.getFiledNum()) + String.valueOf(productBatchInfo.getSeedNum())+productBatchInfo.getProWeight();
+        productBatchInfo.setProBatchNum(proBatchNum);
+        productBatchInfo.setHarvTime(publicService.formatTime(productBatchInfo.getHarvTime()));
+
+        productBatchInfo.setSeedName(farmerService.findBySeedId(productBatchInfo.getSeedNum()).getSeedName());
+        productBatchInfo.setOperatorNum(user.getUserNum());
+        coopService.saveproBachInfo(productBatchInfo);
+
+        modelAndView.addObject("productBatchInfo", new ProductBatchInfo());
+        modelAndView.addObject("compNum", user.getUserComp());
+        modelAndView.addObject("compName", user.getUserCompName());
+
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList", seedInfoList);
+        modelAndView.addObject("proBachInfoById", new ProductBatchInfo());
+        modelAndView.addObject("proBachInfoByTime", new QueryPara());
+        modelAndView.setViewName("cooperator/productBachMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/cooperator/proBachInfoByTime")
+    public ModelAndView proBachInfoByTime(QueryPara proBachInfoByTime) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+
+        List<ProductBatchInfo> proBachInfoResList = coopService.findProBatchInfoByTime(proBachInfoByTime.startTime,proBachInfoByTime.endTime);
+        modelAndView.addObject("proBachInfoResList", proBachInfoResList);
+
+        modelAndView.addObject("productBatchInfo", new ProductBatchInfo());
+        modelAndView.addObject("compNum", user.getUserComp());
+        modelAndView.addObject("compName", user.getUserCompName());
+
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList", seedInfoList);
+        modelAndView.addObject("proBachInfoById", new ProductBatchInfo());
+        modelAndView.addObject("proBachInfoByTime", new QueryPara());
+        modelAndView.setViewName("cooperator/productBachMan");
+
+        modelAndView.setViewName("cooperator/productBachMan");
         return modelAndView;
     }
 

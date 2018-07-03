@@ -27,22 +27,29 @@ public class ProductInfo {
     @Column(name = "PI_SEED_NUM")
     private int seedNum;
 
-    @Column(name = "PI_IS_TRANSED")
-    private int isTransed;//0为未操作，1为操作完成
-
     @Column(name = "PI_OPERATOR_NUM")
     private String operatorNum;
 
-    public String getProWeight() {
-        return proWeight;
-    }
+    @Column(name = "PI_PROBATCH_NUM")
+    private String proBatchNum;
 
-    public void setProWeight(String proWeight) {
-        this.proWeight = proWeight;
-    }
+    @Column(name = "PI_SEED_NAME")
+    private String seedName;
+
+    @Column(name = "PI_HARVEST_TIME")
+    private String harvTime;
+
+    @Column(name = "PI_COOPERATION_NUM")
+    private String coopNum;
 
     @Column(name = "PI_PRODUCT_WEIGHT")
     private String proWeight;
+
+    @Column(name = "PI_COOPERATION_NAME")
+    private String coopName;
+
+    @Column(name = "PI_IS_TRANSED")
+    private int isTransed;//0为未操作，1为操作完成
 
     @Override
     public String toString() {
@@ -54,12 +61,31 @@ public class ProductInfo {
                 ", seedNum=" + seedNum +
                 ", isTransed=" + isTransed +
                 ", operatorNum='" + operatorNum + '\'' +
+                ", proBatchNum='" + proBatchNum + '\'' +
                 ", proWeight='" + proWeight + '\'' +
                 ", seedName='" + seedName + '\'' +
                 ", harvTime='" + harvTime + '\'' +
                 ", coopNum='" + coopNum + '\'' +
                 ", coopName='" + coopName + '\'' +
                 '}';
+    }
+
+    public String getProBatchNum() {
+        return proBatchNum;
+    }
+
+    public void setProBatchNum(String proBatchNum) {
+        this.proBatchNum = proBatchNum;
+    }
+
+
+
+    public String getProWeight() {
+        return proWeight;
+    }
+
+    public void setProWeight(String proWeight) {
+        this.proWeight = proWeight;
     }
 
     public String getOperatorNum() {
@@ -86,15 +112,6 @@ public class ProductInfo {
         this.seedName = seedName;
     }
 
-    @Column(name = "PI_SEED_NAME")
-    private String seedName;
-
-    @Column(name = "PI_HARVEST_TIME")
-    private String harvTime;
-
-    @Column(name = "PI_COOPERATION_NUM")
-    private String coopNum;
-
     public String getCoopName() {
         return coopName;
     }
@@ -102,9 +119,6 @@ public class ProductInfo {
     public void setCoopName(String coopName) {
         this.coopName = coopName;
     }
-
-    @Column(name = "PI_COOPERATION_NAME")
-    private String coopName;
 
     public int getId() {
         return id;

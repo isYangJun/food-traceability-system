@@ -1,9 +1,11 @@
 package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.ComInfo;
+import com.yj.foodtracesystem.model.ProductBatchInfo;
 import com.yj.foodtracesystem.model.ProductInfo;
 import com.yj.foodtracesystem.model.SeedInfo;
 import com.yj.foodtracesystem.repository.ComInfoRepository;
+import com.yj.foodtracesystem.repository.ProductBatchInfoRepository;
 import com.yj.foodtracesystem.repository.ProductInfoRepository;
 import com.yj.foodtracesystem.repository.SeedInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public class CoopServiceImp implements CoopService {
 
     @Autowired
     private ProductInfoRepository productIndoRepository;
+
+    @Autowired
+    private ProductBatchInfoRepository productBatchInfoRepository;
+
     @Autowired
     @PersistenceContext
     EntityManager entityManager;
@@ -127,5 +133,30 @@ public class CoopServiceImp implements CoopService {
     public String findSeedNameBySeedNum(int seedId) {
        SeedInfo seedInfo= seedInfoRepository.findById(seedId);
        return seedInfo.getSeedName();
+    }
+
+    @Override
+    public void saveproBachInfo(ProductBatchInfo productBatchInfo) {
+        productBatchInfoRepository.save(productBatchInfo);
+    }
+
+    @Override
+    public List<ProductBatchInfo> findProBachInfoByBachNum(String proBachNum) {
+        return productBatchInfoRepository.findByProBatchNum(proBachNum);
+    }
+
+    @Override
+    public List<ProductBatchInfo> findBySeedNum(int seedId) {
+        return productBatchInfoRepository.findBySeedNum(seedId);
+    }
+
+    @Override
+    public List<ProductBatchInfo> findProBatchInfoByTime(String startTime, String endTime) {
+        return productBatchInfoRepository.findByHarvTimeBetween(startTime,endTime);
+    }
+
+    @Override
+    public List<ProductBatchInfo> findAllProBatchInfo() {
+        return productBatchInfoRepository.findAll();
     }
 }

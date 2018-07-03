@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.ComInfo;
+import com.yj.foodtracesystem.model.ProductBatchInfo;
 import com.yj.foodtracesystem.model.ProductInfo;
 
 import java.util.List;
@@ -37,4 +38,9 @@ public interface CoopService {
     List<ProductInfo> findByProductNumIn(String productNum);
     int findSeedIdByProductNum(String productNum);
     String findSeedNameBySeedNum(int seedId);
+    void saveproBachInfo(ProductBatchInfo productBatchInfo);
+    List<ProductBatchInfo> findProBachInfoByBachNum(String proBachNum);
+    List<ProductBatchInfo>findBySeedNum(int seedId);
+    List<ProductBatchInfo> findProBatchInfoByTime(String startTime,String endTime);
+    List<ProductBatchInfo> findAllProBatchInfo();
 }

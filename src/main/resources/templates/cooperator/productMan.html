@@ -51,6 +51,16 @@
                     </div>
                 </div>
                 <div>
+                    <div class="content"><h5>产品批次:</h5></div>
+                    <div class="content">
+                        <select name="proBatchNum" th:filed="*{proBatchNum}">
+                            <option>产品名称</option>
+                            <option th:each="productBatchInfo:${productBatchInfoList}" th:value="${productBatchInfo.proBatchNum}"
+                                    th:text="${productBatchInfo.proBatchNum}+${productBatchInfo.seedName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
                     <div class="content"><h5>产品重量:</h5></div>
                     <div class="content">
                         <input type="text" name="proWeight" th:filed="*{proWeight}">
@@ -131,6 +141,7 @@
                 <th>收获时间</th>
                 <th>产品重量</th>
                 <th>操作人员编号</th>
+               <th>产品编号</th>
                 <th>生成二维码</th>
             </tr>
             </thead>
@@ -143,6 +154,7 @@
                 <td th:text="${proInfoRes.harvTime}"></td>
                 <td th:text="${proInfoRes.proWeight}"></td>
                 <td th:text="${proInfoRes.operatorNum}"></td>
+                <td th:text="${proInfoRes.proBatchNum}"></td>
                 <td>
                     <form autocomplete="off"
                           th:object="${creatQRCode}" th:action="@{/cooperator/creatQRCode}" method="post"

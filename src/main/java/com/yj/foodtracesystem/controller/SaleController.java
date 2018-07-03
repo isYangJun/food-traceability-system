@@ -105,7 +105,7 @@ public class SaleController {
 
     @PostMapping(value = "/saleman/verifyProWeightById")
     public ModelAndView verifyProWeightById(SaleInfo proWeightById) {
-        countProTotalWeight(String proNum);
+        //countProTotalWeight(String proNum);
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
