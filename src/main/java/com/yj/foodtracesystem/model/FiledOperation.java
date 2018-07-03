@@ -54,6 +54,8 @@ public class FiledOperation {
     @Column(name = "FO_OPERATION_NAME")
     private String operationName;
 
+
+
     @Column(name = "FO_USER_ID")
     private int userId;
 

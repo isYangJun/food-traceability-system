@@ -18,6 +18,8 @@ public class TransStationInfo {
     private String carNum;
     @Column(name = "TI_CAR_NAME")
     private String carName;
+    @Column(name = "TI_CAR_TYPE")
+    private String carType;
     @Column(name = "TI_CAR_REG_TIME")
     private String carRegTime;
     @Column(name = "TI_COM_NUM")
@@ -43,6 +45,10 @@ public class TransStationInfo {
     public void setCarName(String carName) {
         this.carName = carName;
     }
+
+    public String getCarType() { return carType; }
+
+    public void setCarType(String carType) { this.carType = carType; }
 
     public String getCarRegTime() {
         return carRegTime;
@@ -77,8 +83,10 @@ public class TransStationInfo {
     @Override
     public String toString() {
         return "TransStationInfo{" +
+                "id='" + id + '\'' +
                 "carNum='" + carNum + '\'' +
                 ", carName='" + carName + '\'' +
+                ", carType='" + carType + '\'' +
                 ", carRegTime='" + carRegTime + '\'' +
                 ", companyNum='" + companyNum + '\'' +
                 ", companyName='" + companyName + '\'' +

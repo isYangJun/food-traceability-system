@@ -1,9 +1,6 @@
 package com.yj.foodtracesystem.service;
 
-import com.yj.foodtracesystem.model.ComInfo;
-import com.yj.foodtracesystem.model.ProductInfo;
-import com.yj.foodtracesystem.model.TransStationInfo;
-import com.yj.foodtracesystem.model.TransportInfo;
+import com.yj.foodtracesystem.model.*;
 
 import java.util.List;
 
@@ -23,4 +20,5 @@ public interface TransporterService {
     List<TransStationInfo> findTransStationInfoByCarNum(String carNum);
     List<TransStationInfo> findTransStationInfoByTime(String startTime,String endTime);
     List<TransStationInfo> findAllInfo();
+    List<Car> findCarInfo();
 }

@@ -4,6 +4,8 @@ public class OperationHerPara {
     public String startTime;
     public String endTime;
     public int seedId;
+    public int fertilizerId;
+    public int pesticideId;
 
     @Override
     public String toString() {
@@ -11,6 +13,8 @@ public class OperationHerPara {
                 "startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ",seedId='" +seedId+ '\''+
+                ",fertilizerId='" +fertilizerId +'\''+
+                ",pesticideId='" + pesticideId +'\'' +
                 '}';
     }
 
@@ -33,4 +37,12 @@ public class OperationHerPara {
     public int getSeedId(){return seedId;}
 
     public void setSeedId(int seedId){this.seedId=seedId;}
+
+    public int getFertilizerId() { return fertilizerId; }
+
+    public void setFertilizerId(int fertilizerId) { this.fertilizerId = fertilizerId; }
+
+    public int getPesticideId() { return pesticideId; }
+
+    public void setPesticideId(int pesticideId) { this.pesticideId = pesticideId; }
 }
