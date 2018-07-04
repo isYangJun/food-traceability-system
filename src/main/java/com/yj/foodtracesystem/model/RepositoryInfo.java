@@ -27,27 +27,20 @@ public class RepositoryInfo {
     @Column(name = "RI_PRODUCT_NAME")
     private String proName;
 
-
-    @Override
-    public String toString() {
-        return "RepositoryInfo{" +
-                "id=" + id +
-                ", warehouseNum='" + warehouseNum + '\'' +
-                ", warehouseName='" + warehouseName + '\'' +
-                ", proNum='" + proNum + '\'' +
-                ", proName='" + proName + '\'' +
-                ", proWeight='" + proWeight + '\'' +
-                ", inRecorded=" + inRecorded +
-                ", recordedTime='" + recordedTime + '\'' +
-                ", saveTemp='" + saveTemp + '\'' +
-                ", repositoryNum='" + repositoryNum + '\'' +
-                ", operatorNum='" + operatorNum + '\'' +
-                '}';
+    public String getProBatchNum() {
+        return proBatchNum;
     }
+
+    public void setProBatchNum(String proBatchNum) {
+        this.proBatchNum = proBatchNum;
+    }
+
+    @Column(name = "RI_PROBATCH_NUM")
+    private String proBatchNum;
 
 
     @Column(name = "RI_PRODUCT_WEIGHT")
-    private String proWeight;
+    private int proWeight;
 
     @Column(name = "RI_PRODUCT_INRECORDED")
     private int inRecorded;
@@ -64,11 +57,29 @@ public class RepositoryInfo {
     @Column(name = "RI_OPERATOR_NUM")
     private String operatorNum;
 
-    public String getProWeight() {
+    public int getProWeight() {
         return proWeight;
     }
 
-    public void setProWeight(String proWeight) {
+    @Override
+    public String toString() {
+        return "RepositoryInfo{" +
+                "id=" + id +
+                ", warehouseNum='" + warehouseNum + '\'' +
+                ", warehouseName='" + warehouseName + '\'' +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", proBatchNum='" + proBatchNum + '\'' +
+                ", proWeight=" + proWeight +
+                ", inRecorded=" + inRecorded +
+                ", recordedTime='" + recordedTime + '\'' +
+                ", saveTemp='" + saveTemp + '\'' +
+                ", repositoryNum='" + repositoryNum + '\'' +
+                ", operatorNum='" + operatorNum + '\'' +
+                '}';
+    }
+
+    public void setProWeight(int proWeight) {
         this.proWeight = proWeight;
     }
 

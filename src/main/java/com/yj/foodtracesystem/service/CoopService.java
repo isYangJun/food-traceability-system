@@ -43,4 +43,7 @@ public interface CoopService {
     List<ProductBatchInfo>findBySeedNum(int seedId);
     List<ProductBatchInfo> findProBatchInfoByTime(String startTime,String endTime);
     List<ProductBatchInfo> findAllProBatchInfo();
+    String findProBatchNumByProNum(String proNum);
+    int findProBatchWeightByBatchNum(String batchNum);
+
 }

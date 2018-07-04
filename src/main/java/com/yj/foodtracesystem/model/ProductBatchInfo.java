@@ -32,7 +32,7 @@ public class ProductBatchInfo {
     private String coopNum;
 
     @Column(name = "PB_PRODUCT_WEIGHT")
-    private String proWeight;
+    private int proWeight;
 
     @Column(name = "PB_COOPERATION_NAME")
     private String coopName;
@@ -117,11 +117,11 @@ public class ProductBatchInfo {
         this.coopNum = coopNum;
     }
 
-    public String getProWeight() {
+    public int getProWeight() {
         return proWeight;
     }
 
-    public void setProWeight(String proWeight) {
+    public void setProWeight(int proWeight) {
         this.proWeight = proWeight;
     }
 

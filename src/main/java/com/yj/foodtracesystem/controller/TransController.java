@@ -64,6 +64,7 @@ public class TransController {
         addTransInfo.setDestinationName(comInfoList.get(0).getComName());
         addTransInfo.setOperatorNum(user.getUserNum());
         addTransInfo.setRecordedTime(publicService.formatTime(addTransInfo.getRecordedTime()));
+        addTransInfo.setProBatchNum(coopService.findProBatchNumByProNum(addTransInfo.getProNum()));
         transporterService.saveTransInfo(addTransInfo);
         initialParaModel(modelAndView, user);
         modelAndView.setViewName("transporter/transMan");

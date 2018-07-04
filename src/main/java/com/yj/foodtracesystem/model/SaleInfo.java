@@ -18,14 +18,27 @@ public class SaleInfo {
     private int id;
     @Column(name = "SI_PRO_NUM")
     private String proNum;
+
+    public String getProBatchNum() {
+        return proBatchNum;
+    }
+
+    public void setProBatchNum(String proBatchNum) {
+        this.proBatchNum = proBatchNum;
+    }
+
     @Column(name = "SI_PRO_NAME")
     private String proName;
 
-    public String getProWeight() {
+    @Column(name = "SI_PROBATCH_NUM")
+    private String proBatchNum;
+
+
+    public int getProWeight() {
         return proWeight;
     }
 
-    public void setProWeight(String proWeight) {
+    public void setProWeight(int proWeight) {
         this.proWeight = proWeight;
     }
 
@@ -35,7 +48,8 @@ public class SaleInfo {
                 "id=" + id +
                 ", proNum='" + proNum + '\'' +
                 ", proName='" + proName + '\'' +
-                ", proWeight='" + proWeight + '\'' +
+                ", proBatchNum='" + proBatchNum + '\'' +
+                ", proWeight=" + proWeight +
                 ", recordedTime='" + recordedTime + '\'' +
                 ", comNum='" + comNum + '\'' +
                 ", comName='" + comName + '\'' +
@@ -45,8 +59,7 @@ public class SaleInfo {
     }
 
     @Column(name = "SI_PRO_WEIGHT")
-    private String proWeight;
-
+    private int proWeight;
 
     @Column(name = "SI_RECORDED_TIME")
     private String recordedTime;

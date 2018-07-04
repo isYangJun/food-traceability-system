@@ -16,5 +16,5 @@ public interface SaleService {
     String findComNameByComNum(String comNum);
     String findProNameByProNum(String proNum);
     void saveSaleInfo(SaleInfo saleInfo);
-    int countProWeight(String proNum);
+    String countProWeightByProBatchNum(String proBatchNum);
 }

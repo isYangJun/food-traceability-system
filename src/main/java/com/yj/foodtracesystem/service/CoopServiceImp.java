@@ -96,8 +96,8 @@ public class CoopServiceImp implements CoopService {
     }
 
     @Override
-    public List<ProductInfo> findByFiledNumOrSeedName(int id,String seedName) {
-       List<ProductInfo> productInfoList=productIndoRepository.findBySeedNameInAndFiledNumIn(seedName,id);
+    public List<ProductInfo> findByFiledNumOrSeedName(int id, String seedName) {
+        List<ProductInfo> productInfoList = productIndoRepository.findBySeedNameInAndFiledNumIn(seedName, id);
 
        /* List<ProductInfo> productInfoList= productIndoRepository.findBySeedName(seedName);
         List<ProductInfo>productInfoList1=productIndoRepository.findByFiledNum(id);*/
@@ -110,11 +110,11 @@ public class CoopServiceImp implements CoopService {
 
     @Override
     public List<ProductInfo> findByHarvTime(String startTime, String endTime) {
-        return productIndoRepository.findByHarvTimeBetween(startTime,endTime);
+        return productIndoRepository.findByHarvTimeBetween(startTime, endTime);
     }
 
     @Override
-    public  ProductInfo findByProductNum(String productNum) {
+    public ProductInfo findByProductNum(String productNum) {
         return productIndoRepository.findByProNum(productNum);
     }
 
@@ -125,14 +125,14 @@ public class CoopServiceImp implements CoopService {
 
     @Override
     public int findSeedIdByProductNum(String productNum) {
-        ProductInfo productInfo=productIndoRepository.findByProNum(productNum);
+        ProductInfo productInfo = productIndoRepository.findByProNum(productNum);
         return productInfo.getSeedNum();
     }
 
     @Override
     public String findSeedNameBySeedNum(int seedId) {
-       SeedInfo seedInfo= seedInfoRepository.findById(seedId);
-       return seedInfo.getSeedName();
+        SeedInfo seedInfo = seedInfoRepository.findById(seedId);
+        return seedInfo.getSeedName();
     }
 
     @Override
@@ -152,11 +152,25 @@ public class CoopServiceImp implements CoopService {
 
     @Override
     public List<ProductBatchInfo> findProBatchInfoByTime(String startTime, String endTime) {
-        return productBatchInfoRepository.findByHarvTimeBetween(startTime,endTime);
+        return productBatchInfoRepository.findByHarvTimeBetween(startTime, endTime);
     }
 
     @Override
     public List<ProductBatchInfo> findAllProBatchInfo() {
         return productBatchInfoRepository.findAll();
+    }
+
+    @Override
+    public String findProBatchNumByProNum(String proNum) {
+        ProductInfo productInfo = productIndoRepository.findByProNum(proNum);
+        String proBatchNum = productInfo.getProBatchNum();
+        return proBatchNum;
+    }
+
+    @Override
+    public int findProBatchWeightByBatchNum(String batchNum) {
+        List<ProductBatchInfo> productBatchInfoList =productBatchInfoRepository.findByProBatchNum(batchNum);
+        ProductBatchInfo productBatchInfo=productBatchInfoList.get(0);
+        return productBatchInfo.getProWeight();
     }
 }

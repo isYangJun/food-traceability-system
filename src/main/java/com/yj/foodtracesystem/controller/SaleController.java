@@ -4,6 +4,7 @@ import com.yj.foodtracesystem.model.SaleInfo;
 import com.yj.foodtracesystem.model.TempModel.ProductPara;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
 import com.yj.foodtracesystem.model.User;
+import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.SaleService;
 import com.yj.foodtracesystem.service.UserService;
@@ -30,6 +31,8 @@ public class SaleController {
     private PublicService publicService;
     @Autowired
     private SaleService saleService;
+    @Autowired
+    private CoopService coopService;
 
     @GetMapping("/saleman/saleMan")
     public ModelAndView saleMan() {
@@ -54,6 +57,7 @@ public class SaleController {
         saleInfo.setInRecorded(1);
         saleInfo.setOperatorNum(user.getUserNum());
         saleInfo.setRecordedTime(publicService.formatTime(saleInfo.getRecordedTime()));
+        saleInfo.setProBatchNum(coopService.findProBatchNumByProNum(saleInfo.getProNum()));
         saleService.saveSaleInfo(saleInfo);
 
         initialModel(modelAndView, user);
@@ -85,7 +89,6 @@ public class SaleController {
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         List<SaleInfo> saleInfoResList = saleService.findSaleInfoByTime(queryPara.getStartTime(), queryPara.getEndTime());
         modelAndView.addObject("saleInfoResList", saleInfoResList);
-
         initialModel(modelAndView, user);
 
         modelAndView.setViewName("saleman/saleMan");
@@ -98,19 +101,25 @@ public class SaleController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("proWeightById", new SaleInfo());
         List<ProductPara> proNumNameList = publicService.findSaleProFromTransAndRepos(user.getUserComp());
         modelAndView.addObject("proNumNameList", proNumNameList);
+        modelAndView.setViewName("saleman/verifyPro");
         return modelAndView;
     }
-
     @PostMapping(value = "/saleman/verifyProWeightById")
     public ModelAndView verifyProWeightById(SaleInfo proWeightById) {
-        //countProTotalWeight(String proNum);
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
-
+        String proBatchNum = coopService.findProBatchNumByProNum(proWeightById.getProNum());
+        String verifyRes = saleService.countProWeightByProBatchNum(proBatchNum);
+        modelAndView.addObject("verifyRes",verifyRes);
+        modelAndView.addObject("proWeightById", new SaleInfo());
+        List<ProductPara> proNumNameList = publicService.findSaleProFromTransAndRepos(user.getUserComp());
+        modelAndView.addObject("proNumNameList", proNumNameList);
+        modelAndView.setViewName("saleman/verifyPro");
         return modelAndView;
     }
 

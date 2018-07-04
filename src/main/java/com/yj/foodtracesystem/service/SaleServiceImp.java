@@ -8,6 +8,9 @@ import com.yj.foodtracesystem.repository.SaleInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -25,6 +28,13 @@ public class SaleServiceImp implements SaleService {
 
     @Autowired
     private ProductInfoRepository productInfoRepository;
+
+    @Autowired
+    private CoopService coopService;
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Override
     public List<SaleInfo> findSaleInfoByProNum(String proNum) {
         return saleInfoRepository.findByProNum(proNum);
@@ -52,7 +62,16 @@ public class SaleServiceImp implements SaleService {
     }
 
     @Override
-    public int countProWeight(String proNum) {
-        return 0;
+    public String countProWeightByProBatchNum(String proBatchNum) {
+
+        String sql="SELECT SUM(ti_product_weight) FROM tbl_transport_info  WHERE ti_operator_num='"+proBatchNum+"'";
+        Query nativeQuery = entityManager.createNativeQuery(sql);
+       int totalRealProWeight = nativeQuery.getFirstResult();
+
+       int totalPreProWeight=coopService.findProBatchWeightByBatchNum(proBatchNum);
+       if(totalPreProWeight>totalRealProWeight){
+           return "通过对比计算，该批次产品重量可靠";
+       }
+        return "通过对比计算，该批次产品重量不可靠，请联系监管部门";
     }
 }

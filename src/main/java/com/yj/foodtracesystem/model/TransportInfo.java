@@ -28,7 +28,7 @@ public class TransportInfo {
     private String proName;
 
     @Column(name = "TI_PRODUCT_WEIGHT")
-    private String proWeight;
+    private int proWeight;
 
     @Column(name = "TI_PRODUCT_INRECORDED")
     private int inRecorded;
@@ -48,6 +48,10 @@ public class TransportInfo {
     @Column(name = "TI_OPERATOR_NUM")
     private String operatorNum;
 
+    public String getProBatchNum() {
+        return proBatchNum;
+    }
+
     @Override
     public String toString() {
         return "TransportInfo{" +
@@ -63,13 +67,22 @@ public class TransportInfo {
                 ", destinationName='" + destinationName + '\'' +
                 ", carNum='" + carNum + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
+                ", proBatchNum='" + proBatchNum + '\'' +
                 '}';
     }
 
-    public String getProWeight() {
+    public void setProBatchNum(String proBatchNum) {
+        this.proBatchNum = proBatchNum;
+    }
+
+    @Column(name = "TI_PROBATCH_NUM")
+    private String proBatchNum;
+
+    public int getProWeight() {
         return proWeight;
     }
-    public void setProWeight(String proWeight) {
+
+    public void setProWeight(int proWeight) {
         this.proWeight = proWeight;
     }
 

@@ -43,32 +43,13 @@ public class ProductInfo {
     private String coopNum;
 
     @Column(name = "PI_PRODUCT_WEIGHT")
-    private String proWeight;
+    private int proWeight;
 
     @Column(name = "PI_COOPERATION_NAME")
     private String coopName;
 
     @Column(name = "PI_IS_TRANSED")
     private int isTransed;//0为未操作，1为操作完成
-
-    @Override
-    public String toString() {
-        return "ProductInfo{" +
-                "id=" + id +
-                ", proNum='" + proNum + '\'' +
-                ", proName='" + proName + '\'' +
-                ", filedNum=" + filedNum +
-                ", seedNum=" + seedNum +
-                ", isTransed=" + isTransed +
-                ", operatorNum='" + operatorNum + '\'' +
-                ", proBatchNum='" + proBatchNum + '\'' +
-                ", proWeight='" + proWeight + '\'' +
-                ", seedName='" + seedName + '\'' +
-                ", harvTime='" + harvTime + '\'' +
-                ", coopNum='" + coopNum + '\'' +
-                ", coopName='" + coopName + '\'' +
-                '}';
-    }
 
     public String getProBatchNum() {
         return proBatchNum;
@@ -78,13 +59,30 @@ public class ProductInfo {
         this.proBatchNum = proBatchNum;
     }
 
+    @Override
+    public String toString() {
+        return "ProductInfo{" +
+                "id=" + id +
+                ", proNum='" + proNum + '\'' +
+                ", proName='" + proName + '\'' +
+                ", filedNum=" + filedNum +
+                ", seedNum=" + seedNum +
+                ", operatorNum='" + operatorNum + '\'' +
+                ", proBatchNum='" + proBatchNum + '\'' +
+                ", seedName='" + seedName + '\'' +
+                ", harvTime='" + harvTime + '\'' +
+                ", coopNum='" + coopNum + '\'' +
+                ", proWeight=" + proWeight +
+                ", coopName='" + coopName + '\'' +
+                ", isTransed=" + isTransed +
+                '}';
+    }
 
-
-    public String getProWeight() {
+    public int getProWeight() {
         return proWeight;
     }
 
-    public void setProWeight(String proWeight) {
+    public void setProWeight(int proWeight) {
         this.proWeight = proWeight;
     }
 
