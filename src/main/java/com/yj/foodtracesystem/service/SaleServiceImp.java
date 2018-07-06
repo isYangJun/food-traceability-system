@@ -69,7 +69,7 @@ public class SaleServiceImp implements SaleService {
        double totalRealProWeight = (double)nativeQuery.getSingleResult();
 
         double totalPreProWeight=coopService.findProBatchWeightByBatchNum(proBatchNum);
-       if((totalPreProWeight>=totalRealProWeight-10)||(totalPreProWeight<=totalRealProWeight+10)){
+       if((totalRealProWeight>=totalPreProWeight-10)||(totalRealProWeight<=totalPreProWeight+10)){
            return "通过对比计算，该批次产品重量可靠";
        }
         return "通过对比计算，该批次产品重量不可靠，请联系监管部门";
