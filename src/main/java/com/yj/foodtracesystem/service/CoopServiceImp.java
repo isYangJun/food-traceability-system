@@ -173,4 +173,11 @@ public class CoopServiceImp implements CoopService {
         ProductBatchInfo productBatchInfo=productBatchInfoList.get(0);
         return productBatchInfo.getProWeight();
     }
+
+    @Override
+    public int findCompanyRoleByComNum(String comNum) {
+        List<ComInfo> comInfoList=findComInfoByComNum(comNum);
+        int comRole=comInfoList.get(0).getComRole();
+        return comRole;
+    }
 }

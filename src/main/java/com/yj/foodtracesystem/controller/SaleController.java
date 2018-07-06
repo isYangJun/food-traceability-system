@@ -90,7 +90,6 @@ public class SaleController {
         List<SaleInfo> saleInfoResList = saleService.findSaleInfoByTime(queryPara.getStartTime(), queryPara.getEndTime());
         modelAndView.addObject("saleInfoResList", saleInfoResList);
         initialModel(modelAndView, user);
-
         modelAndView.setViewName("saleman/saleMan");
         return modelAndView;
     }

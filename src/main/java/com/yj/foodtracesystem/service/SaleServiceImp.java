@@ -64,12 +64,12 @@ public class SaleServiceImp implements SaleService {
     @Override
     public String countProWeightByProBatchNum(String proBatchNum) {
 
-        String sql="SELECT SUM(ti_product_weight) FROM tbl_transport_info  WHERE ti_operator_num='"+proBatchNum+"'";
+        String sql="SELECT SUM(ti_product_weight) FROM tbl_transport_info  WHERE ti_probatch_num='"+proBatchNum+"' AND ti_destination_role=4";
         Query nativeQuery = entityManager.createNativeQuery(sql);
-       int totalRealProWeight = nativeQuery.getFirstResult();
+       double totalRealProWeight = (double)nativeQuery.getSingleResult();
 
-       int totalPreProWeight=coopService.findProBatchWeightByBatchNum(proBatchNum);
-       if(totalPreProWeight>totalRealProWeight){
+        double totalPreProWeight=coopService.findProBatchWeightByBatchNum(proBatchNum);
+       if((totalPreProWeight>=totalRealProWeight-10)||(totalPreProWeight<=totalRealProWeight+10)){
            return "通过对比计算，该批次产品重量可靠";
        }
         return "通过对比计算，该批次产品重量不可靠，请联系监管部门";

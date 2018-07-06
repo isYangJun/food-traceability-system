@@ -35,15 +35,27 @@ public interface CoopService {
     List<ProductInfo> findByHarvTime(String startTime, String endTime);
 
     ProductInfo findByProductNum(String productNum);
+
     List<ProductInfo> findByProductNumIn(String productNum);
+
     int findSeedIdByProductNum(String productNum);
+
     String findSeedNameBySeedNum(int seedId);
+
     void saveproBachInfo(ProductBatchInfo productBatchInfo);
+
     List<ProductBatchInfo> findProBachInfoByBachNum(String proBachNum);
-    List<ProductBatchInfo>findBySeedNum(int seedId);
-    List<ProductBatchInfo> findProBatchInfoByTime(String startTime,String endTime);
+
+    List<ProductBatchInfo> findBySeedNum(int seedId);
+
+    List<ProductBatchInfo> findProBatchInfoByTime(String startTime, String endTime);
+
     List<ProductBatchInfo> findAllProBatchInfo();
+
     String findProBatchNumByProNum(String proNum);
+
     int findProBatchWeightByBatchNum(String batchNum);
+
+    int findCompanyRoleByComNum(String comNum);
 
 }

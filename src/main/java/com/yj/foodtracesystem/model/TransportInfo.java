@@ -42,16 +42,6 @@ public class TransportInfo {
     @Column(name = "TI_DESTINATION_NAME")
     private String destinationName;
 
-    @Column(name = "TI_CAR_NUM")
-    private String carNum;
-
-    @Column(name = "TI_OPERATOR_NUM")
-    private String operatorNum;
-
-    public String getProBatchNum() {
-        return proBatchNum;
-    }
-
     @Override
     public String toString() {
         return "TransportInfo{" +
@@ -60,15 +50,37 @@ public class TransportInfo {
                 ", comName='" + comName + '\'' +
                 ", proNum='" + proNum + '\'' +
                 ", proName='" + proName + '\'' +
-                ", proWeight='" + proWeight + '\'' +
+                ", proWeight=" + proWeight +
                 ", inRecorded=" + inRecorded +
                 ", recordedTime='" + recordedTime + '\'' +
                 ", destinationNum='" + destinationNum + '\'' +
                 ", destinationName='" + destinationName + '\'' +
+                ", destinationRole=" + destinationRole +
                 ", carNum='" + carNum + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
                 ", proBatchNum='" + proBatchNum + '\'' +
                 '}';
+    }
+
+    public int getDestinationRole() {
+        return destinationRole;
+    }
+
+    public void setDestinationRole(int destinationRole) {
+        this.destinationRole = destinationRole;
+    }
+
+    @Column(name = "TI_DESTINATION_ROLE")
+    private int destinationRole;
+
+    @Column(name = "TI_CAR_NUM")
+    private String carNum;
+
+    @Column(name = "TI_OPERATOR_NUM")
+    private String operatorNum;
+
+    public String getProBatchNum() {
+        return proBatchNum;
     }
 
     public void setProBatchNum(String proBatchNum) {

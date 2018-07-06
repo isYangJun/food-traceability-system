@@ -148,6 +148,7 @@ public class RepositoryController {
         addTransInfo.setOperatorNum(user.getUserNum());
         addTransInfo.setProBatchNum(coopService.findProBatchNumByProNum(addTransInfo.getProNum()));
         addTransInfo.setRecordedTime(publicService.formatTime(addTransInfo.getRecordedTime()));
+        addTransInfo.setDestinationRole(coopService.findCompanyRoleByComNum(addTransInfo.getDestinationNum()));
         transporterService.saveTransInfo(addTransInfo);
 
         modelAndView.addObject("addTransInfo", new TransportInfo());
