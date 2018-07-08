@@ -98,13 +98,6 @@ public class CoopServiceImp implements CoopService {
     @Override
     public List<ProductInfo> findByFiledNumOrSeedName(int id, String seedName) {
         List<ProductInfo> productInfoList = productIndoRepository.findBySeedNameInAndFiledNumIn(seedName, id);
-
-       /* List<ProductInfo> productInfoList= productIndoRepository.findBySeedName(seedName);
-        List<ProductInfo>productInfoList1=productIndoRepository.findByFiledNum(id);*/
-
-      /*  for(ProductInfo productInfo:productInfoList1){
-            productInfoList.add(productInfo);
-        }*/
         return productInfoList;
     }
 
@@ -179,5 +172,11 @@ public class CoopServiceImp implements CoopService {
         List<ComInfo> comInfoList=findComInfoByComNum(comNum);
         int comRole=comInfoList.get(0).getComRole();
         return comRole;
+    }
+
+    @Override
+    public int findProWeightByProNum(String proNum) {
+        ProductInfo productInfo=productIndoRepository.findByProNum(proNum);
+        return productInfo.getProWeight();
     }
 }

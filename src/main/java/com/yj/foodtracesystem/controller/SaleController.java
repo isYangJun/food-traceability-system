@@ -4,10 +4,7 @@ import com.yj.foodtracesystem.model.SaleInfo;
 import com.yj.foodtracesystem.model.TempModel.ProductPara;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
 import com.yj.foodtracesystem.model.User;
-import com.yj.foodtracesystem.service.CoopService;
-import com.yj.foodtracesystem.service.PublicService;
-import com.yj.foodtracesystem.service.SaleService;
-import com.yj.foodtracesystem.service.UserService;
+import com.yj.foodtracesystem.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +31,9 @@ public class SaleController {
     @Autowired
     private CoopService coopService;
 
+    @Autowired
+    private TransporterService transporterService;
+
     @GetMapping("/saleman/saleMan")
     public ModelAndView saleMan() {
         ModelAndView modelAndView = new ModelAndView();
@@ -58,12 +58,21 @@ public class SaleController {
         saleInfo.setOperatorNum(user.getUserNum());
         saleInfo.setRecordedTime(publicService.formatTime(saleInfo.getRecordedTime()));
         saleInfo.setProBatchNum(coopService.findProBatchNumByProNum(saleInfo.getProNum()));
-        saleService.saveSaleInfo(saleInfo);
 
-        initialModel(modelAndView, user);
-
-        modelAndView.setViewName("saleman/saleMan");
-        return modelAndView;
+        int preWeight=transporterService.findProWeightByProNumAndDestinationNum(user.getUserComp(),saleInfo.getProNum());
+        if(publicService.isReasonableProWeight(preWeight,saleInfo.getProWeight())){
+            double grossLossRate=saleInfo.getProWeight()*1.0/preWeight;
+            grossLossRate=((int)(grossLossRate*1000))/1000.0;
+            saleInfo.setGrossLossRate(grossLossRate);
+            saleService.saveSaleInfo(saleInfo);
+            initialModel(modelAndView, user);
+            modelAndView.setViewName("saleman/saleMan");
+            return modelAndView;
+        }else {
+            ModelAndView modelAndView1 =new ModelAndView();
+            modelAndView1.setViewName("errorProweight");
+            return modelAndView1;
+        }
     }
 
     @PostMapping(value = "/saleman/saleInfoById")

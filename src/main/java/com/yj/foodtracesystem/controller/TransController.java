@@ -66,10 +66,21 @@ public class TransController {
         addTransInfo.setRecordedTime(publicService.formatTime(addTransInfo.getRecordedTime()));
         addTransInfo.setProBatchNum(coopService.findProBatchNumByProNum(addTransInfo.getProNum()));
         addTransInfo.setDestinationRole(coopService.findCompanyRoleByComNum(addTransInfo.getDestinationNum()));
-        transporterService.saveTransInfo(addTransInfo);
-        initialParaModel(modelAndView, user);
-        modelAndView.setViewName("transporter/transMan");
-        return modelAndView;
+        int preWeight=coopService.findProWeightByProNum(addTransInfo.getProNum());
+
+        if(publicService.isReasonableProWeight(preWeight,addTransInfo.getProWeight())){
+            double grossLossRate=addTransInfo.getProWeight()*1.0/preWeight;
+            grossLossRate=((int)(grossLossRate*1000))/1000.0;
+            addTransInfo.setGrossLossRate(grossLossRate);
+            transporterService.saveTransInfo(addTransInfo);
+            initialParaModel(modelAndView, user);
+            modelAndView.setViewName("transporter/transMan");
+            return modelAndView;
+        }else {
+            ModelAndView modelAndView1 =new ModelAndView();
+            modelAndView1.setViewName("errorProweight");
+            return modelAndView1;
+        }
     }
 
     @PostMapping(value = "/transporter/transInfoById")

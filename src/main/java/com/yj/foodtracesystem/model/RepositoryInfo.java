@@ -57,8 +57,12 @@ public class RepositoryInfo {
     @Column(name = "RI_OPERATOR_NUM")
     private String operatorNum;
 
-    public int getProWeight() {
-        return proWeight;
+    public double getGrossLossRate() {
+        return grossLossRate;
+    }
+
+    public void setGrossLossRate(double grossLossRate) {
+        this.grossLossRate = grossLossRate;
     }
 
     @Override
@@ -76,7 +80,15 @@ public class RepositoryInfo {
                 ", saveTemp='" + saveTemp + '\'' +
                 ", repositoryNum='" + repositoryNum + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
+                ", grossLossRate=" + grossLossRate +
                 '}';
+    }
+
+    @Column(name = "RI_GROSSLOSS_RATE")
+    private double grossLossRate;
+
+    public int getProWeight() {
+        return proWeight;
     }
 
     public void setProWeight(int proWeight) {

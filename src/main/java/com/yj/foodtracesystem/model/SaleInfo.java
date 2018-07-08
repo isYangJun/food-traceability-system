@@ -33,15 +33,6 @@ public class SaleInfo {
     @Column(name = "SI_PROBATCH_NUM")
     private String proBatchNum;
 
-
-    public int getProWeight() {
-        return proWeight;
-    }
-
-    public void setProWeight(int proWeight) {
-        this.proWeight = proWeight;
-    }
-
     @Override
     public String toString() {
         return "SaleInfo{" +
@@ -49,6 +40,7 @@ public class SaleInfo {
                 ", proNum='" + proNum + '\'' +
                 ", proName='" + proName + '\'' +
                 ", proBatchNum='" + proBatchNum + '\'' +
+                ", grossLossRate=" + grossLossRate +
                 ", proWeight=" + proWeight +
                 ", recordedTime='" + recordedTime + '\'' +
                 ", comNum='" + comNum + '\'' +
@@ -56,6 +48,27 @@ public class SaleInfo {
                 ", inRecorded=" + inRecorded +
                 ", operatorNum='" + operatorNum + '\'' +
                 '}';
+    }
+
+    public double getGrossLossRate() {
+        return grossLossRate;
+    }
+
+    public void setGrossLossRate(double grossLossRate) {
+        this.grossLossRate = grossLossRate;
+    }
+
+    @Column(name = "SI_GROSSLOSS_RATE")
+    private double grossLossRate;
+
+
+
+    public int getProWeight() {
+        return proWeight;
+    }
+
+    public void setProWeight(int proWeight) {
+        this.proWeight = proWeight;
     }
 
     @Column(name = "SI_PRO_WEIGHT")

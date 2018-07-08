@@ -33,6 +33,9 @@ public class TransporterServiceImp implements TransporterService {
     @Autowired
     private TransporterRepository transporterRepository;
 
+    @Autowired
+    private CoopService coopService;
+
     @Override
     public List<ProductInfo> findTranstedProductInfo() {
         String sql = "SELECT pi_product_num,pi_product_name FROM tbl_product_info WHERE pi_is_transed=1";
@@ -95,6 +98,12 @@ public class TransporterServiceImp implements TransporterService {
         List<Object[]> list = nativeQuery.getResultList();
         List<Car> carList = publicService.convertToType(list,Car.class.getName());
         return carList;
+    }
+
+    @Override
+    public int findProWeightByProNumAndDestinationNum(String destinationNum, String proNum) {
+        TransportInfo transportInfo=transporterRepository.findByDestinationNumAndProNum(destinationNum,proNum);
+        return transportInfo.getProWeight();
     }
 }
 

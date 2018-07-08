@@ -21,4 +21,5 @@ public interface TransporterService {
     List<TransStationInfo> findTransStationInfoByTime(String startTime,String endTime);
     List<TransStationInfo> findAllInfo();
     List<Car> findCarInfo();
+    int findProWeightByProNumAndDestinationNum(String destinationNum,String proNum);
 }

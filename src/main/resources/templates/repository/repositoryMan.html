@@ -113,6 +113,7 @@
                 <th>产品编号</th>
                 <th>产品名称</th>
                 <th>贮藏重量</th>
+                <th>损耗率</th>
                 <th>贮藏仓库编号</th>
                 <th>贮藏仓库名称</th>
                 <th>是否登记</th>
@@ -126,6 +127,9 @@
                 <td th:text="${repositoryInfo.proNum}"></td>
                 <td th:text="${repositoryInfo.proName}"></td>
                 <td th:text="${repositoryInfo.proWeight}"></td>
+
+                <td th:text="${repositoryInfo.grossLossRate}"></td>
+
                 <td th:text="${repositoryInfo.warehouseNum}"></td>
                 <td th:text="${repositoryInfo.warehouseName}"></td>
                 <td th:text="${repositoryInfo.inRecorded}"></td>

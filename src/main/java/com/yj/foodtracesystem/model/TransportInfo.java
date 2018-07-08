@@ -42,6 +42,14 @@ public class TransportInfo {
     @Column(name = "TI_DESTINATION_NAME")
     private String destinationName;
 
+    public double getGrossLossRate() {
+        return grossLossRate;
+    }
+
+    public void setGrossLossRate(double grossLossRate) {
+        this.grossLossRate = grossLossRate;
+    }
+
     @Override
     public String toString() {
         return "TransportInfo{" +
@@ -55,12 +63,16 @@ public class TransportInfo {
                 ", recordedTime='" + recordedTime + '\'' +
                 ", destinationNum='" + destinationNum + '\'' +
                 ", destinationName='" + destinationName + '\'' +
+                ", grossLossRate=" + grossLossRate +
                 ", destinationRole=" + destinationRole +
                 ", carNum='" + carNum + '\'' +
                 ", operatorNum='" + operatorNum + '\'' +
                 ", proBatchNum='" + proBatchNum + '\'' +
                 '}';
     }
+
+    @Column(name = "TI_GROSSLOSS_RATE")
+    private double grossLossRate;
 
     public int getDestinationRole() {
         return destinationRole;

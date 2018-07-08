@@ -39,6 +39,13 @@ public class PublicService {
     @Autowired
     private PublicService publicService;
 
+    public boolean isReasonableProWeight(int preWeight,int currentProWeight) {
+        if((currentProWeight<=preWeight*0.9)||(currentProWeight>=preWeight*1.1)){
+            return false;
+        }
+        return true;
+    }
+
     public List<ProductPara> findSaleProFromTransAndRepos(String comNum) {
         String sql = "SELECT ti_product_num,ti_product_name FROM tbl_transport_info WHERE ti_destination_num='" + comNum + "'";
         Query nativeQuery = entityManager.createNativeQuery(sql);

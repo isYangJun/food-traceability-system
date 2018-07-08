@@ -15,5 +15,6 @@ import java.util.List;
 public interface TransporterRepository extends JpaRepository<TransportInfo,Integer> {
     List<TransportInfo> findByProNum(String proNum);
     List<TransportInfo> findByRecordedTimeBetween(String startTime,String endTime);
+    TransportInfo findByDestinationNumAndProNum(String destinationNum,String proNum);
 
 }

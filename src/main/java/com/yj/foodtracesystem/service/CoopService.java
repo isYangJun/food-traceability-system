@@ -58,4 +58,6 @@ public interface CoopService {
 
     int findCompanyRoleByComNum(String comNum);
 
+    int findProWeightByProNum(String proNum);
+
 }
