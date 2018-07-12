@@ -51,13 +51,6 @@ public class ProductInfo {
     @Column(name = "PI_IS_TRANSED")
     private int isTransed;//0为未操作，1为操作完成
 
-    public String getProBatchNum() {
-        return proBatchNum;
-    }
-
-    public void setProBatchNum(String proBatchNum) {
-        this.proBatchNum = proBatchNum;
-    }
 
     @Override
     public String toString() {
@@ -76,6 +69,14 @@ public class ProductInfo {
                 ", coopName='" + coopName + '\'' +
                 ", isTransed=" + isTransed +
                 '}';
+    }
+
+    public String getProBatchNum() {
+        return proBatchNum;
+    }
+
+    public void setProBatchNum(String proBatchNum) {
+        this.proBatchNum = proBatchNum;
     }
 
     public int getProWeight() {

@@ -7,9 +7,8 @@ import com.yj.foodtracesystem.repository.TransporterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +34,9 @@ public class TransporterServiceImp implements TransporterService {
 
     @Autowired
     private CoopService coopService;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public List<ProductInfo> findTranstedProductInfo() {
@@ -104,6 +106,43 @@ public class TransporterServiceImp implements TransporterService {
     public int findProWeightByProNumAndDestinationNum(String destinationNum, String proNum) {
         TransportInfo transportInfo=transporterRepository.findByDestinationNumAndProNum(destinationNum,proNum);
         return transportInfo.getProWeight();
+    }
+
+    @Override
+    public int findIdByComNumAndProNum(String comNum,String proNum) {
+        TransportInfo transportInfo=transporterRepository.findByComNumAndProNum(comNum,proNum);
+        return transportInfo.getId();
+    }
+
+    @Override
+    public String findDestinationNumByComNumAndProNum(String comNum, String proNum) {
+        TransportInfo transportInfo=transporterRepository.findByComNumAndProNum(comNum,proNum);
+        return transportInfo.getDestinationNum();
+    }
+
+    @Override
+    public boolean isNextNodeTransted(String comNum, String proNum) {
+        try{
+            String desNum=findDestinationNumByComNumAndProNum(comNum,proNum);
+            int id =findIdByComNumAndProNum(desNum,proNum);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateTransporterInfo(TransportInfo transportInfo,int proId) {
+
+        TransportInfo newTransportInfo = em.find(TransportInfo.class, proId);
+        newTransportInfo.setProWeight(transportInfo.getProWeight());
+        newTransportInfo.setGrossLossRate(transportInfo.getGrossLossRate());
+        newTransportInfo.setDestinationName(transportInfo.getDestinationName());
+        newTransportInfo.setDestinationRole(transportInfo.getDestinationRole());
+        newTransportInfo.setOperatorNum(transportInfo.getOperatorNum());
+        newTransportInfo.setRecordedTime(transportInfo.getRecordedTime());
+        newTransportInfo.setCarNum(transportInfo.getCarNum());
     }
 }
 

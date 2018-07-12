@@ -175,6 +175,69 @@ public class TransController {
         QueryPara queryPara = new QueryPara();
         modelAndView.addObject("queryPara", queryPara);
         return modelAndView;
+    }
 
+
+    /***************************************************修改站点信息****************************************************/
+
+    @GetMapping(value = "/transadmin/transUpdate")
+    public ModelAndView transUpdate() {
+        ModelAndView modelAndView=new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+       modelAndView.addObject("upTransInfo",new TransportInfo());
+        List<ProductInfo> proNumNameList = transporterService.findTranstedProductInfo();
+        modelAndView.addObject("proNumNameList", proNumNameList);
+        List<TransStationInfo> transStationInfo = transporterService.findTransStationInfo();
+        modelAndView.addObject("transStationInfo", transStationInfo);
+        modelAndView.addObject("startStationNum", user.getUserComp());
+        modelAndView.addObject("startStationName", user.getUserCompName());
+        List<ComInfo> comInfoList = transporterService.findTransOrReposInfo();
+        modelAndView.addObject("comInfoList", comInfoList);
+        modelAndView.setViewName("transadmin/transUpdate");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/transadmin/upTransInfo")
+    public ModelAndView upTransInfo(TransportInfo upTransInfo) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+       //如果下一个记录isTransted就不能再改
+        if(!transporterService.isNextNodeTransted(user.getUserComp(),upTransInfo.getProNum())){
+            upTransInfo.setComNum(user.getUserComp());
+            upTransInfo.setComName(user.getUserCompName());
+            ProductInfo productInfo = coopService.findByProductNum(upTransInfo.getProNum());
+            upTransInfo.setProName(productInfo.getProName());
+            upTransInfo.setInRecorded(1);
+            List<ComInfo> comInfoList = coopService.findComInfoByComNum(upTransInfo.getDestinationNum());
+            upTransInfo.setDestinationName(comInfoList.get(0).getComName());
+            upTransInfo.setOperatorNum(user.getUserNum());
+            upTransInfo.setRecordedTime(publicService.formatTime(upTransInfo.getRecordedTime()));
+            upTransInfo.setProBatchNum(coopService.findProBatchNumByProNum(upTransInfo.getProNum()));
+            upTransInfo.setDestinationRole(coopService.findCompanyRoleByComNum(upTransInfo.getDestinationNum()));
+            int preWeight=coopService.findProWeightByProNum(upTransInfo.getProNum());
+
+            if(publicService.isReasonableProWeight(preWeight,upTransInfo.getProWeight())){
+                double grossLossRate=upTransInfo.getProWeight()*1.0/preWeight;
+                grossLossRate=((int)(grossLossRate*1000))/1000.0;
+                upTransInfo.setGrossLossRate(grossLossRate);
+                int preProId=transporterService.findIdByComNumAndProNum(user.getUserComp(),upTransInfo.getProNum());
+                transporterService.updateTransporterInfo(upTransInfo,preProId);
+                modelAndView.setViewName("transadmin/transUpdate");
+                return modelAndView;
+            }else {
+                ModelAndView modelAndView1 =new ModelAndView();
+                modelAndView1.setViewName("errorProweight");
+                return modelAndView1;
+            }
+        }else {
+            ModelAndView modelAndView2 =new ModelAndView();
+            modelAndView2.setViewName("errorUpdateTransInfo");
+            return modelAndView2;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.repository;
 
+import com.yj.foodtracesystem.model.ProductInfo;
 import com.yj.foodtracesystem.model.TransportInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,6 @@ public interface TransporterRepository extends JpaRepository<TransportInfo,Integ
     List<TransportInfo> findByProNum(String proNum);
     List<TransportInfo> findByRecordedTimeBetween(String startTime,String endTime);
     TransportInfo findByDestinationNumAndProNum(String destinationNum,String proNum);
+    TransportInfo findByComNumAndProNum(String comNum, String proNum);
 
 }

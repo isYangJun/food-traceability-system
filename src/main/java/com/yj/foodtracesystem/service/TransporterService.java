@@ -22,4 +22,10 @@ public interface TransporterService {
     List<TransStationInfo> findAllInfo();
     List<Car> findCarInfo();
     int findProWeightByProNumAndDestinationNum(String destinationNum,String proNum);
+
+    void updateTransporterInfo(TransportInfo transportInfo,int proId);
+    int findIdByComNumAndProNum(String comNum,String proNum);
+    String findDestinationNumByComNumAndProNum(String comNum,String proNum);
+    boolean isNextNodeTransted(String comNum, String proNum);
+
 }
