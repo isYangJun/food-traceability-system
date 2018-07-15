@@ -1,14 +1,9 @@
 package com.yj.foodtracesystem.service;
 
-import com.yj.foodtracesystem.model.ComInfo;
-import com.yj.foodtracesystem.model.ProductBatchInfo;
-import com.yj.foodtracesystem.model.ProductInfo;
-import com.yj.foodtracesystem.model.SeedInfo;
-import com.yj.foodtracesystem.repository.ComInfoRepository;
-import com.yj.foodtracesystem.repository.ProductBatchInfoRepository;
-import com.yj.foodtracesystem.repository.ProductInfoRepository;
-import com.yj.foodtracesystem.repository.SeedInfoRepository;
+import com.yj.foodtracesystem.model.*;
+import com.yj.foodtracesystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -34,6 +29,12 @@ public class CoopServiceImp implements CoopService {
 
     @Autowired
     private ProductBatchInfoRepository productBatchInfoRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private OperationOrderInfoRepository operationOrderInfoRepository;
 
     @Autowired
     @PersistenceContext
@@ -178,5 +179,26 @@ public class CoopServiceImp implements CoopService {
     public int findProWeightByProNum(String proNum) {
         ProductInfo productInfo=productIndoRepository.findByProNum(proNum);
         return productInfo.getProWeight();
+    }
+
+    @Override
+    public List<User> findByUserCompAndRole(String userComp, int userRole) {
+        return userRepository.findByUserCompAndUserRole(userComp,userRole);
+    }
+
+    @Override
+    public void saveOperationOrderInfo(OperationOrderInfo operationOrderInfo) {
+        operationOrderInfoRepository.save(operationOrderInfo);
+
+    }
+
+    @Override
+    public List<OperationOrderInfo> findAllOperationOrderInfo() {
+        return operationOrderInfoRepository.findAll();
+    }
+
+    @Override
+    public List<OperationOrderInfo> findByUserIdAndIsDone(String UserId, int isDone) {
+        return operationOrderInfoRepository.findByUserIdAndIsDone(UserId,isDone);
     }
 }

@@ -18,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Override
     List<User> findAll();
     List<User> findByRegTimeBetween(String startTime,String endTime);
+    List<User> findByUserCompAndUserRole(String userComp,int userRole);
 }

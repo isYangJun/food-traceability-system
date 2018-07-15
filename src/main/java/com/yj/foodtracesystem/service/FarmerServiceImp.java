@@ -6,11 +6,14 @@ import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +39,14 @@ public class FarmerServiceImp implements FarmerService {
     private FertilizerInfoRepository fertilizerInfoRepository;
     @Autowired
     private  PesticideInfoRepository pesticideInfoRepository;
+
+    private OperationOrderInfoRepository operationOrderInfoRepository;
     @Autowired
     @PersistenceContext
     EntityManager entityManager;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public List<FiledInfo> findAllFiledInfo() {
@@ -151,5 +159,14 @@ public class FarmerServiceImp implements FarmerService {
     @Override
     public List<FiledOperation> findFiledOperationBySeedId(int id) {
         return filedOperationRepository.findBySeedId(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateOrderInfo(int id) {
+
+        OperationOrderInfo operationOrderInfo = em.find(OperationOrderInfo.class, id);
+        operationOrderInfo.setIsDone(1);
+        operationOrderInfo.setDoneTime(publicService.getStringDate());
     }
 }

@@ -2,6 +2,8 @@ package com.yj.foodtracesystem.controller;
 
 import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.QueryPara;
+import com.yj.foodtracesystem.repository.FiledInfoRepository;
+import com.yj.foodtracesystem.repository.FiledOperationTypeRepository;
 import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.FarmerService;
 import com.yj.foodtracesystem.service.PublicService;
@@ -13,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
@@ -36,6 +37,76 @@ public class CooperatorController {
     @Autowired
     private FarmerService farmerService;
 
+    @Autowired
+    private FiledInfoRepository filedInfoRepository;
+
+    @Autowired
+    private FiledOperationTypeRepository filedOperationTypeRepository;
+
+    /*生产订单管理*/
+    @GetMapping("/cooperator/orderMan")
+    public ModelAndView orderMan() throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
+
+        modelAndView.addObject("opeartionOrderInfo", new OperationOrderInfo());
+
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList", seedInfoList);
+
+        List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
+        modelAndView.addObject("operationTypeList", operationTypeList);
+
+        List<User> userInfoList = coopService.findByUserCompAndRole(user.getUserComp(), 2);
+        modelAndView.addObject("userInfoList", userInfoList);
+
+        List<OperationOrderInfo> operationOrderInfoList = coopService.findAllOperationOrderInfo();
+        modelAndView.addObject("orderInfoResList", operationOrderInfoList);
+        modelAndView.setViewName("cooperator/orderMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/cooperator/addOrder")
+    public ModelAndView addOrder(OperationOrderInfo operationOrderInfo) throws Exception {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        operationOrderInfo.setFiledName(filedInfoRepository.findById(operationOrderInfo.getFiledId()).getFiledName());
+        operationOrderInfo.setCreaterId(user.getUserNum());
+        operationOrderInfo.setCreaterName(user.getName());
+        operationOrderInfo.setIsDone(0);
+        operationOrderInfo.setOperationName(filedOperationTypeRepository.findById(operationOrderInfo.getOperateTypeId()).getOperationName())
+        ;
+        operationOrderInfo.setUserName(userService.findUserByUserNum(operationOrderInfo.getUserId()).getName());
+        operationOrderInfo.setOrderTime(publicService.getStringDate());
+        operationOrderInfo.setSeedName(farmerService.findBySeedId(operationOrderInfo.getSeedId()).getSeedName());
+        coopService.saveOperationOrderInfo(operationOrderInfo);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("opeartionOrderInfo", new OperationOrderInfo());
+
+        List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
+        modelAndView.addObject("filedInfoList", filedInfoList);
+
+        List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
+        modelAndView.addObject("seedInfoList", seedInfoList);
+
+        List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
+        modelAndView.addObject("operationTypeList", operationTypeList);
+
+        List<User> userInfoList = coopService.findByUserCompAndRole(user.getUserComp(), 2);
+        modelAndView.addObject("userInfoList", userInfoList);
+
+        List<OperationOrderInfo> operationOrderInfoList = coopService.findAllOperationOrderInfo();
+        modelAndView.addObject("orderInfoResList", operationOrderInfoList);
+
+        modelAndView.setViewName("cooperator/orderMan");
+        return modelAndView;
+    }
 
     /*
      * **************************生产者管理*************************/
@@ -171,13 +242,13 @@ public class CooperatorController {
         modelAndView.addObject("compName", user.getUserCompName());
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
         modelAndView.addObject("filedInfoList", filedInfoList);
-        modelAndView.addObject("creatQRCode",new ProductInfo());
+        modelAndView.addObject("creatQRCode", new ProductInfo());
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
-        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
-        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
+        List<ProductBatchInfo> productBatchInfoList = coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList", productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -204,12 +275,12 @@ public class CooperatorController {
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
         modelAndView.addObject("filedInfoList", filedInfoList);
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
-        modelAndView.addObject("creatQRCode",new ProductInfo());
+        modelAndView.addObject("creatQRCode", new ProductInfo());
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
-        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
-        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
+        List<ProductBatchInfo> productBatchInfoList = coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList", productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -220,21 +291,21 @@ public class CooperatorController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
-       productInfoById.setSeedName(coopService.findSeedNameBySeedNum(productInfoById.getSeedNum()));
+        productInfoById.setSeedName(coopService.findSeedNameBySeedNum(productInfoById.getSeedNum()));
         List<ProductInfo> proInfoResList = coopService.findByFiledNumOrSeedName(productInfoById.getFiledNum(), productInfoById.getSeedName());
         modelAndView.addObject("proInfoResList", proInfoResList);
         modelAndView.addObject("productInfo", new ProductInfo());
         modelAndView.addObject("compNum", user.getUserComp());
         modelAndView.addObject("compName", user.getUserCompName());
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
-        modelAndView.addObject("creatQRCode",new ProductInfo());
+        modelAndView.addObject("creatQRCode", new ProductInfo());
         modelAndView.addObject("filedInfoList", filedInfoList);
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
-        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
-        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
+        List<ProductBatchInfo> productBatchInfoList = coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList", productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -247,7 +318,7 @@ public class CooperatorController {
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         List<ProductInfo> proInfoResList = coopService.findByHarvTime(proInfoByTime.startTime, proInfoByTime.endTime);
         modelAndView.addObject("proInfoResList", proInfoResList);
-modelAndView.addObject("creatQRCode",new ProductInfo());
+        modelAndView.addObject("creatQRCode", new ProductInfo());
         modelAndView.addObject("productInfo", new ProductInfo());
         modelAndView.addObject("compNum", user.getUserComp());
         modelAndView.addObject("compName", user.getUserCompName());
@@ -257,8 +328,8 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.addObject("seedInfoList", seedInfoList);
         modelAndView.addObject("productInfoById", new ProductInfo());
         modelAndView.addObject("proInfoByTime", new QueryPara());
-        List<ProductBatchInfo> productBatchInfoList=coopService.findAllProBatchInfo();
-        modelAndView.addObject("productBatchInfoList",productBatchInfoList);
+        List<ProductBatchInfo> productBatchInfoList = coopService.findAllProBatchInfo();
+        modelAndView.addObject("productBatchInfoList", productBatchInfoList);
         modelAndView.setViewName("cooperator/productMan");
         return modelAndView;
     }
@@ -294,7 +365,7 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
 
         productBatchInfo.setCoopName(user.getUserCompName());
-        String proBatchNum =publicService.getTimeStamp()+ productBatchInfo.getCoopNum() + String.valueOf(productBatchInfo.getFiledNum()) + String.valueOf(productBatchInfo.getSeedNum())+productBatchInfo.getProWeight();
+        String proBatchNum = publicService.getTimeStamp() + productBatchInfo.getCoopNum() + String.valueOf(productBatchInfo.getFiledNum()) + String.valueOf(productBatchInfo.getSeedNum()) + productBatchInfo.getProWeight();
         productBatchInfo.setProBatchNum(proBatchNum);
 
         productBatchInfo.setHarvTime(publicService.formatTime(productBatchInfo.getHarvTime()));
@@ -334,7 +405,7 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
         modelAndView.addObject("seedInfoList", seedInfoList);
 
-        List<ProductBatchInfo> proBachInfoResList = coopService.findProBatchInfoByTime(proBachInfoByTime.startTime,proBachInfoByTime.endTime);
+        List<ProductBatchInfo> proBachInfoResList = coopService.findProBatchInfoByTime(proBachInfoByTime.startTime, proBachInfoByTime.endTime);
         modelAndView.addObject("proBachInfoResList", proBachInfoResList);
 
         modelAndView.addObject("proBachInfoByTime", new QueryPara());
@@ -345,9 +416,9 @@ modelAndView.addObject("creatQRCode",new ProductInfo());
     @PostMapping("/cooperator/creatQRCode")
     public ModelAndView testQRCode(ProductInfo creatQRCode) {
         ModelAndView modelAndView = new ModelAndView();
-        String url="http://173919zc58.imwork.net:45167/QRCodeRes?proNum="+creatQRCode.getProNum();
-        modelAndView.addObject("URL",url);
-        modelAndView.addObject("proNum",creatQRCode.getProNum());
+        String url = "http://173919zc58.imwork.net:45167/QRCodeRes?proNum=" + creatQRCode.getProNum();
+        modelAndView.addObject("URL", url);
+        modelAndView.addObject("proNum", creatQRCode.getProNum());
         modelAndView.setViewName("cooperator/creatQRCode");
         return modelAndView;
     }

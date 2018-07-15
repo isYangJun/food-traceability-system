@@ -26,6 +26,7 @@ public class User {
     @NotEmpty(message = "*Please provide your password")
     @org.springframework.data.annotation.Transient
     private String password;
+
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
     private String name;
@@ -48,12 +49,24 @@ public class User {
                 ", sex='" + sex + '\'' +
                 ", idNum='" + idNum + '\'' +
                 ", regTime='" + regTime + '\'' +
+                ", userRole=" + userRole +
                 ", userComp='" + userComp + '\'' +
                 ", userCompName='" + userCompName + '\'' +
                 ", active=" + active +
                 ", roles=" + roles +
                 '}';
     }
+
+    public int getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(int userRole) {
+        this.userRole = userRole;
+    }
+
+    @Column(name="userRole")
+    private int userRole;
 
     public String getRegTime() {
         return regTime;

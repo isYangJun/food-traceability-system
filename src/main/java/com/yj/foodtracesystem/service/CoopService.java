@@ -1,8 +1,6 @@
 package com.yj.foodtracesystem.service;
 
-import com.yj.foodtracesystem.model.ComInfo;
-import com.yj.foodtracesystem.model.ProductBatchInfo;
-import com.yj.foodtracesystem.model.ProductInfo;
+import com.yj.foodtracesystem.model.*;
 
 import java.util.List;
 
@@ -60,4 +58,10 @@ public interface CoopService {
 
     int findProWeightByProNum(String proNum);
 
+    List<User> findByUserCompAndRole(String userComp, int userRole);
+
+    void saveOperationOrderInfo(OperationOrderInfo operationOrderInfo);
+
+    List<OperationOrderInfo> findAllOperationOrderInfo();
+    List<OperationOrderInfo> findByUserIdAndIsDone(String UserId,int isDone);
 }

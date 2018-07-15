@@ -4,12 +4,14 @@ import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationHerPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
-import com.yj.foodtracesystem.model.TempModel.QueryPara;
+import com.yj.foodtracesystem.repository.OperationOrderInfoRepository;
 import com.yj.foodtracesystem.repository.UserRepository;
+import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.FarmerService;
 import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -38,14 +40,59 @@ public class FarmerController {
     @Autowired
     private PublicService publicService;
 
+    @Autowired
+    private OperationOrderInfoRepository operationOrderInfoRepository;
+
+    @Autowired
+    private CoopService coopService;
+
     @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " +user.getUserCompName()+": "+ user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("farmer/header");
+        return modelAndView;
+    }
+
+    /*订单管理*/
+    @GetMapping("/farmer/orderMan")
+    public ModelAndView orderMan() throws Exception {
+
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+        modelAndView.addObject("orderInfo", new OperationOrderInfo());
+
+        List<OperationOrderInfo> downOrderInfoList = coopService.findByUserIdAndIsDone(user.getUserNum(), 1);
+        modelAndView.addObject("downOrderInfoList", downOrderInfoList);
+
+        List<OperationOrderInfo> unDownOrderInfoList = coopService.findByUserIdAndIsDone(user.getUserNum(), 0);
+        modelAndView.addObject("unDownOrderInfoList", unDownOrderInfoList);
+        modelAndView.setViewName("farmer/orderMan");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/farmer/updateOrder")
+    public ModelAndView updateOrder(OperationOrderInfo orderInfo) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+       farmerService.updateOrderInfo(orderInfo.getId());
+
+        modelAndView.addObject("orderInfo", new OperationOrderInfo());
+
+        List<OperationOrderInfo> downOrderInfoList = coopService.findByUserIdAndIsDone(user.getUserNum(), 1);
+        modelAndView.addObject("downOrderInfoList", downOrderInfoList);
+
+        List<OperationOrderInfo> unDownOrderInfoList = coopService.findByUserIdAndIsDone(user.getUserNum(), 0);
+        modelAndView.addObject("unDownOrderInfoList", unDownOrderInfoList);
+        modelAndView.setViewName("farmer/orderMan");
+
         return modelAndView;
     }
 
@@ -56,24 +103,27 @@ public class FarmerController {
         modelAndView.setViewName("farmer/seedMan");
         return modelAndView;
     }
-    @PostMapping(value ="/farmer/querySeedInfoByTime")
+
+    @PostMapping(value = "/farmer/querySeedInfoByTime")
     public ModelAndView querySeedInfoByTime(OperationHerPara operationHerPara) throws Exception {
         ModelAndView modelAndView = initialSeedMan();
-        List<SeedInfo> seedInfoResList = farmerService.findSeedByTime(operationHerPara.startTime,operationHerPara.endTime);
-        modelAndView.addObject("seedInfoResList",seedInfoResList);
-        modelAndView.setViewName("farmer/seedMan");
-        return  modelAndView;
-    }
-    @PostMapping(value="/farmer/querySeedInfoById")
-    public  ModelAndView querySeedInfoById(OperationHerPara operationHerPara) throws Exception{
-        ModelAndView modelAndView=initialSeedMan();
-        List<SeedInfo> seedInfoResList = farmerService.findSeedInfoById(operationHerPara.seedId);
-        modelAndView.addObject("seedInfoResList",seedInfoResList);
+        List<SeedInfo> seedInfoResList = farmerService.findSeedByTime(operationHerPara.startTime, operationHerPara.endTime);
+        modelAndView.addObject("seedInfoResList", seedInfoResList);
         modelAndView.setViewName("farmer/seedMan");
         return modelAndView;
     }
+
+    @PostMapping(value = "/farmer/querySeedInfoById")
+    public ModelAndView querySeedInfoById(OperationHerPara operationHerPara) throws Exception {
+        ModelAndView modelAndView = initialSeedMan();
+        List<SeedInfo> seedInfoResList = farmerService.findSeedInfoById(operationHerPara.seedId);
+        modelAndView.addObject("seedInfoResList", seedInfoResList);
+        modelAndView.setViewName("farmer/seedMan");
+        return modelAndView;
+    }
+
     @PostMapping(value = "/farmer/addSeedInfo")
-    public ModelAndView addSeedInfo(SeedInfo seedInfo) throws Exception{
+    public ModelAndView addSeedInfo(SeedInfo seedInfo) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         seedInfo.setSeedRegTime(publicService.getStringDate());
@@ -88,24 +138,26 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName","welcome "+ user.getUserCompName() + ":" + user.getName() + "(" +user.getUserNum()+ ")");
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
         SeedInfo seedInfo = new SeedInfo();
-        modelAndView.addObject("seedInfo",seedInfo);
+        modelAndView.addObject("seedInfo", seedInfo);
         List<SeedInfo> seedInfoList = farmerService.findAllSeedInfo();
-        modelAndView.addObject("seedInfoList",seedInfoList);
+        modelAndView.addObject("seedInfoList", seedInfoList);
         OperationHerPara operationHerPara = new OperationHerPara();
-        modelAndView.addObject("operationHerPara",operationHerPara);
+        modelAndView.addObject("operationHerPara", operationHerPara);
         return modelAndView;
     }
+
     /*****************************************肥料管理**********************************************/
     @GetMapping("/farmer/fertilizerMan")
-    public ModelAndView fertilizerMan(){
+    public ModelAndView fertilizerMan() {
         ModelAndView modelAndView = initialFertilizerMan();
         modelAndView.setViewName("farmer/fertilizerMan");
         return modelAndView;
     }
+
     @PostMapping(value = "/farmer/addFertilizerInfo")
-    public ModelAndView addFertilizerInfo(FertilizerInfo fertilizerInfo) throws Exception{
+    public ModelAndView addFertilizerInfo(FertilizerInfo fertilizerInfo) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         fertilizerInfo.setFertilizerRegTime(publicService.getStringDate());
@@ -115,44 +167,49 @@ public class FarmerController {
         modelAndView.setViewName("farmer/fertilizerMan");
         return modelAndView;
     }
-    @PostMapping(value ="/farmer/queryFertilizerInfoByTime")
+
+    @PostMapping(value = "/farmer/queryFertilizerInfoByTime")
     public ModelAndView queryFertilizerInfoByTime(OperationHerPara operationHerPara) throws Exception {
         ModelAndView modelAndView = initialFertilizerMan();
-        List<FertilizerInfo> fertilizerInfoResList = farmerService.findFertilizerInfoByTime(operationHerPara.startTime,operationHerPara.endTime);
-        modelAndView.addObject("fertilizerInfoResList",fertilizerInfoResList);
-        modelAndView.setViewName("farmer/fertilizerMan");
-        return  modelAndView;
-    }
-    @PostMapping(value="/farmer/queryFertilizerInfoById")
-    public  ModelAndView queryFertilizerInfoById(OperationHerPara operationHerPara) throws Exception{
-        ModelAndView modelAndView=initialFertilizerMan();
-        List<FertilizerInfo> fertilizerInfoResList = farmerService.findFertilizerInfoById(operationHerPara.fertilizerId);
-        modelAndView.addObject("fertilizerInfoResList",fertilizerInfoResList);
+        List<FertilizerInfo> fertilizerInfoResList = farmerService.findFertilizerInfoByTime(operationHerPara.startTime, operationHerPara.endTime);
+        modelAndView.addObject("fertilizerInfoResList", fertilizerInfoResList);
         modelAndView.setViewName("farmer/fertilizerMan");
         return modelAndView;
     }
+
+    @PostMapping(value = "/farmer/queryFertilizerInfoById")
+    public ModelAndView queryFertilizerInfoById(OperationHerPara operationHerPara) throws Exception {
+        ModelAndView modelAndView = initialFertilizerMan();
+        List<FertilizerInfo> fertilizerInfoResList = farmerService.findFertilizerInfoById(operationHerPara.fertilizerId);
+        modelAndView.addObject("fertilizerInfoResList", fertilizerInfoResList);
+        modelAndView.setViewName("farmer/fertilizerMan");
+        return modelAndView;
+    }
+
     private ModelAndView initialFertilizerMan() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName","welcome "+ user.getUserCompName() + ":" + user.getName() + "(" +user.getUserNum()+ ")");
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
         FertilizerInfo fertilizerInfo = new FertilizerInfo();
-        modelAndView.addObject("fertilizerInfo",fertilizerInfo);
-        List<FertilizerInfo> fertilizerInfoList =farmerService.findAllFertilizerInfo();
-        modelAndView.addObject("fertilizerInfoList",fertilizerInfoList);
+        modelAndView.addObject("fertilizerInfo", fertilizerInfo);
+        List<FertilizerInfo> fertilizerInfoList = farmerService.findAllFertilizerInfo();
+        modelAndView.addObject("fertilizerInfoList", fertilizerInfoList);
         OperationHerPara operationHerPara = new OperationHerPara();
-        modelAndView.addObject("operationHerPara",operationHerPara);
+        modelAndView.addObject("operationHerPara", operationHerPara);
         return modelAndView;
     }
+
     /*****************************************农药管理**********************************************/
     @GetMapping("/farmer/pesticideMan")
-    public ModelAndView pesticideMan(){
+    public ModelAndView pesticideMan() {
         ModelAndView modelAndView = initialPesticideMan();
         modelAndView.setViewName("farmer/pesticideMan");
         return modelAndView;
     }
+
     @PostMapping(value = "/farmer/addPesticideInfo")
-    public ModelAndView addPesticideInfo(PesticideInfo pesticideInfo) throws Exception{
+    public ModelAndView addPesticideInfo(PesticideInfo pesticideInfo) throws Exception {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         pesticideInfo.setPesticideRegTime(publicService.getStringDate());
@@ -162,33 +219,36 @@ public class FarmerController {
         modelAndView.setViewName("farmer/pesticideMan");
         return modelAndView;
     }
-    @PostMapping(value ="/farmer/queryPesticideInfoByTime")
+
+    @PostMapping(value = "/farmer/queryPesticideInfoByTime")
     public ModelAndView queryPesticideInfoByTime(OperationHerPara operationHerPara) throws Exception {
         ModelAndView modelAndView = initialPesticideMan();
-        List<PesticideInfo> pesticideInfoResList = farmerService.findPesticideInfoByTime(operationHerPara.startTime,operationHerPara.endTime);
-        modelAndView.addObject("pesticideInfoResList",pesticideInfoResList);
-        modelAndView.setViewName("farmer/pesticideMan");
-        return  modelAndView;
-    }
-    @PostMapping(value="/farmer/queryPesticideInfoById")
-    public  ModelAndView queryPesticideInfoById(OperationHerPara operationHerPara) throws Exception{
-        ModelAndView modelAndView=initialPesticideMan();
-        List<PesticideInfo> pesticideInfoResList = farmerService.findPesticideInfoById(operationHerPara.pesticideId);
-        modelAndView.addObject("pesticideInfoResList",pesticideInfoResList);
+        List<PesticideInfo> pesticideInfoResList = farmerService.findPesticideInfoByTime(operationHerPara.startTime, operationHerPara.endTime);
+        modelAndView.addObject("pesticideInfoResList", pesticideInfoResList);
         modelAndView.setViewName("farmer/pesticideMan");
         return modelAndView;
     }
+
+    @PostMapping(value = "/farmer/queryPesticideInfoById")
+    public ModelAndView queryPesticideInfoById(OperationHerPara operationHerPara) throws Exception {
+        ModelAndView modelAndView = initialPesticideMan();
+        List<PesticideInfo> pesticideInfoResList = farmerService.findPesticideInfoById(operationHerPara.pesticideId);
+        modelAndView.addObject("pesticideInfoResList", pesticideInfoResList);
+        modelAndView.setViewName("farmer/pesticideMan");
+        return modelAndView;
+    }
+
     private ModelAndView initialPesticideMan() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName","welcome "+ user.getUserCompName() + ":" + user.getName() + "(" +user.getUserNum()+ ")");
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
         PesticideInfo pesticideInfo = new PesticideInfo();
-        modelAndView.addObject("pesticideInfo",pesticideInfo);
-        List<PesticideInfo> pesticideInfoList =farmerService.findAllPesticideInfo();
-        modelAndView.addObject("pesticideInfoList",pesticideInfoList);
+        modelAndView.addObject("pesticideInfo", pesticideInfo);
+        List<PesticideInfo> pesticideInfoList = farmerService.findAllPesticideInfo();
+        modelAndView.addObject("pesticideInfoList", pesticideInfoList);
         OperationHerPara operationHerPara = new OperationHerPara();
-        modelAndView.addObject("operationHerPara",operationHerPara);
+        modelAndView.addObject("operationHerPara", operationHerPara);
         return modelAndView;
     }
 
@@ -203,8 +263,8 @@ public class FarmerController {
     @PostMapping(value = "/farmer/queryFiledInfoByTime")
     public ModelAndView queryFiledInfoByTime(OperationHisPara operationHisPara) throws Exception {
         ModelAndView modelAndView = initialFiledMan();
-        List<FiledInfo> filedInfoResList=farmerService.findByTime(operationHisPara.startTime,operationHisPara.endTime);
-        modelAndView.addObject("filedInfoResList",filedInfoResList);
+        List<FiledInfo> filedInfoResList = farmerService.findByTime(operationHisPara.startTime, operationHisPara.endTime);
+        modelAndView.addObject("filedInfoResList", filedInfoResList);
         modelAndView.setViewName("farmer/filedMan");
         return modelAndView;
     }
@@ -212,8 +272,8 @@ public class FarmerController {
     @PostMapping(value = "/farmer/queryFiledInfoById")
     public ModelAndView queryFiledInfoById(OperationHisPara operationHisPara) throws Exception {
         ModelAndView modelAndView = initialFiledMan();
-        List<FiledInfo> filedInfoResList=farmerService.findFiledInfoById(operationHisPara.filedId);
-        modelAndView.addObject("filedInfoResList",filedInfoResList);
+        List<FiledInfo> filedInfoResList = farmerService.findFiledInfoById(operationHisPara.filedId);
+        modelAndView.addObject("filedInfoResList", filedInfoResList);
         modelAndView.setViewName("farmer/filedMan");
         return modelAndView;
     }
@@ -236,7 +296,7 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome "+user.getUserCompName()+": " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         FiledInfo filedInfo = new FiledInfo();
         modelAndView.addObject("filedInfo", filedInfo);
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
@@ -283,7 +343,7 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome "+user.getUserCompName()+": " + user.getName() + " (" + user.getUserNum() + ")");
+        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         List<FiledInfo> filedInfoList = farmerService.findAllFiledInfo();
         List<FiledOperationType> operationTypeList = farmerService.findAllFiledOperationType();
         modelAndView.addObject("filedInfoList", filedInfoList);
