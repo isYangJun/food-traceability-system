@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TBL_CAR")
@@ -9,7 +10,9 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "car_id")
     private int id;
+
     @Column(name = "car_type")
+    @NotNull
     private String type;
 
     public int getId() {

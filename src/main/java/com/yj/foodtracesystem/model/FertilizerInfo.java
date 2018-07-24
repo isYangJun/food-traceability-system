@@ -1,6 +1,9 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "TBL_FERTILIZER_INFO")
 public class FertilizerInfo {
@@ -8,8 +11,12 @@ public class FertilizerInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "FE_ID")
     private int id;
+
     @Column(name = "FE_FERTILIZER_NAME")
+    @NotNull
+    @Max(20)
     private  String fertilizerName;
+
     @Column(name = "FE_FERTILIZER_type")
     private  String fertilizerType;
     @Column(name = "FE_FERTILIZER_PRODUCER")

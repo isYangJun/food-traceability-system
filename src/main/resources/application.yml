@@ -1,0 +1,42 @@
+server:
+    port: 8081
+
+logging:
+    file: target/app.log
+    isDebugEnabled: FALSE
+    level:
+        ROOT: WARN
+        com.yj.foodtracesystem: TRACE
+
+spring:
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/food_traceability_system?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+        driver-class-name: com.mysql.jdbc.Driver
+        username: root
+        password: 654321
+        testWhileIdle: true
+        validationQuery: SELECT 1
+    jpa:
+        hibernate.ddl-auto: update
+        show-sql: true
+        hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+    thymeleaf:
+        cache: false
+        mode: LEGACYHTML5
+    devtools:
+        restart:
+            enabled: true
+            additional-paths: src/main/java
+    queries:
+        users-query: select user_num, password, active from tbl_user where user_num=?
+        roles-query: select u.user_num, r.role from tbl_user u inner join user_role ur on(u.user_id=ur.user_id) inner join role r on(ur.role_id=r.role_id) where u.user_num=?
+
+logging:
+    level:
+        org:
+            springframework.security=info
+
+
+
+

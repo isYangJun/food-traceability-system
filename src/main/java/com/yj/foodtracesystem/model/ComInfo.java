@@ -1,6 +1,8 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -17,21 +19,27 @@ public class ComInfo {
     private int id;
 
     @Column(name = "CI_COMPANY_NUM")
+    @NotNull
     private String comNum;
 
     @Column(name = "CI_COMPANY_NAME")
+    @NotNull
     private String comName;
 
     @Column(name = "CI_COMPANY_ROLE")
+    @NotNull
     private int comRole;
 
     @Column(name = "CI_COMPANY_ROLE_INFO")
+    @NotNull
     private String comRoleInfo;
 
     @Column(name = "CI_REGISTER_TIME")
+    @NotNull
     private String comRegTime;
 
     @Column(name = "CI_COMPANY_ADD")
+    @NotNull
     private String comAdd;
 
     @Override

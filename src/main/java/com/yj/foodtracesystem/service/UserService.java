@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.service;
 
+import com.yj.foodtracesystem.model.Role;
 import com.yj.foodtracesystem.model.User;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface UserService {
     List<User> findAllUser();
     List<User> findByTime(String startTime,String endTime);
     void saveUser(User user);
+    List<Role> findAllRole();
 }

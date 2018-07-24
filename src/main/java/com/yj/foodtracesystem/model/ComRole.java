@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,6 +17,7 @@ public class ComRole {
     private int id;
 
     @Column(name = "CR_ROLE_NAME")
+    @NotNull
     private String comRoleName;
 
     @Override

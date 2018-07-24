@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.service;
 
+import com.yj.foodtracesystem.model.Role;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.model.User;
 import com.yj.foodtracesystem.repository.RoleRepository;
@@ -65,5 +66,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findByTime(String startTime, String endTime) {
         return userRepository.findByRegTimeBetween(startTime,endTime);
+    }
+
+    @Override
+    public List<Role> findAllRole() {
+        return roleRepository.findAll();
     }
 }
