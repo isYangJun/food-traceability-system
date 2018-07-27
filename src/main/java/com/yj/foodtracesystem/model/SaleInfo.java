@@ -3,6 +3,7 @@ package com.yj.foodtracesystem.model;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -31,6 +32,7 @@ public class SaleInfo {
     private String proName;
 
     @Column(name = "SI_PROBATCH_NUM")
+    @NotNull
     private String proBatchNum;
 
     @Override

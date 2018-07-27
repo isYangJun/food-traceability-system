@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,18 +17,29 @@ public class SeedInfo {
     private int id;
     @Column(name = "SI_SEED_NAME")
     private String seedName;
+
     @Column(name = "SI_SEED_PRODUCER")
+    @NotNull
     private String seedProducer;
+
     @Column(name = "SI_PRODUCE_PLACE")
+    @NotNull
     private String seedRroPlace;
+
     @Column(name = "SI_PRODUCE_TIME")
     private String seedProTime;
+
     @Column(name = "SI_VALIDATE_TIME")
+    @NotNull
     private String seedValTime;
+
     @Column(name = "SI_REGISTER_TIME")
     private String seedRegTime;
+
     @Column(name = "SI_SEED_WEIGHT")
+    @NotNull
     private String seedWeight;
+
     @Column(name = "SI_OPERATOR_NUM")
     private String operatorNum;
 

@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,39 +17,47 @@ public class ProductInfo {
     private int id;
 
     @Column(name = "PI_PRODUCT_NUM")
+    @NotNull
     private String proNum;
 
     @Column(name = "PI_PRODUCT_NAME")
     private String proName;
 
     @Column(name = "PI_FILED_NUM")
+    @NotNull
     private int filedNum;
 
     @Column(name = "PI_SEED_NUM")
+    @NotNull
     private int seedNum;
 
     @Column(name = "PI_OPERATOR_NUM")
+    @NotNull
     private String operatorNum;
 
     @Column(name = "PI_PROBATCH_NUM")
+    @NotNull
     private String proBatchNum;
 
     @Column(name = "PI_SEED_NAME")
     private String seedName;
 
     @Column(name = "PI_HARVEST_TIME")
+    @NotNull
     private String harvTime;
 
     @Column(name = "PI_COOPERATION_NUM")
     private String coopNum;
 
     @Column(name = "PI_PRODUCT_WEIGHT")
+    @NotNull
     private int proWeight;
 
     @Column(name = "PI_COOPERATION_NAME")
     private String coopName;
 
     @Column(name = "PI_IS_TRANSED")
+    @NotNull
     private int isTransed;//0为未操作，1为操作完成
 
 

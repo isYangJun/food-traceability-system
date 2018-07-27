@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -17,6 +18,7 @@ public class FiledOperation {
     private int id;
 
     @Column(name = "FO_OPERATION_ID")
+    @NotNull
     private int operateTypeId;
 
     public String getOperationName() {
@@ -55,21 +57,25 @@ public class FiledOperation {
     private String operationName;
 
     @Column(name = "FO_USER_ID")
+    @NotNull
     private int userId;
 
     @Column(name = "FO_FILED_ID")
     private int filedId;
 
     @Column(name = "FO_FILED_NAME")
+    @NotNull
     private String filedName;
 
     @Column(name = "FO_OPERATION_TIME")
+    @NotNull
     private String operateTime;
 
     @Column(name = "FO_SEED_ID")
     private int seedId;
 
     @Column(name = "FO_SEED_NAME")
+    @NotNull
     private String seedName;
 
     @Column(name = "FO_OPERATION_MEMO")

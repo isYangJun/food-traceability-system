@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,12 +17,14 @@ public class RepositoryStationInfo {
     private int id;
 
     @Column(name = "RSI_REPOSITORY_NUM")
+    @NotNull
     private String repositoryNum; //仓储公司编号
 
     @Column(name = "RSI_REPOSITORY_NAME")
     private String repositoryName;
 
     @Column(name = "RSI_WAREHOUSE_NUM")
+    @NotNull
     private String warehouseNum;  //所包含仓库编号
 
     @Column(name = "RSI_WAREHOUSE_NAME")

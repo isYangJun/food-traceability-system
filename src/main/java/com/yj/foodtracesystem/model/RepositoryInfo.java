@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,12 +17,14 @@ public class RepositoryInfo {
     private int id;
 
     @Column(name = "RI_WAREHOUSE_NUM")
+    @NotNull
     private String warehouseNum;
 
     @Column(name = "RI_WAREHOUSE_NAME")
     private String warehouseName;
 
     @Column(name = "RI_PRODUCT_NUM")
+    @NotNull
     private String proNum;
 
     @Column(name = "RI_PRODUCT_NAME")
@@ -36,16 +39,20 @@ public class RepositoryInfo {
     }
 
     @Column(name = "RI_PROBATCH_NUM")
+    @NotNull
     private String proBatchNum;
 
 
     @Column(name = "RI_PRODUCT_WEIGHT")
+    @NotNull
     private int proWeight;
 
     @Column(name = "RI_PRODUCT_INRECORDED")
+    @NotNull
     private int inRecorded;
 
     @Column(name = "RI_RECORDED_TIME")
+    @NotNull
     private String recordedTime;
 
     @Column(name = "RI_SAVE_TEMP")

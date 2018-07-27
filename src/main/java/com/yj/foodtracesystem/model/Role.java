@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -15,6 +16,7 @@ public class Role {
     @Column(name = "role_id")
     private int id;
     @Column(name = "role")
+    @NotNull
     private String role;
 
     public int getId() {

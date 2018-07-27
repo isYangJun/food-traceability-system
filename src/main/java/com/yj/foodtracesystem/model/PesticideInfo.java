@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TBL_PESTICIDE_INFO")
@@ -9,19 +10,32 @@ public class PesticideInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PE_ID")
     private int id;
+
     @Column(name = "PE_PESTICIDE_NAME")
     private  String pesticideName;
+
     @Column(name = "PE_PESTICIDE_TYPE")
+    @NotNull
     private  String pesticideType;
+
     @Column(name = "PE_PESTICIDE_PRODUCER")
+    @NotNull
     private String pesticideProducer;
+
     @Column(name = "PE_VALIDATE_TIME")
+    @NotNull
     private  String pesticideValTime;
+
     @Column(name = "PE_PESTICIDE_WEIGHT")
+    @NotNull
     private String pesticideWeight;
+
     @Column(name = "PE_REGISTER_TIME")
+    @NotNull
     private  String pesticideRegTime;
+
     @Column(name = "PE_OPERATOR_NUM")
+    @NotNull
     private  String operatorNum;
 
     public int getId() { return id; }

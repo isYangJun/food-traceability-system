@@ -1,5 +1,7 @@
 package com.yj.foodtracesystem.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -14,20 +16,30 @@ public class FertilizerInfo {
 
     @Column(name = "FE_FERTILIZER_NAME")
     @NotNull
-    @Max(20)
+    @Length(max = 30)
     private  String fertilizerName;
 
     @Column(name = "FE_FERTILIZER_type")
+    @Length(max = 20)
+    @NotNull
     private  String fertilizerType;
+
     @Column(name = "FE_FERTILIZER_PRODUCER")
+    @Length(max = 20)
+    @NotNull
     private  String fertilizerProducer;
+
     @Column(name = "FE_VALIDATE_TIME")
     private String fertilizerValTime;
+
     @Column(name = "FE_FERTILIZER_WEIGHT")
     private String fertilizerWeight;
+
     @Column(name = "FE_REGISTER_TIME")
     private  String fertilizerRegTime;
+
     @Column(name = "FE_OPERATOR_NUM")
+    @NotNull
     private String operatorNum;
 
     public int getId() { return id; }

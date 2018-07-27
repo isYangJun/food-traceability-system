@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -15,17 +16,26 @@ public class FiledInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "FI_ID")
     private int id;
+
     @Column(name = "FI_FILED_AREA")
     private int filedArea;
+
     @Column(name = "FI_FILED_NAME")
     private String filedName;
+
     @Column(name = "FI_FILED_ADD")
     private String filedAdd;
+
     @Column(name = "FI_REGISTER_TIME")
+    @NotNull
     private String filedRegTime;
+
     @Column(name = "FI_COMP_NUM")
+    @NotNull
     private String filedCompNum;
+
     @Column(name = "PI_OPERATOR_NUM")
+    @NotNull
     private String operatorNum;
 
     @Override

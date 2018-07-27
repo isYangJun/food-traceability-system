@@ -3,6 +3,8 @@ package com.yj.foodtracesystem.controllerApi;
 import com.yj.foodtracesystem.model.TempModel.ProductPara;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,25 @@ import java.util.Map;
 @RequestMapping("/test")
 public class ReturnRes {
     private static final Log log = LogFactory.getLog(ReturnRes.class);
+    private static final Logger logger= LoggerFactory.getLogger(ReturnRes.class);
+
 
  /*   @Autowired
     TokenService tokenService;*/
 
     @GetMapping
     public String test() {
+        logger.debug("now {}debug" , "starting server");
+        logger.info("now {}info" , "starting server");
+        logger.warn("now {}warn" , "starting server");
+        logger.error("now {}error" , "starting server");
+
+        log.debug("now {}hahadebug");
+        log.info("now {}hahainfo");
+        log.warn("now {}hahawarn");
+        log.error("now {}hahaerror");
+
+        logger.debug("dd");
         if (log.isTraceEnabled()) {
             log.trace("log test");
         }

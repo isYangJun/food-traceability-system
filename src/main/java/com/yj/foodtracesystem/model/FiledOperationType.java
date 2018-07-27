@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,6 +17,7 @@ public class FiledOperationType {
     private int id;
 
     @Column(name = "OT_OPERATION_NAME")
+    @NotNull
     private String operationName;
 
     public int getId() {

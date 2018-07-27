@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TBL_PRODUCT_BATCHINFO")
@@ -11,27 +12,34 @@ public class ProductBatchInfo {
     private int id;
 
     @Column(name = "PB_FILED_NUM")
+    @NotNull
     private int filedNum;
 
     @Column(name = "PB_SEED_NUM")
+    @NotNull
     private int seedNum;
 
     @Column(name = "PB_OPERATOR_NUM")
+    @NotNull
     private String operatorNum;
 
     @Column(name = "PB_PROBATCH_NUM")
+    @NotNull
     private String proBatchNum;
 
     @Column(name = "PB_SEED_NAME")
     private String seedName;
 
     @Column(name = "PB_HARVEST_TIME")
+    @NotNull
     private String harvTime;
 
     @Column(name = "PB_COOPERATION_NUM")
+    @NotNull
     private String coopNum;
 
     @Column(name = "PB_PRODUCT_WEIGHT")
+    @NotNull
     private int proWeight;
 
     @Column(name = "PB_COOPERATION_NAME")

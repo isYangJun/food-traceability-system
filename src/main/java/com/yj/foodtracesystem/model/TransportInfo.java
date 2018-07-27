@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -16,18 +17,21 @@ public class TransportInfo {
     private int id;
 
     @Column(name = "TI_COM_NUM")
+    @NotNull
     private String comNum;
 
     @Column(name = "TI_COM_NAME")
     private String comName;
 
     @Column(name = "TI_PRODUCT_NUM")
+    @NotNull
     private String proNum;
 
     @Column(name = "TI_PRODUCT_NAME")
     private String proName;
 
     @Column(name = "TI_PRODUCT_WEIGHT")
+    @NotNull
     private int proWeight;
 
     @Column(name = "TI_PRODUCT_INRECORDED")
@@ -37,9 +41,11 @@ public class TransportInfo {
     private String recordedTime;
 
     @Column(name = "TI_DESTINATION_NUM")
+    @NotNull
     private String destinationNum;
 
     @Column(name = "TI_DESTINATION_NAME")
+    @NotNull
     private String destinationName;
 
     public double getGrossLossRate() {

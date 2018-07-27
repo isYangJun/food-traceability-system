@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author:yangjun
@@ -14,19 +15,30 @@ public class TransStationInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TI_ID")
     private int id;
+
     @Column(name = "TI_CAR_NUM")
+    @NotNull
     private String carNum;
+
     @Column(name = "TI_CAR_NAME")
     private String carName;
+
     @Column(name = "TI_CAR_TYPE")
+    @NotNull
     private String carType;
+
     @Column(name = "TI_CAR_REG_TIME")
     private String carRegTime;
+
     @Column(name = "TI_COM_NUM")
+    @NotNull
     private String companyNum;
+
     @Column(name = "TI_COM_NAME")
     private String companyName;
+
     @Column(name = "TI_OPER_NUM")
+    @NotNull
     private String operatorNum;
 
 
