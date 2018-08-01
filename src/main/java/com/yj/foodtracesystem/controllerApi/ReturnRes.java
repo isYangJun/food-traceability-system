@@ -30,8 +30,43 @@ public class ReturnRes {
         p.setSex("female");
         p.setPass("123456");
         p.setBirthday(new Date());
-
         return JsonResult.ok(p);
+    }
+
+    @GetMapping("/pe")
+    @ResponseBody
+    public Result<Person> returnP()throws Exception{
+        Result<Person>personResult=new Result<Person>();
+
+        Person p=new Person();
+        p.setName("p1");
+        p.setSex("female");
+        p.setPass("123456");
+        p.setBirthday(new Date());
+        personResult.setCode(200);
+        personResult.setMsg("success");
+        personResult.setData(p);
+        if(true)
+            throw new Exception("密码不能为null");
+        return personResult;
+    }
+
+    @GetMapping("/pes")
+    @ResponseBody
+    public Result<Person> returnPes()throws Exception{
+        Result<Person>personResult=new Result<Person>();
+
+        Person p=new Person();
+        p.setName("p1");
+        p.setSex("female");
+        p.setPass("123456");
+        p.setBirthday(new Date());
+        personResult.setCode(200);
+        personResult.setMsg("success");
+        personResult.setData(p);
+        if(true)
+            throw new ExcepHandle(ResultEnum.UNKNOW_ERROR);
+        return ResultUtil.success(p);
     }
 
     /**

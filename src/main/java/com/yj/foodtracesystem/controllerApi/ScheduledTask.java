@@ -24,11 +24,11 @@ public class ScheduledTask {
         System.out.println("current time:" + date.format(new Date()));
     }*/
 
-    @Scheduled(cron="4-40 * * * * ?")
+  /*  @Scheduled(cron="4-40 * * * * ?")
     public void printCronCurrentTime() {
         loggre.info("cron log time:"+date.format(new Date()));
         System.out.println("cron current time:" + date.format(new Date()));
-    }
+    }*/
 
 
 }
