@@ -46,6 +46,11 @@ public class FarmerController {
     @Autowired
     private CoopService coopService;
 
+    @GetMapping(value = "/farmer/test")
+    public String test() {
+        return "hello world, I yangJun";
+    }
+
     @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
