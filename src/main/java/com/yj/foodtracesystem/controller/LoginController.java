@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -25,18 +22,19 @@ import java.util.Set;
  * @Description:
  * @Date: Created in 22:42 2018/4/18
  */
-@Controller
+@RestController
 public class LoginController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+   /* @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("user", new User());
         return "login";
-    }
+    }*/
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();

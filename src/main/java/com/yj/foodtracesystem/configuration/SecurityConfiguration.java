@@ -2,8 +2,9 @@ package com.yj.foodtracesystem.configuration;
 
 import com.yj.foodtracesystem.filter.JWTAuthenticationFilter;
 import com.yj.foodtracesystem.filter.JWTLoginFilter;
-import com.yj.foodtracesystem.handler.CustomAuthenticationProvider;
 import com.yj.foodtracesystem.handler.UserHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
+
     @Autowired
     private DataSource dataSource;
 
@@ -58,21 +61,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
+        logger.info("SecurityConfiguration: JDBC config");
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .authenticationProvider(new CustomAuthenticationProvider(userDetailsService,bCryptPasswordEncoder));
+                .passwordEncoder(bCryptPasswordEncoder);
     }
+
     // 设置 HTTP 验证规则
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/login","/registration","/header","/403","/QRCodeRes","/errorProWeight").permitAll()
+                .antMatchers("/", "/login", "/registration", "/header", "/403", "/QRCodeRes", "/errorProWeight","/signup","/users/**").permitAll()
                 .antMatchers("/test/**").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/cooperator/**").hasAuthority("COOPERATOR")

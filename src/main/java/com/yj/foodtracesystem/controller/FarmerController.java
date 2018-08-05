@@ -10,15 +10,14 @@ import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.FarmerService;
 import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -29,7 +28,7 @@ import java.util.List;
  * @Description:
  * @Date: Created in 10:00 2018/5/1
  */
-@Controller
+@RestController
 public class FarmerController {
     @Autowired
     private UserService userService;
@@ -46,20 +45,19 @@ public class FarmerController {
     @Autowired
     private CoopService coopService;
 
+    private static final Logger logger =LoggerFactory.getLogger(FarmerController.class);
+
     @GetMapping(value = "/farmer/test")
+    @ResponseBody
     public String test() {
+        logger.info("farmer test");
         return "hello world, I yangJun";
     }
 
     @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
-    public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("farmer/header");
-        return modelAndView;
+    public String home() {
+        logger.info("farmer home");
+       return "farmer home";
     }
 
     /*订单管理*/

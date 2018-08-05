@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -18,9 +19,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int id;
+
     @Column(name = "user_num")
     @NotEmpty(message = "*Please provide an user num")
     private String userNum;
+
     @Column(name = "password")
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
@@ -33,6 +36,7 @@ public class User {
 
     @Column(name = "sex")
     private String sex;
+
     @Column(name = "idNum")
     private String idNum;
 
@@ -110,6 +114,7 @@ public class User {
 
     @Column(name = "user_comp")
     private String userComp;
+
     @Column(name = "user_comp_name")
     private String userCompName;
 

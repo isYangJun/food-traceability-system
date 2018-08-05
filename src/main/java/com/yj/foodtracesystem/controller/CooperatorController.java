@@ -8,13 +8,14 @@ import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.FarmerService;
 import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
@@ -42,6 +43,14 @@ public class CooperatorController {
 
     @Autowired
     private FiledOperationTypeRepository filedOperationTypeRepository;
+
+    private static final Logger logger=LoggerFactory.getLogger(CooperatorController.class);
+    @RequestMapping(value = "/cooperator/hom", method = RequestMethod.GET)
+    @ResponseBody
+    public String coophome() {
+        logger.info("coophome home");
+        return "coophome home";
+    }
 
     /*生产订单管理*/
     @GetMapping("/cooperator/orderMan")
