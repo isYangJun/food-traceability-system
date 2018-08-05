@@ -10,9 +10,12 @@ import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.FarmerService;
 import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,6 +36,7 @@ import java.util.List;
  */
 @Controller
 public class FarmerController {
+    private static final Logger logger=LoggerFactory.getLogger(FarmerController.class);
     @Autowired
     private UserService userService;
     @Autowired
@@ -39,6 +45,7 @@ public class FarmerController {
     private UserRepository userRepository;
     @Autowired
     private PublicService publicService;
+
 
     @Autowired
     private OperationOrderInfoRepository operationOrderInfoRepository;
@@ -50,6 +57,13 @@ public class FarmerController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        List<String> list = new ArrayList<>();
+        for (GrantedAuthority grantedAuthority : authorities) {
+            logger.info("权限列表：{}", grantedAuthority.getAuthority());
+            list.add(grantedAuthority.getAuthority());
+        }
+
         User user = userService.findUserByUserNum(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getUserCompName() + ": " + user.getName() + " (" + user.getUserNum() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
