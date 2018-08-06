@@ -15,40 +15,39 @@ import javax.servlet.http.HttpServletRequest;
  * @Description:
  * @Date: Created in 6:41 2018/8/1
  */
-@Aspect
+
 @Component
+@Aspect
 public class HttpAspect {
- /*   public final static Logger logger= LoggerFactory.getLogger(HttpAspect.class);
+    /*public final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
+
     @Pointcut(value = "execution(public * com.yj.foodtracesystem.controllerApi.ReturnRes.*(..))")
-    public void log(){
+    public void log() {
     }
 
     @Before("log()")
-    public void doBefore(JoinPoint joinPoint){
+    public void doBefore(JoinPoint joinPoint) {
         //url  method ip 类方法 参数
-        ServletRequestAttributes attributes=(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request=attributes.getRequest();
-        logger.info("url={}",request.getRequestURL());
-        logger.info("method={}",request.getMethod());
-        logger.info("ip={}",request.getRemoteAddr());
-        logger.info("class_method={}",joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName());
-        logger.info("args={}",joinPoint.getArgs());
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        logger.info("url={}", request.getRequestURL());
+        logger.info("method={}", request.getMethod());
+        logger.info("ip={}", request.getRemoteAddr());
+        logger.info("class_method={}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        logger.info("args={}", joinPoint.getArgs());
         System.out.println("before");
     }
 
 
     @After("log()")
-    public void doAfter(){
+    public void doAfter() {
         System.out.println("after");
     }
-    @AfterReturning(returning="",pointcut = "log()")
-    public void doAfterReturning(Object object){
-        logger.info("response=",object.toString());
+
+    @AfterReturning(returning = "", pointcut = "log()")
+    public void doAfterReturning(Object object) {
+        logger.info("response=", object.toString());
     }
+
 */
-
-
-
-
-
 }

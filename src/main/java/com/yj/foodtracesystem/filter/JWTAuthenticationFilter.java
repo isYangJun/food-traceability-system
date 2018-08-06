@@ -1,6 +1,8 @@
 package com.yj.foodtracesystem.filter;
 
 import com.yj.foodtracesystem.ConstantKey.ConstantKey;
+import com.yj.foodtracesystem.controllerApi.ResultEnum;
+import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.exception.TokenException;
 import com.yj.foodtracesystem.model.GrantedAuthorityImpl;
 import io.jsonwebtoken.*;
@@ -20,10 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  * token的校验
@@ -71,7 +71,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         logger.info("JWTAuthenticationFilter.getAuthentication");
         String token = request.getHeader("Authorization");
         if (token == null || token.isEmpty()) {
-            throw new TokenException("Token为空");
+            throw new TokenException(ResultEnum.NULL_TOKEN);
         }
         // parse the token.
         String user = null;
@@ -104,21 +104,20 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             }
         } catch (ExpiredJwtException e) {
             logger.error("Token已过期: {} " + e);
-            throw new TokenException("Token已过期");
+            throw new BaseException(ResultEnum.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e) {
             logger.error("Token格式错误: {} " + e);
-            throw new TokenException("Token格式错误");
+            throw new TokenException(ResultEnum.UNSUPPORTED_TOKEN);
         } catch (MalformedJwtException e) {
             logger.error("Token没有被正确构造: {} " + e);
-            throw new TokenException("Token没有被正确构造");
+            throw new TokenException(ResultEnum.UNFORMED_TOKEN);
         } catch (SignatureException e) {
             logger.error("签名失败: {} " + e);
-            throw new TokenException("签名失败");
+            throw new TokenException(ResultEnum.SIGNFAIL_TOKEN);
         } catch (IllegalArgumentException e) {
             logger.error("非法参数异常: {} " + e);
-            throw new TokenException("非法参数异常");
+            throw new TokenException(ResultEnum.ILLEAGUE_TOKEN);
         }
         return null;
     }
-
 }

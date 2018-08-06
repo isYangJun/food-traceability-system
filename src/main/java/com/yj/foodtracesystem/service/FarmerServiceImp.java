@@ -163,10 +163,11 @@ public class FarmerServiceImp implements FarmerService {
 
     @Transactional
     @Override
-    public void updateOrderInfo(int id) {
+    public OperationOrderInfo updateOrderInfo(int id) {
 
         OperationOrderInfo operationOrderInfo = em.find(OperationOrderInfo.class, id);
         operationOrderInfo.setIsDone(1);
         operationOrderInfo.setDoneTime(publicService.getStringDate());
+        return operationOrderInfo;
     }
 }

@@ -1,12 +1,13 @@
 package com.yj.foodtracesystem.controllerApi;
 
+import com.yj.foodtracesystem.exception.SelfDesignException;
 import com.yj.foodtracesystem.model.TempModel.ProductPara;
+import com.yj.foodtracesystem.unuserful.JsonResult;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,7 +66,7 @@ public class ReturnRes {
         personResult.setMsg("success");
         personResult.setData(p);
         if(true)
-            throw new ExcepHandle(ResultEnum.UNKNOW_ERROR);
+            throw new SelfDesignException(ResultEnum.UNKNOW_ERROR);
         return ResultUtil.success(p);
     }
 

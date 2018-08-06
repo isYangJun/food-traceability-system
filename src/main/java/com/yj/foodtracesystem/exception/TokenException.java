@@ -1,17 +1,16 @@
 package com.yj.foodtracesystem.exception;
 
+import com.yj.foodtracesystem.controllerApi.ResultEnum;
+
 /**
  * 描述：
  * <p>
  *
- * @author: 赵新国
+ * @author: yangjun
  * @date: 2018/4/11 10:24
  */
 public class TokenException extends BaseException {
-
-    private static final long serialVersionUID = 1L;
-
-    public TokenException(String message) {
-        super(message);
+    public TokenException(ResultEnum resultEnum) {
+        super(resultEnum);
     }
 }

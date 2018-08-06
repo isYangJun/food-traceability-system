@@ -37,7 +37,6 @@ public class CooperatorController {
     private CoopService coopService;
     @Autowired
     private FarmerService farmerService;
-
     @Autowired
     private FiledInfoRepository filedInfoRepository;
 

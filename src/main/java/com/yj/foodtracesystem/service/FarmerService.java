@@ -35,6 +35,6 @@ public interface FarmerService {
     List<PesticideInfo> findPesticideInfoByTime(String startTime,String endTime);
     SeedInfo findBySeedId(int id);
     List<FiledOperation> findFiledOperationBySeedId(int id);
-    void updateOrderInfo(int id);
+    OperationOrderInfo updateOrderInfo(int id);
 
 }

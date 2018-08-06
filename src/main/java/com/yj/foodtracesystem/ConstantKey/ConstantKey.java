@@ -4,8 +4,8 @@ package com.yj.foodtracesystem.ConstantKey;
  * 描述：
  * <p>
  *
- * @author: 赵新国
- * @date: 2018/3/12 16:07
+ * @author: yangjun
+ * @date: 2018/7/14 16:07
  */
 public class ConstantKey {
 

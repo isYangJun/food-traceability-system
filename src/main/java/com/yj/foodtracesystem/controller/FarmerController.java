@@ -1,5 +1,9 @@
 package com.yj.foodtracesystem.controller;
 
+import com.yj.foodtracesystem.controllerApi.Result;
+import com.yj.foodtracesystem.controllerApi.ResultEnum;
+import com.yj.foodtracesystem.controllerApi.ResultUtil;
+import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationHerPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
@@ -45,19 +49,18 @@ public class FarmerController {
     @Autowired
     private CoopService coopService;
 
-    private static final Logger logger =LoggerFactory.getLogger(FarmerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FarmerController.class);
 
     @GetMapping(value = "/farmer/test")
-    @ResponseBody
     public String test() {
         logger.info("farmer test");
         return "hello world, I yangJun";
     }
 
-    @RequestMapping(value = "/farmer/home", method = RequestMethod.GET)
+    @GetMapping(value = "/farmer/home")
     public String home() {
         logger.info("farmer home");
-       return "farmer home";
+        return "farmer home";
     }
 
     /*订单管理*/
@@ -67,6 +70,7 @@ public class FarmerController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
+
         modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
         modelAndView.addObject("orderInfo", new OperationOrderInfo());
 
@@ -80,6 +84,17 @@ public class FarmerController {
     }
 
     @PostMapping(value = "/farmer/updateOrder")
+    public Result<OperationOrderInfo> updateOrder(@RequestBody OperationOrderInfo orderInfo) {
+
+        OperationOrderInfo operationOrderInfo;
+        try {
+            operationOrderInfo = farmerService.updateOrderInfo(orderInfo.getId());
+        } catch (Exception e) {
+            throw new BaseException(ResultEnum.ARGUMENT_ERROR);
+        }
+        return ResultUtil.success(operationOrderInfo);
+    }
+   /* @PostMapping(value = "/farmer/updateOrder")
     public ModelAndView updateOrder(OperationOrderInfo orderInfo) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -97,7 +112,7 @@ public class FarmerController {
         modelAndView.setViewName("farmer/orderMan");
 
         return modelAndView;
-    }
+    }*/
 
     /************************************种子管理***********************************************/
     @GetMapping("/farmer/seedMan")
