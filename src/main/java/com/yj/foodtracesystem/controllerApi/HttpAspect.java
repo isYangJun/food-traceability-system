@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletRequest;
  * @Description:
  * @Date: Created in 6:41 2018/8/1
  */
-
-@Component
 @Aspect
+@Component
 public class HttpAspect {
-    /*public final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
+    public final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
 
-    @Pointcut(value = "execution(public * com.yj.foodtracesystem.controllerApi.ReturnRes.*(..))")
+    @Pointcut("execution(* com.yj.foodtracesystem.service.FarmerServiceImp.*(..))")
     public void log() {
     }
 
@@ -49,5 +48,4 @@ public class HttpAspect {
         logger.info("response=", object.toString());
     }
 
-*/
 }

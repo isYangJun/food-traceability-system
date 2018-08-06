@@ -93,9 +93,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 logger.info("authority",authorit);
                 logger.info(authority);*/
                 String authority = user;
-                authority=authority.substring(authority.indexOf("-")+1,authority.length());
-              //authority= authority.substring(9,15);
-              logger.info(authority);
+                authority = authority.substring(authority.indexOf("-") + 1, authority.length());
+                //authority= authority.substring(9,15);
+                logger.info(authority);
                 authorities.add(new GrantedAuthorityImpl(authority));
                 logger.info(authorities.get(0).getAuthority());
                 user = user.substring(0, user.indexOf("-"));
@@ -113,10 +113,10 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             throw new TokenException(ResultEnum.UNFORMED_TOKEN);
         } catch (SignatureException e) {
             logger.error("签名失败: {} " + e);
-            throw new TokenException(ResultEnum.SIGNFAIL_TOKEN);
+            throw new BaseException(ResultEnum.SIGNFAIL_TOKEN);
         } catch (IllegalArgumentException e) {
             logger.error("非法参数异常: {} " + e);
-            throw new TokenException(ResultEnum.ILLEAGUE_TOKEN);
+            throw new BaseException(ResultEnum.ILLEAGUE_TOKEN);
         }
         return null;
     }
