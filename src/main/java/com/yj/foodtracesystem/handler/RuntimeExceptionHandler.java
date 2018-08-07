@@ -3,7 +3,7 @@ package com.yj.foodtracesystem.handler;
 import com.yj.foodtracesystem.controllerApi.Result;
 import com.yj.foodtracesystem.controllerApi.ResultUtil;
 import com.yj.foodtracesystem.exception.BaseException;
-import com.yj.foodtracesystem.exception.SelfDesignException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,14 +15,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @ControllerAdvice
 public class RuntimeExceptionHandler {
-    @org.springframework.web.bind.annotation.ExceptionHandler(value=Exception.class)
+    @ExceptionHandler(value = Exception.class)
     @ResponseBody
-     public Result handle(Exception e){
-        if(e instanceof BaseException){
-            BaseException baseException =(BaseException)e;
+    public Result handle(Exception e) {
+        if (e instanceof BaseException) {
+            BaseException baseException = (BaseException) e;
             return ResultUtil.error(baseException.getCode(), baseException.getMessage());
         }
-return ResultUtil.error(500,e.getMessage());
-     }
+        return ResultUtil.error(500, e.getMessage());
+    }
+
+    @ExceptionHandler(value = BaseException.class)
+    @ResponseBody
+    public Result handle(BaseException e) {
+            return ResultUtil.error(e.getCode(), e.getMessage());
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.yj.foodtracesystem.controllerApi;
 
-import com.yj.foodtracesystem.exception.SelfDesignException;
+import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.model.TempModel.ProductPara;
 import com.yj.foodtracesystem.unuserful.JsonResult;
 import org.apache.commons.logging.Log;
@@ -66,7 +66,7 @@ public class ReturnRes {
         personResult.setMsg("success");
         personResult.setData(p);
         if(true)
-            throw new SelfDesignException(ResultEnum.UNKNOW_ERROR);
+            throw new BaseException(ResultEnum.UNKNOW_ERROR);
         return ResultUtil.success(p);
     }
 
