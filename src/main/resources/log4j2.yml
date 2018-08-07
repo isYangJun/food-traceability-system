@@ -4,7 +4,7 @@ Configuration:
   Properties: # 定义变量
     Property:
       - name: log.path
-        value: /Users/tuolian/trace/reConstruct/reConstructSystem/log
+        value: E:\IntelliJIDEAWork\food-traceability-system\log
       - name: project.name
         value: spring-boot-log
 

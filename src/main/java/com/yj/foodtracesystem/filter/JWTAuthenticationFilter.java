@@ -31,7 +31,7 @@ import java.util.List;
  * 从http头的Authorization 项读取token数据，然后用Jwts包提供的方法校验token的合法性。
  * 如果校验通过，就认为这是一个取得授权的合法请求
  *
- * @author zhaoxinguo on 2017/9/13.
+ * @author yangjun on 2017/9/13.
  */
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
@@ -63,7 +63,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             logger.info("权限列表：{}", grantedAuthority.getAuthority().toString());
             list.add(grantedAuthority.getAuthority());
         }
-
         chain.doFilter(request, response);
     }
 
@@ -94,7 +93,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 logger.info(authority);*/
                 String authority = user;
                 authority = authority.substring(authority.indexOf("-") + 1, authority.length());
-                //authority= authority.substring(9,15);
                 logger.info(authority);
                 authorities.add(new GrantedAuthorityImpl(authority));
                 logger.info(authorities.get(0).getAuthority());

@@ -52,10 +52,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
 
-    /*public SecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }*/
+    }
 
     // 该方法是登录的时候会进入
     @Override
@@ -76,7 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/registration", "/header", "/403", "/QRCodeRes", "/errorProWeight","/signup","/users/**").permitAll()
-                .antMatchers("/test/**").permitAll()
+                .antMatchers("/test/**","/swagger-ui.html","/v2/api-docs").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/cooperator/**").hasAuthority("COOPERATOR")
                 .antMatchers("/farmer/**").hasAuthority("FARMER")
@@ -87,13 +87,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/saleadmin/**").hasAuthority("SALE_ADMIN")
                 .antMatchers("/saleman/**").hasAuthority("SALEMAN")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .successHandler(userHandler)
-                .failureUrl("/login?error=true")
-                .usernameParameter("userNum")
-                .passwordParameter("password")
                 .and()
                 .addFilter(new JWTLoginFilter(authenticationManager()))
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

@@ -1,5 +1,7 @@
 package com.yj.foodtracesystem.controller;
 
+import com.yj.foodtracesystem.controllerApi.Result;
+import com.yj.foodtracesystem.controllerApi.ResultUtil;
 import com.yj.foodtracesystem.model.Role;
 import com.yj.foodtracesystem.model.User;
 import com.yj.foodtracesystem.repository.UserRepository;
@@ -22,17 +24,17 @@ import java.util.Set;
  * @Description:
  * @Date: Created in 22:42 2018/4/18
  */
-@RestController
+@Controller
 public class LoginController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
-   /* @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
-    public String login(Model model) {
-        model.addAttribute("user", new User());
-        return "login";
+    /*@RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+    @ResponseBody
+    public Result<User> login(@RequestBody User user) {
+        return ResultUtil.success(user);
     }*/
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)

@@ -1,4 +1,4 @@
-package com.yj.foodtracesystem.controllerApi;
+package com.yj.foodtracesystem.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -18,9 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 public class HttpAspect {
-    public final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
-
-    @Pointcut("execution(* com.yj.foodtracesystem.service.FarmerServiceImp.*(..))")
+   public final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
+    @Pointcut("execution(public * com.yj.foodtracesystem.controller.FarmerController.*(..))")
     public void log() {
     }
 
@@ -43,9 +42,9 @@ public class HttpAspect {
         System.out.println("after");
     }
 
-    @AfterReturning(returning = "", pointcut = "log()")
+    @AfterReturning(returning = "object", pointcut = "log()")
     public void doAfterReturning(Object object) {
-        logger.info("response=", object.toString());
+        logger.info("response={}", object.toString());
     }
 
 }

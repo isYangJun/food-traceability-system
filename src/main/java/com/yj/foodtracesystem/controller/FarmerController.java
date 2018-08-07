@@ -85,14 +85,12 @@ public class FarmerController {
 
     @PostMapping(value = "/farmer/updateOrder")
     public Result<OperationOrderInfo> updateOrder(@RequestBody OperationOrderInfo orderInfo) {
-
-        OperationOrderInfo operationOrderInfo;
         try {
-            operationOrderInfo = farmerService.updateOrderInfo(orderInfo.getId());
+            OperationOrderInfo operationOrderInfo = farmerService.updateOrderInfo(orderInfo.getId());
+            return ResultUtil.success(operationOrderInfo);
         } catch (Exception e) {
             throw new BaseException(ResultEnum.ARGUMENT_ERROR);
         }
-        return ResultUtil.success(operationOrderInfo);
     }
    /* @PostMapping(value = "/farmer/updateOrder")
     public ModelAndView updateOrder(OperationOrderInfo orderInfo) throws Exception {
