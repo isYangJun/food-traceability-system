@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Date: Created in 8:36 2018/8/1
  */
 @ControllerAdvice
-public class RuntimeExceptionHandler {
+public class RuntimeExceptionHandler{
     private static final Logger logger=LoggerFactory.getLogger(RuntimeExceptionHandler.class);
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
@@ -30,7 +30,7 @@ public class RuntimeExceptionHandler {
         return ResultUtil.error(500);
     }
 
-    @ExceptionHandler(value = BaseException.class)
+   /* @ExceptionHandler(value = BaseException.class)
     @ResponseBody
     public Result handle(BaseException e) {
         logger.info("RuntimeExceptionHandler-method:handle");
@@ -59,5 +59,5 @@ public class RuntimeExceptionHandler {
         logger.info("RuntimeException:token is not supported");
         BaseException baseException=new BaseException(ResultEnum.UNSUPPORTED_TOKEN);
         return ResultUtil.error(baseException.getCode(),baseException.getMessage());
-    }
+    }*/
 }

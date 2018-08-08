@@ -22,7 +22,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
+       try {
             filterChain.doFilter(request, response);
         } catch (RuntimeException e) {
             logger.info("ExceptionHandlerFilter: "+e.getMessage());

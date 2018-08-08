@@ -7,7 +7,7 @@ package com.yj.foodtracesystem.controllerApi;
  */
 public enum ResultEnum {
     UNKNOW_ERROR(-1,"error"),
-    ARGUMENT_ERROR(1,"参数错误"),
+    ARGUMENT_ERROR(1,"error argument"),
     NULL_TOKEN(2,"token is null"),
     EXPIRED_TOKEN(3,"token is expired"),
     UNSUPPORTED_TOKEN(4,"token is unsupported"),
