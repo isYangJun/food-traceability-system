@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.controller;
 
-import com.yj.foodtracesystem.exception.UsernameIsExitedException;
+import com.yj.foodtracesystem.controllerApi.ResultEnum;
+import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.model.User;
 import com.yj.foodtracesystem.repository.UserRepository;
 import io.swagger.annotations.Api;
@@ -34,7 +35,7 @@ public class RegisterController extends BaseController {
     public User signup(@RequestBody User user) {
         User bizUser = userRepository.findByUserNum(user.getUserNum());
         if(null != bizUser){
-            throw new UsernameIsExitedException("用户已经存在");
+            throw new BaseException(ResultEnum.USER_EXISTED);
         }
         user.setPassword(DigestUtils.md5DigestAsHex((user.getPassword()).getBytes()));
         return userRepository.save(user);

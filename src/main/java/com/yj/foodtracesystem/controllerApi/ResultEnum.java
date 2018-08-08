@@ -13,7 +13,8 @@ public enum ResultEnum {
     UNSUPPORTED_TOKEN(4,"token is unsupported"),
     UNFORMED_TOKEN(5,"token form is wrong"),
     SIGNFAIL_TOKEN(6,"sign failed"),
-    ILLEAGUE_TOKEN(7,"illeague token para");
+    ILLEAGUE_TOKEN(7,"illeague token para"),
+    USER_EXISTED(8,"user already exist");
 
 
     private Integer code;

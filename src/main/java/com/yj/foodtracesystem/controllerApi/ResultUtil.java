@@ -27,4 +27,10 @@ public class ResultUtil {
         result.setMsg(msg);
         return result;
     }
+
+    public static Result error(Integer code){
+        Result result=new Result();
+        result.setCode(code);
+        return result;
+    }
 }

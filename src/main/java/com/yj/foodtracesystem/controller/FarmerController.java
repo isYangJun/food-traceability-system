@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.controller;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.yj.foodtracesystem.controllerApi.Result;
 import com.yj.foodtracesystem.controllerApi.ResultEnum;
 import com.yj.foodtracesystem.controllerApi.ResultUtil;
@@ -84,11 +85,13 @@ public class FarmerController {
     }
 
     @PostMapping(value = "/farmer/updateOrder")
-    public Result<OperationOrderInfo> updateOrder(@RequestBody OperationOrderInfo orderInfo) {
+    public Result<OperationOrderInfo> updateOrder(@RequestBody OperationOrderInfo orderInfo)throws BaseException {
         try {
             OperationOrderInfo operationOrderInfo = farmerService.updateOrderInfo(orderInfo.getId());
             return ResultUtil.success(operationOrderInfo);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
+            logger.info("异常类型："+e.getClass().getName().toString());
+            //throw new BaseException(ResultEnum.EXPIRED_TOKEN);
             throw new BaseException(ResultEnum.ARGUMENT_ERROR);
         }
     }

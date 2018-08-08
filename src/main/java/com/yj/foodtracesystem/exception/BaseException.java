@@ -16,6 +16,10 @@ public class BaseException extends RuntimeException {
         super((resultEnum.getMsg()));
         this.code=resultEnum.getCode();
     }
+    public BaseException(Integer code,String msg){
+        super(msg);
+        this.code=code;
+    }
 
     public Integer getCode() {
         return code;

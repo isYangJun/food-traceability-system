@@ -3,7 +3,6 @@ package com.yj.foodtracesystem.filter;
 import com.yj.foodtracesystem.ConstantKey.ConstantKey;
 import com.yj.foodtracesystem.controllerApi.ResultEnum;
 import com.yj.foodtracesystem.exception.BaseException;
-import com.yj.foodtracesystem.exception.TokenException;
 import com.yj.foodtracesystem.model.GrantedAuthorityImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -42,13 +41,14 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException,BaseException {
         logger.info("JWTAuthenticationFilter");
         logger.info("doFilterInternal");
 
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response);
+
             return;
         }
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
@@ -66,11 +66,11 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request)throws BaseException{
         logger.info("JWTAuthenticationFilter.getAuthentication");
         String token = request.getHeader("Authorization");
         if (token == null || token.isEmpty()) {
-            throw new TokenException(ResultEnum.NULL_TOKEN);
+            throw new BaseException(ResultEnum.NULL_TOKEN);
         }
         // parse the token.
         String user = null;
@@ -102,13 +102,15 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             }
         } catch (ExpiredJwtException e) {
             logger.error("Token已过期: {} " + e);
-            throw new BaseException(ResultEnum.EXPIRED_TOKEN);
+            logger.info("异常类型："+e.getClass().getName().toString());
+            throw new BaseException(ResultEnum.ARGUMENT_ERROR);
+            //throw new BaseException(ResultEnum.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException e) {
             logger.error("Token格式错误: {} " + e);
-            throw new TokenException(ResultEnum.UNSUPPORTED_TOKEN);
+            throw new BaseException(ResultEnum.ARGUMENT_ERROR);
         } catch (MalformedJwtException e) {
             logger.error("Token没有被正确构造: {} " + e);
-            throw new TokenException(ResultEnum.UNFORMED_TOKEN);
+            throw new BaseException(ResultEnum.UNFORMED_TOKEN);
         } catch (SignatureException e) {
             logger.error("签名失败: {} " + e);
             throw new BaseException(ResultEnum.SIGNFAIL_TOKEN);

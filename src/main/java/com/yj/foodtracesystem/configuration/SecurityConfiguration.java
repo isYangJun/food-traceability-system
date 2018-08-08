@@ -1,5 +1,6 @@
 package com.yj.foodtracesystem.configuration;
 
+import com.yj.foodtracesystem.filter.ExceptionHandlerFilter;
 import com.yj.foodtracesystem.filter.JWTAuthenticationFilter;
 import com.yj.foodtracesystem.filter.JWTLoginFilter;
 import com.yj.foodtracesystem.handler.UserHandler;
@@ -90,6 +91,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JWTLoginFilter(authenticationManager()))
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilterBefore(new ExceptionHandlerFilter(),JWTAuthenticationFilter.class)
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and()
