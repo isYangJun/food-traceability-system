@@ -34,8 +34,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    private UserHandler userHandler;
-    @Autowired
     private AccessDeniedHandler accessDeniedHandler;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -53,10 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
 
-    public SecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    /*public SecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+    }*/
 
     // 该方法是登录的时候会进入
     @Override
@@ -73,7 +71,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
             // -- register url
-            "/users/signup",
             // -- swagger ui
             "/v2/api-docs",
             "/swagger-resources",

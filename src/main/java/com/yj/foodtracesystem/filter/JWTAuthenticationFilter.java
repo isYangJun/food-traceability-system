@@ -48,15 +48,13 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             logger.info(request.getRequestURL().toString());
-            if(!request.getRequestURL().toString().equals("http://localhost:8081/users/signup")){
-                throw new BaseException(ResultEnum.NULL_TOKEN);
+            if(request.getRequestURL().toString().equals("http://localhost:8081/users/signup")||request.getRequestURL().toString().equals("http://localhost:8081/swagger-ui.html")
+                    ){
+                chain.doFilter(request, response);
+                return;
             }
-            chain.doFilter(request, response);
-            return;
-        }
-        /*if (header == null || !header.startsWith("Bearer ")) {
             throw new BaseException(ResultEnum.NULL_TOKEN);
-        }*/
+        }
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class HttpAspect {
    public final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
+   /* @Pointcut("execution(public * com.yj.foodtracesystem.controller.FarmerController.*(..))")
+    public void log() {
+    }*/
+
     @Pointcut("execution(public * com.yj.foodtracesystem.controller.FarmerController.*(..))")
     public void log() {
     }
@@ -33,13 +37,12 @@ public class HttpAspect {
         logger.info("ip={}", request.getRemoteAddr());
         logger.info("class_method={}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         logger.info("args={}", joinPoint.getArgs());
-        System.out.println("before");
     }
 
 
     @After("log()")
-    public void doAfter() {
-        System.out.println("after");
+    public void doAfter(JoinPoint joinPoint) {
+        logger.info("class_method={}: end", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
     }
 
     @AfterReturning(returning = "object", pointcut = "log()")
