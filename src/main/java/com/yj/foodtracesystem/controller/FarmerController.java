@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -85,14 +86,12 @@ public class FarmerController {
     }
 
     @PostMapping(value = "/farmer/updateOrder")
-    public Result<OperationOrderInfo> updateOrder(@RequestBody OperationOrderInfo orderInfo)throws BaseException {
-        try {
+    public Result<OperationOrderInfo> updateOrder(@RequestBody OperationOrderInfo orderInfo) {
+        try{
             OperationOrderInfo operationOrderInfo = farmerService.updateOrderInfo(orderInfo.getId());
             return ResultUtil.success(operationOrderInfo);
-        } catch (NullPointerException e) {
-            logger.info("异常类型："+e.getClass().getName().toString());
-            //throw new BaseException(ResultEnum.EXPIRED_TOKEN);
-            throw new BaseException(ResultEnum.ARGUMENT_ERROR);
+        }catch (NullPointerException e) {
+           throw new BaseException(ResultEnum.ARGUMENT_ERROR);
         }
     }
    /* @PostMapping(value = "/farmer/updateOrder")

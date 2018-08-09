@@ -24,40 +24,17 @@ public class RuntimeExceptionHandler{
     @ResponseBody
     public Result handle(Exception e) {
         if (e instanceof BaseException) {
+            logger.info("e instanceof BaseException:");
             BaseException baseException = (BaseException) e;
             return ResultUtil.error(baseException.getCode(), baseException.getMessage());
         }
         return ResultUtil.error(500);
     }
 
-   /* @ExceptionHandler(value = BaseException.class)
+   @ExceptionHandler(value = BaseException.class)
     @ResponseBody
     public Result handle(BaseException e) {
         logger.info("RuntimeExceptionHandler-method:handle");
             return ResultUtil.error(e.getCode(), e.getMessage());
     }
-
-    @ExceptionHandler(value = ExpiredJwtException.class)
-    @ResponseBody
-    public Result handle(ExpiredJwtException e){
-        logger.info("token is expired");
-        BaseException baseException=new BaseException(ResultEnum.EXPIRED_TOKEN);
-        return ResultUtil.error(baseException.getCode(),baseException.getMessage());
-    }
-
-    @ExceptionHandler(value = UnsupportedJwtException.class)
-    @ResponseBody
-    public Result handle(UnsupportedJwtException e){
-        logger.info("token is not supported");
-        BaseException baseException=new BaseException(ResultEnum.UNSUPPORTED_TOKEN);
-        return ResultUtil.error(baseException.getCode(),baseException.getMessage());
-    }
-
-    @ExceptionHandler(value = RuntimeException.class)
-    @ResponseBody
-    public Result handle(RuntimeException e){
-        logger.info("RuntimeException:token is not supported");
-        BaseException baseException=new BaseException(ResultEnum.UNSUPPORTED_TOKEN);
-        return ResultUtil.error(baseException.getCode(),baseException.getMessage());
-    }*/
 }

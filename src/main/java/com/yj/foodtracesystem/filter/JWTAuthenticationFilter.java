@@ -41,7 +41,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException,BaseException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         logger.info("JWTAuthenticationFilter");
         logger.info("doFilterInternal");
 
@@ -66,7 +66,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request)throws BaseException{
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
         logger.info("JWTAuthenticationFilter.getAuthentication");
         String token = request.getHeader("Authorization");
         if (token == null || token.isEmpty()) {
@@ -74,7 +74,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         }
         // parse the token.
         String user = null;
-        try {
+
             user = Jwts.parser()
                     .setSigningKey(ConstantKey.SIGNING_KEY)
                     .parseClaimsJws(token.replace("Bearer ", ""))
@@ -87,10 +87,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
             if (user != null) {
                 ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-
-                /*String authority = (String) user.substring(user.indexOf("["), user.indexOf("]"));
-                logger.info("authority",authorit);
-                logger.info(authority);*/
                 String authority = user;
                 authority = authority.substring(authority.indexOf("-") + 1, authority.length());
                 logger.info(authority);
@@ -100,24 +96,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 logger.info(user);
                 return new UsernamePasswordAuthenticationToken(user, null, authorities);
             }
-        } catch (ExpiredJwtException e) {
-            logger.error("Token已过期: {} " + e);
-            logger.info("异常类型："+e.getClass().getName().toString());
-            throw new BaseException(ResultEnum.ARGUMENT_ERROR);
-            //throw new BaseException(ResultEnum.EXPIRED_TOKEN);
-        } catch (UnsupportedJwtException e) {
-            logger.error("Token格式错误: {} " + e);
-            throw new BaseException(ResultEnum.ARGUMENT_ERROR);
-        } catch (MalformedJwtException e) {
-            logger.error("Token没有被正确构造: {} " + e);
-            throw new BaseException(ResultEnum.UNFORMED_TOKEN);
-        } catch (SignatureException e) {
-            logger.error("签名失败: {} " + e);
-            throw new BaseException(ResultEnum.SIGNFAIL_TOKEN);
-        } catch (IllegalArgumentException e) {
-            logger.error("非法参数异常: {} " + e);
-            throw new BaseException(ResultEnum.ILLEAGUE_TOKEN);
-        }
+
         return null;
     }
 }
