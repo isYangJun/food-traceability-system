@@ -125,23 +125,6 @@ public class PublicService {
         }
     }
 
-    /*public List<OperationHisResult> convertToType(List<Object[]> list) {
-        List<OperationHisResult> operationHisResultList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            OperationHisResult operationHisResult = new OperationHisResult();
-            operationHisResult.filedId = list.get(i)[0].toString();
-            operationHisResult.filedName = list.get(i)[1].toString();
-            operationHisResult.userNum = list.get(i)[2].toString();
-            operationHisResult.userName = list.get(i)[3].toString();
-            operationHisResult.operaInfo = list.get(i)[4].toString();
-            operationHisResult.seedName = list.get(i)[5].toString();
-            operationHisResult.operationTime = list.get(i)[6].toString().replace(".0", "");
-            operationHisResult.memo = list.get(i)[7].toString();
-            operationHisResultList.add(operationHisResult);
-        }
-        return operationHisResultList;
-    }*/
-
     /**
      * @Author:yangjun
      * @Description:@return返回字符串格式 yyyy-MM-dd HH:mm:ss
