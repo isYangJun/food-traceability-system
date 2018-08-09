@@ -1,6 +1,6 @@
 package com.yj.foodtracesystem.exception;
 
-import com.yj.foodtracesystem.controllerApi.ResultEnum;
+import com.yj.foodtracesystem.Result.ResultEnum;
 
 /**
  * 描述：

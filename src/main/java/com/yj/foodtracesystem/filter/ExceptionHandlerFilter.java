@@ -2,14 +2,13 @@ package com.yj.foodtracesystem.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yj.foodtracesystem.controllerApi.ResultEnum;
-import com.yj.foodtracesystem.controllerApi.ResultUtil;
+import com.yj.foodtracesystem.Result.ResultEnum;
+import com.yj.foodtracesystem.Result.ResultUtil;
 import com.yj.foodtracesystem.exception.BaseException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import org.mapstruct.BeforeMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

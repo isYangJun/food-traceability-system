@@ -1,4 +1,4 @@
-package com.yj.foodtracesystem.controllerApi;
+package com.yj.foodtracesystem.Result;
 
 /**
  * @Author:yangjun

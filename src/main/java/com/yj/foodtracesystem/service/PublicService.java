@@ -110,25 +110,7 @@ public class PublicService {
             }
             return (T) productInfoList;
         }
-        if (typeName.contains("CarInfo")){
-            List<Car> carList = new ArrayList<>();
-            for (int i = 0;i<list.size();i++){
-                Car car = new Car();
-                car.setType(list.get(i)[0].toString());
-                carList.add(car);
-            }
-            return(T) carList;
-        }
-        if (typeName.contains("TransportInfo")) {
-            List<TransportInfo> transportInfoList = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                TransportInfo transportInfo = new TransportInfo();
-                transportInfo.setProNum(list.get(i)[0].toString());
-                transportInfo.setProName(list.get(i)[1].toString());
-                transportInfoList.add(transportInfo);
-            }
-            return (T) transportInfoList;
-        }
+
         if (typeName.contains("ProductPara")) {
             List<ProductPara> productParaList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {

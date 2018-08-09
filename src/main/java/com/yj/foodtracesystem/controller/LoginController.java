@@ -1,8 +1,5 @@
 package com.yj.foodtracesystem.controller;
 
-import com.yj.foodtracesystem.controllerApi.Result;
-import com.yj.foodtracesystem.controllerApi.ResultUtil;
-import com.yj.foodtracesystem.model.Role;
 import com.yj.foodtracesystem.model.User;
 import com.yj.foodtracesystem.repository.UserRepository;
 import com.yj.foodtracesystem.service.UserService;
@@ -10,14 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @Author:yangjun

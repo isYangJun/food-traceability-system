@@ -1,7 +1,7 @@
 package com.yj.foodtracesystem.filter;
 
 import com.yj.foodtracesystem.ConstantKey.ConstantKey;
-import com.yj.foodtracesystem.controllerApi.ResultEnum;
+import com.yj.foodtracesystem.Result.ResultEnum;
 import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.model.GrantedAuthorityImpl;
 import io.jsonwebtoken.*;
@@ -48,7 +48,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             logger.info(request.getRequestURL().toString());
-            if(request.getRequestURL().toString().equals("http://localhost:8081/users/signup")||request.getRequestURL().toString().equals("http://localhost:8081/swagger-ui.html")
+            logger.info(request.getRequestURL().toString());
+            if(request.getRequestURL().toString().contains("/users/signup")||request.getRequestURL().toString().contains("/swagger")
                     ){
                 chain.doFilter(request, response);
                 return;

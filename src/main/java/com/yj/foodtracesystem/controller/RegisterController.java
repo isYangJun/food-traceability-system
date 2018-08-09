@@ -1,6 +1,6 @@
 package com.yj.foodtracesystem.controller;
 
-import com.yj.foodtracesystem.controllerApi.ResultEnum;
+import com.yj.foodtracesystem.Result.ResultEnum;
 import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.model.User;
 import com.yj.foodtracesystem.repository.UserRepository;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.nio.file.attribute.UserPrincipal;
 
 /**
  * @author zhaoxinguo on 2018/06/05.
