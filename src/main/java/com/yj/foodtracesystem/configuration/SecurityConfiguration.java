@@ -71,13 +71,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            // -- register url
+            "/users/signup",
+            // -- swagger ui
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/", "/login", "/registration", "/header", "/403", "/QRCodeRes", "/errorProWeight","/signup","/users/**",
+            "/test/**","/swagger-ui.html","/v2/api-docs"
+            // other public endpoints of your API may be appended to this array
+    };
+
     // 设置 HTTP 验证规则
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/registration", "/header", "/403", "/QRCodeRes", "/errorProWeight","/signup","/users/**").permitAll()
-                .antMatchers("/test/**","/swagger-ui.html","/v2/api-docs").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/cooperator/**").hasAuthority("COOPERATOR")
                 .antMatchers("/farmer/**").hasAuthority("FARMER")
