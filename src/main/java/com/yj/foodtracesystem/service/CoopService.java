@@ -60,7 +60,7 @@ public interface CoopService {
 
     List<User> findByUserCompAndRole(String userComp, int userRole);
 
-    void saveOperationOrderInfo(OperationOrderInfo operationOrderInfo);
+    OperationOrderInfo saveOperationOrderInfo(OperationOrderInfo operationOrderInfo);
 
     List<OperationOrderInfo> findAllOperationOrderInfo();
     List<OperationOrderInfo> findByUserIdAndIsDone(String UserId,int isDone);

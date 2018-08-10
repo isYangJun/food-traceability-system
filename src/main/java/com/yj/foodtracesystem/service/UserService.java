@@ -15,6 +15,6 @@ public interface UserService {
     List<User> findByUserNumOrName(String num,String name,String compNum);
     List<User> findAllUser();
     List<User> findByTime(String startTime,String endTime);
-    void saveUser(User user);
+    User saveUser(User user);
     List<Role> findAllRole();
 }

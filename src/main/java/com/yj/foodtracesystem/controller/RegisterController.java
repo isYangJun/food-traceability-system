@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author zhaoxinguo on 2018/06/05.
+ * @author yangjun
+ * on 2018/06/05.
  */
 @RestController
 @RequestMapping("/users")

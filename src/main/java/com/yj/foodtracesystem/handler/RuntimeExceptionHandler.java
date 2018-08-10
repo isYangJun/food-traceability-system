@@ -25,7 +25,7 @@ public class RuntimeExceptionHandler{
             BaseException baseException = (BaseException) e;
             return ResultUtil.error(baseException.getCode(), baseException.getMessage());
         }
-        return ResultUtil.error(500);
+        return ResultUtil.error(500,e.getMessage());
     }
 
    @ExceptionHandler(value = BaseException.class)

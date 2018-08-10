@@ -187,8 +187,8 @@ public class CoopServiceImp implements CoopService {
     }
 
     @Override
-    public void saveOperationOrderInfo(OperationOrderInfo operationOrderInfo) {
-        operationOrderInfoRepository.save(operationOrderInfo);
+    public OperationOrderInfo saveOperationOrderInfo(OperationOrderInfo operationOrderInfo) {
+       return operationOrderInfoRepository.save(operationOrderInfo);
 
     }
 

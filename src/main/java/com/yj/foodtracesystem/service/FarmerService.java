@@ -22,7 +22,7 @@ public interface FarmerService {
     List<PesticideInfo> findAllPesticideInfo();
     void saveFiledOperation(FiledOperation filedOperation);
     void saveFiledInfo(FiledInfo filedInfo);
-    void saveSeedInfo(SeedInfo seedInfo);
+    SeedInfo saveSeedInfo(SeedInfo seedInfo);
     void saveFertilizerInfo(FertilizerInfo fertilizerInfo);
     void savePesticideInfo(PesticideInfo pesticideInfo);
     List<FiledInfo> findFiledInfoById(int id);

@@ -103,7 +103,7 @@ public class FarmerServiceImp implements FarmerService {
         filedInfoRepository.save(filedInfo);
     }
     @Override
-    public void saveSeedInfo(SeedInfo seedInfo) {seedInfoRepository.save(seedInfo);}
+    public SeedInfo saveSeedInfo(SeedInfo seedInfo) {return seedInfoRepository.save(seedInfo);}
     @Override
     public void saveFertilizerInfo(FertilizerInfo fertilizerInfo){fertilizerInfoRepository.save(fertilizerInfo);}
     @Override
