@@ -36,7 +36,7 @@ public class BaseController {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<String> list = new ArrayList<>();
         for (GrantedAuthority grantedAuthority : authorities) {
-            logger.info("权限列表：{}", grantedAuthority.getAuthority());
+            logger.debug("权限列表：{}", grantedAuthority.getAuthority());
             list.add(grantedAuthority.getAuthority());
         }
         return list;

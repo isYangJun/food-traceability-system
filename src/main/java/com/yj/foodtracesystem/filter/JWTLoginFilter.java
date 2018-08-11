@@ -39,19 +39,18 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     private static final Logger logger=LoggerFactory.getLogger(JWTLoginFilter.class);
 
     public JWTLoginFilter(AuthenticationManager authenticationManager) {
-        logger.info("construct JWTLoginFilter");
+        logger.debug("construct JWTLoginFilter");
         this.authenticationManager = authenticationManager;
     }
 
     // 接收并解析用户凭证
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
-        logger.info("JWTLoginFilter");
+        logger.debug("JWTLoginFilter");
         try {
             User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
 
-            logger.info("userNum:",user.toString());
-            logger.info(authenticationManager.getClass().getName().toString());
+            logger.debug("userNum:",user.toString());
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUserNum(),
@@ -69,9 +68,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
-        logger.info("JWTLoginFilter");
-        logger.info("successfulAuthentication");
-
+        logger.debug("JWTLoginFilter.successfulAuthentication");
         // builder the token
         String token = null;
         try {
@@ -80,7 +77,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
             List roleList = new ArrayList<>();
             for (GrantedAuthority grantedAuthority : authorities) {
                 logger.info(grantedAuthority.getAuthority().toString());
-                logger.info(grantedAuthority.getAuthority());
                 roleList.add(grantedAuthority.getAuthority());
             }
             token = Jwts.builder()

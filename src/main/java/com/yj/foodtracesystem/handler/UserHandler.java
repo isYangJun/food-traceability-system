@@ -1,5 +1,7 @@
 package com.yj.foodtracesystem.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -22,17 +24,18 @@ import java.util.List;
 @Component
 public class UserHandler extends SimpleUrlAuthenticationSuccessHandler {
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private static final Logger logger=LoggerFactory.getLogger(UserHandler.class);
 
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
+        logger.debug("UserHandler.handle");
         String targetUrl = determineTargetUrl(authentication);
-
+        logger.info("targetUrl:",targetUrl);
         if (response.isCommitted()) {
             System.out.println("Can't redirect");
             return;
         }
-
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 

@@ -53,7 +53,7 @@ public class CooperatorController {
     @ApiOperation(value = "API cooperator test")
     @GetMapping(value = "/test")
     public String test() {
-        logger.info("cooperator test");
+        logger.debug("cooperator test");
         return "cooperator test";
     }
 
@@ -91,24 +91,21 @@ public class CooperatorController {
         farmerInfo.setRegTime(publicService.getStringDate());
         Role role = new Role();
         role.setRole("2");
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        farmerInfo.setRoles(roles);
         return ResultUtil.success(userService.saveUser(farmerInfo));
     }
 
     @ApiOperation(value = "query farmer by id")
     @PostMapping("/queryFarmerById")
-    public Result<List<User>> queryFarmerById(User farmerInfoById) {
+    public Result<List<User>> queryFarmerById(@RequestBody User farmerInfoById) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserNum(auth.getName());
+        User user = userService.findUserByUserNum(auth.getPrincipal().toString());
         List<User> farmerInfoResList = userService.findByUserNumOrName(farmerInfoById.getName(), farmerInfoById.getUserNum(), user.getUserComp());
         return ResultUtil.success(farmerInfoResList);
     }
 
     @ApiOperation(value = "query farmer by time")
     @PostMapping("/queryFarmerByTime")
-    public Result<List<User>> queryFarmerByTime(QueryPara farmerInfoByTime) {
+    public Result<List<User>> queryFarmerByTime(@RequestBody QueryPara farmerInfoByTime) {
         String startTime = farmerInfoByTime.getStartTime();
         String endTime = farmerInfoByTime.getEndTime();
         List<User> farmerInfoResList = userService.findByTime(startTime, endTime);

@@ -6,9 +6,6 @@ import com.yj.foodtracesystem.Result.ResultUtil;
 import com.yj.foodtracesystem.exception.BaseException;
 import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationHerPara;
-import com.yj.foodtracesystem.repository.OperationOrderInfoRepository;
-import com.yj.foodtracesystem.repository.UserRepository;
-import com.yj.foodtracesystem.service.CoopService;
 import com.yj.foodtracesystem.service.FarmerService;
 import com.yj.foodtracesystem.service.PublicService;
 import com.yj.foodtracesystem.service.UserService;
@@ -20,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
@@ -44,7 +40,7 @@ public class FarmerController {
     @ApiOperation(value = "API farmer test")
     @GetMapping(value = "/test")
     public String test() {
-        logger.info("farmer test");
+        logger.debug("farmer test");
         return "farmer test";
     }
 
@@ -78,7 +74,7 @@ public class FarmerController {
 
     @ApiOperation(value = "add seed info ")
     @PostMapping(value = "/addSeedInfo")
-    public Result<SeedInfo> addSeedInfo(@RequestBody SeedInfo seedInfo) throws Exception {
+    public Result<SeedInfo> addSeedInfo(@RequestBody SeedInfo seedInfo) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
         seedInfo.setSeedRegTime(publicService.getStringDate());

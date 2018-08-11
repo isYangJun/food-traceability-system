@@ -3,10 +3,7 @@ package com.yj.foodtracesystem.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;
-import springfox.documentation.builders.ParameterBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.builders.*;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -32,7 +29,7 @@ import static com.google.common.collect.Lists.newArrayList;
 public class SwaggerConfig {
 
     // 设置默认TOKEN，方便测试
-    private static final String TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi1bUk9MRV9BRE1JTiwgQVVUSF9XUklURV0iLCJleHAiOjE1Mjk3Mzg3MzN9.TnPfcYc_ssozPpmnIwf5GvPjp3H4tppf0nXaihgzsMfcoWrhwzEITicvhFNdInFbbDXWNppPD3Bts1ni5GuTRQ";
+    /*private static final String TOKEN = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbi1bUk9MRV9BRE1JTiwgQVVUSF9XUklURV0iLCJleHAiOjE1Mjk3Mzg3MzN9.TnPfcYc_ssozPpmnIwf5GvPjp3H4tppf0nXaihgzsMfcoWrhwzEITicvhFNdInFbbDXWNppPD3Bts1ni5GuTRQ";
 
     @Bean
     public Docket api() {
@@ -43,7 +40,7 @@ public class SwaggerConfig {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.yj.foodtracesystem.controller"))
-                .paths(PathSelectors.ant("/**"))
+                .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars)
                 .apiInfo(apiInfo())
@@ -60,5 +57,32 @@ public class SwaggerConfig {
                 "Terms of service",
                 new Contact("yangjun", "www.12366.com", "isyangjun@126.com"),
                 "License of API", "API license URL", Collections.emptyList());
+    }*/
+
+
+    @Configuration
+    @EnableSwagger2
+    public class Swagger2 {
+
+        @Bean
+        public Docket createRestApi() {
+            return new Docket(DocumentationType.SWAGGER_2)
+                    .apiInfo(apiInfo())
+                    .select()
+                    .apis(RequestHandlerSelectors.basePackage("com.yj.foodtracesystem.controller"))
+                    .paths(PathSelectors.any())
+                    .build();
+        }
+
+        private ApiInfo apiInfo() {
+            return new ApiInfoBuilder()
+                    .title("Spring Boot中使用Swagger2构建RESTful APIs")
+                    .description("更多Spring Boot相关文章请关注：http://blog.didispace.com/")
+                    .termsOfServiceUrl("http://blog.didispace.com/")
+                    .version("1.0")
+                    .build();
+        }
+
     }
+
 }

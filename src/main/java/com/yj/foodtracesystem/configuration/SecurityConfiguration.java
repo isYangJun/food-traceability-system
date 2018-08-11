@@ -3,7 +3,6 @@ package com.yj.foodtracesystem.configuration;
 import com.yj.foodtracesystem.filter.ExceptionHandlerFilter;
 import com.yj.foodtracesystem.filter.JWTAuthenticationFilter;
 import com.yj.foodtracesystem.filter.JWTLoginFilter;
-import com.yj.foodtracesystem.handler.UserHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,17 +49,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-
-    /*public SecurityConfiguration(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }*/
-
     // 该方法是登录的时候会进入
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        logger.info("SecurityConfiguration: JDBC config");
+        logger.debug("SecurityConfiguration: JDBC config");
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
@@ -70,8 +63,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] AUTH_WHITELIST = {
-            // -- register url
-            // -- swagger ui
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
@@ -81,7 +72,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/", "/login", "/registration", "/header", "/403", "/QRCodeRes", "/errorProWeight","/signup","/users/**",
             "/test/**","/v2/api-docs"
-            // other public endpoints of your API may be appended to this array
     };
 
     // 设置 HTTP 验证规则

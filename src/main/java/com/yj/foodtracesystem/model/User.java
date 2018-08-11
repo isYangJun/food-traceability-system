@@ -43,24 +43,6 @@ public class User {
     @Column(name = "regTime")
     private String regTime;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userNum='" + userNum + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", idNum='" + idNum + '\'' +
-                ", regTime='" + regTime + '\'' +
-                ", userRole=" + userRole +
-                ", userComp='" + userComp + '\'' +
-                ", userCompName='" + userCompName + '\'' +
-                ", active=" + active +
-                ", roles=" + roles +
-                '}';
-    }
-
     public int getUserRole() {
         return userRole;
     }
@@ -129,9 +111,22 @@ public class User {
     @Column(name = "active")
     private int active;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userNum='" + userNum + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", idNum='" + idNum + '\'' +
+                ", regTime='" + regTime + '\'' +
+                ", userRole=" + userRole +
+                ", userComp='" + userComp + '\'' +
+                ", userCompName='" + userCompName + '\'' +
+                ", active=" + active +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -163,13 +158,5 @@ public class User {
 
     public void setActive(int active) {
         this.active = active;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 }

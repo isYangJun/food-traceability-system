@@ -54,9 +54,15 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
            baseException=new BaseException(ResultEnum.ILLEAGUE_TOKEN);
            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
            response.getWriter().write(convertObjectToJson(ResultUtil.error(baseException.getCode(),baseException.getMessage())));
-       }catch (BaseException e){
+       }
+       catch (BaseException e){
            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
            response.getWriter().write(convertObjectToJson(ResultUtil.error(e.getCode(),e.getMessage())));
+       }
+       catch (RuntimeException e){
+           logger.debug("RuntimeException e:",e.getClass().getName());
+           response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+           response.getWriter().write(convertObjectToJson(e.getMessage()));
        }
     }
 

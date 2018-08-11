@@ -23,7 +23,7 @@ public class HttpAspect {
     public void log() {
     }*/
 
-    @Pointcut("execution(public * com.yj.foodtracesystem.controller.FarmerController.*(..))")
+    @Pointcut("execution(public * com.yj.foodtracesystem.controller.*.*(..))")
     public void log() {
     }
 
@@ -42,7 +42,7 @@ public class HttpAspect {
 
     @After("log()")
     public void doAfter(JoinPoint joinPoint) {
-        logger.info("class_method={}: end", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        //logger.info("class_method={}: ", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
     }
 
     @AfterReturning(returning = "object", pointcut = "log()")

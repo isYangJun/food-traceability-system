@@ -7,6 +7,7 @@ package com.yj.foodtracesystem.model.TempModel;
  */
 public class QueryPara {
     public String startTime;
+    public String endTime;
 
     @Override
     public String toString() {
@@ -32,5 +33,5 @@ public class QueryPara {
         this.endTime = endTime;
     }
 
-    public String endTime;
+
 }

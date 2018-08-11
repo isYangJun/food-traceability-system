@@ -42,13 +42,10 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        logger.info("JWTAuthenticationFilter");
-        logger.info("doFilterInternal");
-
+        logger.debug("JWTAuthenticationFilter.doFilterInternal");
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
-            logger.info(request.getRequestURL().toString());
-            logger.info(request.getRequestURL().toString());
+            logger.debug(request.getRequestURL().toString());
             if(request.getRequestURL().toString().contains("/users/signup")||request.getRequestURL().toString().contains("/swagger")
                     ){
                 chain.doFilter(request, response);
@@ -60,19 +57,18 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        logger.info("user:", auth.getName().toString());
+        logger.debug("user:", auth.getName().toString());
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
         List<String> list = new ArrayList<>();
         for (GrantedAuthority grantedAuthority : authorities) {
-            logger.info("权限列表：{}", grantedAuthority.getAuthority());
-            logger.info("权限列表：{}", grantedAuthority.getAuthority().toString());
+            logger.debug("权限列表：{}", grantedAuthority.getAuthority());
             list.add(grantedAuthority.getAuthority());
         }
         chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
-        logger.info("JWTAuthenticationFilter.getAuthentication");
+        logger.debug("JWTAuthenticationFilter.getAuthentication");
         String token = request.getHeader("Authorization");
         if (token == null || token.isEmpty()) {
             throw new BaseException(ResultEnum.NULL_TOKEN);
@@ -85,20 +81,13 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                     .parseClaimsJws(token.replace("Bearer ", ""))
                     .getBody()
                     .getSubject();
-            logger.info(String.valueOf(user.length()));
-            logger.info(user);
-            logger.info(user.toString());
-            logger.info(user.getClass().getName().toString());
-
             if (user != null) {
                 ArrayList<GrantedAuthority> authorities = new ArrayList<>();
                 String authority = user;
                 authority = authority.substring(authority.indexOf("-") + 1, authority.length());
-                logger.info(authority);
+                logger.debug(authority);
                 authorities.add(new GrantedAuthorityImpl(authority));
-                logger.info(authorities.get(0).getAuthority());
                 user = user.substring(0, user.indexOf("-"));
-                logger.info(user);
                 return new UsernamePasswordAuthenticationToken(user, null, authorities);
             }
 

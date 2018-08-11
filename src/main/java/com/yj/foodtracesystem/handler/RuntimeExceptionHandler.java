@@ -20,8 +20,9 @@ public class RuntimeExceptionHandler{
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handle(Exception e) {
+        logger.info("exception class:",e.getClass().getName());
         if (e instanceof BaseException) {
-            logger.info("e instanceof BaseException:");
+            logger.debug("e instanceof BaseException:");
             BaseException baseException = (BaseException) e;
             return ResultUtil.error(baseException.getCode(), baseException.getMessage());
         }
