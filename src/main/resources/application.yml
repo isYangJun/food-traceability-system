@@ -28,6 +28,13 @@ spring:
         users-query: select user_num, password, active from tbl_user where user_num=?
         roles-query: select u.user_num, r.role from tbl_user u inner join user_role ur on(u.user_id=ur.user_id) inner join role r on(ur.role_id=r.role_id) where u.user_num=?
 
+    cache:
+        type: ehcache
+        ehcache:
+          config: classpath:ehcache.xml
+
+
+
 
 
 
