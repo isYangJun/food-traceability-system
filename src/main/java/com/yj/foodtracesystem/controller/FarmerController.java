@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -67,9 +69,16 @@ public class FarmerController {
 
     @ApiOperation(value = "query seed info by id")
     @PostMapping(value = "/querySeedInfoById")
-    public Result<List<SeedInfo>> querySeedInfoById( @RequestBody OperationHerPara operationHerPara) {
-        List<SeedInfo> seedInfoResList = farmerService.findSeedInfoById(operationHerPara.seedId);
-        return ResultUtil.success(seedInfoResList);
+    public Result<SeedInfo> querySeedInfoById(@Valid @RequestBody OperationHerPara operationHerPara) {
+        SeedInfo seedInfo = farmerService.findBySeedId(operationHerPara.seedId);
+        return ResultUtil.success(seedInfo);
+    }
+
+    @ApiOperation(value = "remove seed info by id")
+    @PostMapping(value = "/removeSeedInfoById")
+    public Result<SeedInfo> removeSeedInfoById(@Valid @RequestBody OperationHerPara operationHerPara) {
+       farmerService.removeSeedInfo(operationHerPara.seedId);
+        return ResultUtil.success();
     }
 
     @ApiOperation(value = "add seed info ")

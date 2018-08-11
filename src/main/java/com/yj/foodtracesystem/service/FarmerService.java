@@ -36,5 +36,5 @@ public interface FarmerService {
     SeedInfo findBySeedId(int id);
     List<FiledOperation> findFiledOperationBySeedId(int id);
     OperationOrderInfo updateOrderInfo(int id);
-
+    void removeSeedInfo(int  seedId);
 }

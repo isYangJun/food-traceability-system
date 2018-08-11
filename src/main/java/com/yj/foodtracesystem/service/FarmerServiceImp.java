@@ -5,8 +5,14 @@ import com.yj.foodtracesystem.model.TempModel.OperationAddPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisPara;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
 import com.yj.foodtracesystem.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +30,7 @@ import java.util.List;
  */
 @Service("farmerService")
 public class FarmerServiceImp implements FarmerService {
+    private static final Logger logger=LoggerFactory.getLogger(FarmerServiceImp.class);
     @Autowired
     private FiledOperationRepository filedOperationRepository;
     @Autowired
@@ -38,7 +45,7 @@ public class FarmerServiceImp implements FarmerService {
     @Autowired
     private FertilizerInfoRepository fertilizerInfoRepository;
     @Autowired
-    private  PesticideInfoRepository pesticideInfoRepository;
+    private PesticideInfoRepository pesticideInfoRepository;
 
     private OperationOrderInfoRepository operationOrderInfoRepository;
     @Autowired
@@ -47,6 +54,58 @@ public class FarmerServiceImp implements FarmerService {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Override
+    public List<SeedInfo> findSeedByTime(String startTime, String endTime) {
+        return seedInfoRepository.findBySeedRegTimeBetween(startTime, endTime);
+    }
+
+    @Override
+    @CachePut(value = "#seedInfo",key = "#seedInfo.getId()")
+    public SeedInfo saveSeedInfo(SeedInfo seedInfo) {
+        logger.info("为id为{},key为seedInfo的数据做了缓存",seedInfo.getId());
+        return seedInfoRepository.save(seedInfo);
+    }
+
+    @Override
+    @CacheEvict(value = "#seedInfo")
+    public void removeSeedInfo(int  seedId) {
+        logger.info("为seedId为{}、key为seedInfo的数据移除缓存",seedId);
+        // seedInfoRepository.deleteById(seedId);
+    }
+
+    @Override
+    @Cacheable(value = "#seedInfo")
+    public SeedInfo findBySeedId(int seedId) {
+        logger.info("为seedId为{}、key为seedInfo的数据做了缓存",seedId);
+        SeedInfo seedInfo= seedInfoRepository.findById(seedId);
+        return seedInfo;
+    }
+
+   @Override
+   @Cacheable(value = "seedInfo")
+    public List<SeedInfo> findSeedInfoById(int seedId) {
+        List<SeedInfo> seedInfoList = new ArrayList<>();
+        seedInfoList.add(seedInfoRepository.findById(seedId));
+        return seedInfoList;
+    }
+
+
+
+    @Override
+    public List<FiledOperation> findFiledOperationBySeedId(int id) {
+        return filedOperationRepository.findBySeedId(id);
+    }
+
+    @Transactional
+    @Override
+    public OperationOrderInfo updateOrderInfo(int id) {
+
+        OperationOrderInfo operationOrderInfo = em.find(OperationOrderInfo.class, id);
+        operationOrderInfo.setIsDone(1);
+        operationOrderInfo.setDoneTime(publicService.getStringDate());
+        return operationOrderInfo;
+    }
 
     @Override
     public List<FiledInfo> findAllFiledInfo() {
@@ -74,100 +133,85 @@ public class FarmerServiceImp implements FarmerService {
                 "' and '" + endTime + "'";
         Query nativeQuery = entityManager.createNativeQuery(sql);
         List<Object[]> list = nativeQuery.getResultList();
-        List<OperationHisResult> operationHisResultList = publicService.convertToType(list,OperationHisResult.class.getName());
+        List<OperationHisResult> operationHisResultList = publicService.convertToType(list, OperationHisResult.class.getName());
         return operationHisResultList;
     }
 
     @Override
     public void saveFiledOperation(FiledOperation filedOperation) {
-       String seedName=seedInfoRepository.findById(filedOperation.getSeedId()).getSeedName();
-       String filedName=filedInfoRepository.findById(filedOperation.getFiledId()).getFiledName();
-       String operationName=filedOperationTypeRepository.findById(filedOperation.getOperateTypeId()).getOperationName();
-       filedOperation.setSeedName(seedName);
-       filedOperation.setFiledName(filedName);
-       filedOperation.setOperationName(operationName);
-       filedOperationRepository.save(filedOperation);
+        String seedName = seedInfoRepository.findById(filedOperation.getSeedId()).getSeedName();
+        String filedName = filedInfoRepository.findById(filedOperation.getFiledId()).getFiledName();
+        String operationName = filedOperationTypeRepository.findById(filedOperation.getOperateTypeId()).getOperationName();
+        filedOperation.setSeedName(seedName);
+        filedOperation.setFiledName(filedName);
+        filedOperation.setOperationName(operationName);
+        filedOperationRepository.save(filedOperation);
     }
 
     @Override
     public List<SeedInfo> findAllSeedInfo() {
         return seedInfoRepository.findAll();
     }
+
     @Override
-    public List<FertilizerInfo> findAllFertilizerInfo(){ return  fertilizerInfoRepository.findAll(); }
+    public List<FertilizerInfo> findAllFertilizerInfo() {
+        return fertilizerInfoRepository.findAll();
+    }
+
     @Override
-    public List<PesticideInfo> findAllPesticideInfo(){ return  pesticideInfoRepository.findAll();}
+    public List<PesticideInfo> findAllPesticideInfo() {
+        return pesticideInfoRepository.findAll();
+    }
 
     @Override
     public void saveFiledInfo(FiledInfo filedInfo) {
         filedInfoRepository.save(filedInfo);
     }
+
     @Override
-    public SeedInfo saveSeedInfo(SeedInfo seedInfo) {return seedInfoRepository.save(seedInfo);}
+    public void saveFertilizerInfo(FertilizerInfo fertilizerInfo) {
+        fertilizerInfoRepository.save(fertilizerInfo);
+    }
+
     @Override
-    public void saveFertilizerInfo(FertilizerInfo fertilizerInfo){fertilizerInfoRepository.save(fertilizerInfo);}
-    @Override
-    public void savePesticideInfo(PesticideInfo pesticideInfo){pesticideInfoRepository.save(pesticideInfo);}
+    public void savePesticideInfo(PesticideInfo pesticideInfo) {
+        pesticideInfoRepository.save(pesticideInfo);
+    }
 
     @Override
     public List<FiledInfo> findFiledInfoById(int id) {
-        List<FiledInfo> filedInfoList=new ArrayList<>();
-        filedInfoList.add(filedInfoRepository.findById(id)) ;
+        List<FiledInfo> filedInfoList = new ArrayList<>();
+        filedInfoList.add(filedInfoRepository.findById(id));
         return filedInfoList;
     }
 
     @Override
     public List<FiledInfo> findByTime(String startTime, String endTime) {
-        return filedInfoRepository.findByFiledRegTimeBetween(startTime,endTime);
-    }
-    @Override
-    public List<SeedInfo> findSeedByTime(String startTime,String endTime){
-        return seedInfoRepository.findBySeedRegTimeBetween(startTime, endTime);
+        return filedInfoRepository.findByFiledRegTimeBetween(startTime, endTime);
     }
 
     @Override
-    public List<SeedInfo> findSeedInfoById(int id){
-        List<SeedInfo> seedInfoList= new ArrayList<>();
-        seedInfoList.add(seedInfoRepository.findById(id));
-        return seedInfoList;
-    }
-    @Override
-    public List<FertilizerInfo> findFertilizerInfoById(int id){
-        List<FertilizerInfo> fertilizerInfoList= new ArrayList<>();
+    public List<FertilizerInfo> findFertilizerInfoById(int id) {
+        List<FertilizerInfo> fertilizerInfoList = new ArrayList<>();
         fertilizerInfoList.add(fertilizerInfoRepository.findById(id));
         return fertilizerInfoList;
     }
+
     @Override
-    public List<FertilizerInfo> findFertilizerInfoByTime(String startTime,String endTime){
-        return fertilizerInfoRepository.findByFertilizerRegTimeBetween(startTime,endTime);
+    public List<FertilizerInfo> findFertilizerInfoByTime(String startTime, String endTime) {
+        return fertilizerInfoRepository.findByFertilizerRegTimeBetween(startTime, endTime);
     }
+
     @Override
-    public List<PesticideInfo> findPesticideInfoById(int id){
-        List<PesticideInfo> pesticideInfoList= new ArrayList<>();
+    public List<PesticideInfo> findPesticideInfoById(int id) {
+        List<PesticideInfo> pesticideInfoList = new ArrayList<>();
         pesticideInfoList.add(pesticideInfoRepository.findById(id));
         return pesticideInfoList;
     }
-    @Override
-    public List<PesticideInfo> findPesticideInfoByTime(String startTime,String endTime){
-        return pesticideInfoRepository.findByPesticideRegTimeBetween(startTime,endTime);
-    }
-    @Override
-    public SeedInfo findBySeedId(int id) {
-        return seedInfoRepository.findById(id);
-    }
 
     @Override
-    public List<FiledOperation> findFiledOperationBySeedId(int id) {
-        return filedOperationRepository.findBySeedId(id);
+    public List<PesticideInfo> findPesticideInfoByTime(String startTime, String endTime) {
+        return pesticideInfoRepository.findByPesticideRegTimeBetween(startTime, endTime);
     }
 
-    @Transactional
-    @Override
-    public OperationOrderInfo updateOrderInfo(int id) {
-
-        OperationOrderInfo operationOrderInfo = em.find(OperationOrderInfo.class, id);
-        operationOrderInfo.setIsDone(1);
-        operationOrderInfo.setDoneTime(publicService.getStringDate());
-        return operationOrderInfo;
-    }
 }

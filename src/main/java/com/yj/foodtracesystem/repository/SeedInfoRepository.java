@@ -1,6 +1,7 @@
 package com.yj.foodtracesystem.repository;
 
 import com.yj.foodtracesystem.model.SeedInfo;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.ResponseBody;
