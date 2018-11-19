@@ -18,7 +18,7 @@
 <div class="col-md-9 main">
     <div class="header-grids">
         <div class="col-md-6 log">
-            <h3>新增生产者</h3>
+            <h3>新增仓储操作员</h3>
             <form  autocomplete="off"
                    th:object="${reposOperaInfo}" th:action="@{/reposadmin/addReposOpera}" method="post" class="form-horizontal"
                    role="form" id="addReposOpera" name="addReposOpera">
@@ -49,7 +49,7 @@
         </div>
 
         <div class="col-md-6 log">
-            <h3>查询生产者</h3>
+            <h3>查询仓储操作员</h3>
             <form autocomplete="off"
                   th:object="${reposOperaInfoById}" th:action="@{/reposadmin/queryReposOperaById}" method="post" class="form-horizontal"
                   role="form" id="queryReposOperaById" name="queryReposOperaById">
@@ -70,7 +70,7 @@
         </div>
 
         <div class="col-md-6 log">
-            <h3>查询生产者</h3>
+            <h3>查询仓储操作员</h3>
             <form autocomplete="off"
                   th:object="${reposOperaInfoByTime}" th:action="@{/reposadmin/queryReposOperaByTime}" method="post" class="form-horizontal"
                   role="form" id="queryReposOperaByTime" name="queryReposOperaByTime">
@@ -98,7 +98,7 @@
         <table border="1">
             <thead>
             <tr>
-                <th>生产者姓名</th>
+                <th>仓储操作员姓名</th>
                 <th>编号</th>
                 <th>ID</th>
                 <th>性别</th>
