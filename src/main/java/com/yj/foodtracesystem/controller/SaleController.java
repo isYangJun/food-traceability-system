@@ -34,6 +34,22 @@ public class SaleController {
     @Autowired
     private TransporterService transporterService;
 
+    /*
+     * 销售管理员*/
+    @GetMapping(value = "/saleadmin/saleAdminMan")
+    public ModelAndView operatorMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+        modelAndView.addObject("saleOperaInfo", new User());
+        modelAndView.addObject("saleOperaInfoById", new User());
+        modelAndView.addObject("saleOperaInfoByTime", new QueryPara());
+        modelAndView.setViewName("saleadmin/saleAdminMan");
+        return modelAndView;
+    }
+
+
     @GetMapping("/saleman/saleMan")
     public ModelAndView saleMan() {
         ModelAndView modelAndView = new ModelAndView();

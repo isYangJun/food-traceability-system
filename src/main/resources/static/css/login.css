@@ -23,7 +23,7 @@
   padding: 10px;
 }
 
-input[type="text"] {
+input[type="usernum"] {
   margin-bottom: 0px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

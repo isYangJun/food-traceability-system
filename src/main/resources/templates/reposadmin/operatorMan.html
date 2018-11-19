@@ -1,0 +1,126 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="reposadmin/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+
+    <title>Repos_Man</title>
+
+</head>
+<body>
+<div th:replace="reposadmin/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>新增生产者</h3>
+            <form  autocomplete="off"
+                   th:object="${reposOperaInfo}" th:action="@{/reposadmin/addReposOpera}" method="post" class="form-horizontal"
+                   role="form" id="addReposOpera" name="addReposOpera">
+                <div>
+                    <div class="content"><h5>姓名:</h5></div>
+                    <div class="content"><input type="text" value="" name="name" th:filed="*{name}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>性别:</h5></div>
+                    <div class="content">
+                        <select name="sex" th:filed="*{sex}">
+                            <option>性别</option>
+                            <option value="0" th:selected="${sex=='0'}">女</option>
+                            <option value="1" th:selected="${sex=='1'}">男</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>身份证号:</h5></div>
+                    <div class="content"><input type="text" value="" name="idNum" th:filed="*{idNum}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>员工编号:</h5></div>
+                    <div class="content"><input type="text" value="" name="userNum" th:filed="*{userNum}"></div>
+                </div>
+                <div><input class="content" type="submit" value="提交" ></div>
+            </form>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>查询生产者</h3>
+            <form autocomplete="off"
+                  th:object="${reposOperaInfoById}" th:action="@{/reposadmin/queryReposOperaById}" method="post" class="form-horizontal"
+                  role="form" id="queryReposOperaById" name="queryReposOperaById">
+                <div>
+                    <div class="content"><h5>员工姓名:</h5></div>
+                    <div class="content">
+                        <input type="text" name="name" th:filed="*{name}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>员工编号:</h5></div>
+                    <div class="content">
+                        <input type="text" name="userNum" th:filed="*{userNum}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+
+        <div class="col-md-6 log">
+            <h3>查询生产者</h3>
+            <form autocomplete="off"
+                  th:object="${reposOperaInfoByTime}" th:action="@{/reposadmin/queryReposOperaByTime}" method="post" class="form-horizontal"
+                  role="form" id="queryReposOperaByTime" name="queryReposOperaByTime">
+                <div>
+                    <div class="content"><h5>注册时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>注册时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div width="100%">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>生产者姓名</th>
+                <th>编号</th>
+                <th>ID</th>
+                <th>性别</th>
+                <th>注册时间</th>
+                <th>是否在职</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reposOperaInfoRes:${reposOperaInfoResList}">
+                <td th:text="${reposOperaInfoRes.name}"></td>
+                <td th:text="${reposOperaInfoRes.userNum}"></td>
+                <td th:text="${reposOperaInfoRes.idNum}"></td>
+                <td th:text="${reposOperaInfoRes.sex}"></td>
+                <td th:text="${reposOperaInfoRes.regTime}"></td>
+                <td th:text="${reposOperaInfoRes.active}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+</body>
+</html>

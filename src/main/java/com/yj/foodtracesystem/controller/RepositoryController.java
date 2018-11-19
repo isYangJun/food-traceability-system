@@ -32,6 +32,36 @@ public class RepositoryController {
     @Autowired
     private PublicService publicService;
 
+
+    /*
+     * 仓储管理员*/
+    @GetMapping(value = "/reposadmin/operatorMan")
+    public ModelAndView operatorMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+        modelAndView.addObject("reposOperaInfo", new User());
+        modelAndView.addObject("reposOperaInfoById", new User());
+        modelAndView.addObject("reposOperaInfoByTime", new QueryPara());
+        modelAndView.setViewName("reposadmin/operatorMan");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/reposadmin/repositoryStationMan")
+    public ModelAndView repositoryStationMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+        modelAndView.addObject("warehouseInfo", new WarehouseInfo());
+        modelAndView.addObject("wareInfoById", new WarehouseInfo());
+        modelAndView.addObject("queryPara", new QueryPara());
+        modelAndView.setViewName("reposadmin/repositoryStationMan");
+        return modelAndView;
+    }
+
+
     @GetMapping("/repository/repositoryMan")
     public ModelAndView repositoryMan() {
         ModelAndView modelAndView = new ModelAndView();
@@ -57,10 +87,10 @@ public class RepositoryController {
         repositoryInfo.setOperatorNum(user.getUserNum());
         repositoryInfo.setRecordedTime(publicService.formatTime(repositoryInfo.getRecordedTime()));
         repositoryInfo.setProBatchNum(coopService.findProBatchNumByProNum(repositoryInfo.getProNum()));
-        int preWeight=transporterService.findProWeightByProNumAndDestinationNum(user.getUserComp(),repositoryInfo.getProNum());
-        if(publicService.isReasonableProWeight(preWeight,repositoryInfo.getProWeight())){
-            double grossLossRate=repositoryInfo.getProWeight()*1.0/preWeight;
-            grossLossRate=((int)(grossLossRate*1000))/1000.0;
+        int preWeight = transporterService.findProWeightByProNumAndDestinationNum(user.getUserComp(), repositoryInfo.getProNum());
+        if (publicService.isReasonableProWeight(preWeight, repositoryInfo.getProWeight())) {
+            double grossLossRate = repositoryInfo.getProWeight() * 1.0 / preWeight;
+            grossLossRate = ((int) (grossLossRate * 1000)) / 1000.0;
             repositoryInfo.setGrossLossRate(grossLossRate);
 
             reposService.saveRepositoryInfo(repositoryInfo);
@@ -68,8 +98,8 @@ public class RepositoryController {
             modelAndView.setViewName("repository/repositoryMan");
             return modelAndView;
 
-        }else {
-            ModelAndView modelAndView1 =new ModelAndView();
+        } else {
+            ModelAndView modelAndView1 = new ModelAndView();
             modelAndView1.setViewName("errorProweight");
             return modelAndView1;
         }
@@ -163,10 +193,10 @@ public class RepositoryController {
         addTransInfo.setRecordedTime(publicService.formatTime(addTransInfo.getRecordedTime()));
         addTransInfo.setDestinationRole(coopService.findCompanyRoleByComNum(addTransInfo.getDestinationNum()));
 
-        int preWeight=transporterService.findProWeightByProNumAndDestinationNum(user.getUserComp(),addTransInfo.getProNum());
-        if(publicService.isReasonableProWeight(preWeight,addTransInfo.getProWeight())){
-            double grossLossRate=addTransInfo.getProWeight()*1.0/preWeight;
-            grossLossRate=((int)(grossLossRate*1000))/1000.0;
+        int preWeight = transporterService.findProWeightByProNumAndDestinationNum(user.getUserComp(), addTransInfo.getProNum());
+        if (publicService.isReasonableProWeight(preWeight, addTransInfo.getProWeight())) {
+            double grossLossRate = addTransInfo.getProWeight() * 1.0 / preWeight;
+            grossLossRate = ((int) (grossLossRate * 1000)) / 1000.0;
             addTransInfo.setGrossLossRate(grossLossRate);
             transporterService.saveTransInfo(addTransInfo);
 
@@ -186,8 +216,8 @@ public class RepositoryController {
 
             modelAndView.setViewName("repository/repoTransMan");
             return modelAndView;
-        }else {
-            ModelAndView modelAndView1 =new ModelAndView();
+        } else {
+            ModelAndView modelAndView1 = new ModelAndView();
             modelAndView1.setViewName("errorProweight");
             return modelAndView1;
         }

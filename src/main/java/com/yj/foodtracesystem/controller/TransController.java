@@ -124,6 +124,19 @@ public class TransController {
     }
 
     /***************************************************运输站点管理****************************************************/
+    @GetMapping(value = "/transadmin/operatorMan")
+    public ModelAndView operatorMan() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserNum(auth.getName());
+        modelAndView.addObject("userName", "welcome " + user.getUserCompName() + ":" + user.getName() + "(" + user.getUserNum() + ")");
+        modelAndView.addObject("transOperaInfo", new User());
+        modelAndView.addObject("transOperaInfoById", new User());
+        modelAndView.addObject("transOperaInfoByTime", new QueryPara());
+        modelAndView.setViewName("transadmin/operatorMan");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/transadmin/transStationMan")
     public ModelAndView transStationMan() {
         ModelAndView modelAndView = initialTransStationMan();
@@ -136,6 +149,7 @@ public class TransController {
         ModelAndView modelAndView = initialTransStationMan();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserNum(auth.getName());
+
         addTransStationInfo.setOperatorNum(user.getUserNum());
         addTransStationInfo.setCarRegTime(publicService.getStringDate());
         transporterService.saveTransStationInfo(addTransStationInfo);

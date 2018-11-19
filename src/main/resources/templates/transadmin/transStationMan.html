@@ -21,7 +21,8 @@
         <div class="col-md-6 log">
             <h3>新增车辆信息</h3>
             <form autocomplete="off"
-                  th:object="${transStationInfo}" th:action="@{/transadmin/addTransStationInfo}" method="post" class="form-horizontal"
+                  th:object="${transStationInfo}" th:action="@{/transadmin/addTransStationInfo}" method="post"
+                  class="form-horizontal"
                   role="form" id="addTransStationInfo" name="addTrandStationInfo">
                 <div>
                     <div class="content"><h5>车辆编号:</h5></div>
@@ -32,14 +33,14 @@
                     <div class="content"><input type="text" value="" name="carName" th:filed="*{carName}"></div>
                 </div>
                 <div>
-                <div class="content"><h5>运输车类型:</h5></div>
-                <div class="content">
-                    <select name="carType" th:filed="*{carType}">
-                        <option>请选择运输车类型</option>
-                        <option th:each="car:${carList}" th:value="${car.type}"
-                                th:text="${car.id}+${car.type}"></option>
-                    </select>
-                </div>
+                    <div class="content"><h5>运输车类型:</h5></div>
+                    <div class="content">
+                        <select name="carType" th:filed="*{carType}">
+                            <option>请选择运输车类型</option>
+                            <option th:each="car:${carList}" th:value="${car.type}"
+                                    th:text="${car.id}+${car.type}"></option>
+                        </select>
+                    </div>
                 </div>
                 <div>
                     <div class="content"><h5>公司名称:</h5></div>
@@ -47,7 +48,7 @@
                 </div>
                 <div>
                     <div class="content"><h5>公司编号:</h5></div>
-                    <div class="content"><input type="text" value="" name="companyNum" th:filed="*{companyNum}"></div>
+                    <div><input type="text" value="" name="companyNum" th:filed="*{companyNum}"></div>
                 </div>
                 <div><input class="content" type="submit" value="提交"></div>
             </form>
@@ -59,15 +60,14 @@
                   th:object="${transStationInfo}" th:action="@{/transadmin/transStationInfoById}" method="post"
                   class="form-horizontal"
                   role="form" id="transStationInfoById" name="transStationInfoById">
-                <div>
-                    <!-- <div class="content"><h5>按车辆编号:</h5></div>-->
-                    <div class="content">
-                        <select name="carNum" th:filed="*{carNum}">
-                            <option>车辆编号</option>
-                            <option th:each="transStationInfoList:${transStationInfoList}" th:value="${transStationInfoList.carNum}"
-                                    th:text="${transStationInfoList.carNum}+${transStationInfoList.carName}"></option>
-                        </select>
-                    </div>
+                <!-- <div class="content"><h5>按车辆编号:</h5></div>-->
+                <div class="content">
+                    <select name="carNum" th:filed="*{carNum}">
+                        <option>车辆编号</option>
+                        <option th:each="transStationInfoList:${transStationInfoList}"
+                                th:value="${transStationInfoList.carNum}"
+                                th:text="${transStationInfoList.carNum}+${transStationInfoList.carName}"></option>
+                    </select>
                 </div>
                 <div><input class="content" type="submit" value="查询"></div>
             </form>

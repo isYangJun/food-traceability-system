@@ -2,6 +2,7 @@ package com.yj.foodtracesystem.service;
 
 import com.yj.foodtracesystem.model.*;
 import com.yj.foodtracesystem.model.TempModel.OperationHisResult;
+import com.yj.foodtracesystem.repository.CarInfoRepository;
 import com.yj.foodtracesystem.repository.TransStationRepository;
 import com.yj.foodtracesystem.repository.TransporterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class TransporterServiceImp implements TransporterService {
 
     @Autowired
     private CoopService coopService;
+
+    @Autowired
+    private CarInfoRepository carInfoRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -95,11 +99,7 @@ public class TransporterServiceImp implements TransporterService {
     }
     @Override
     public List<Car>  findCarInfo() {
-        String sql = "SELECT car_id,car_type FROM tbl_car ";
-        Query nativeQuery = entityManager.createNativeQuery(sql);
-        List<Object[]> list = nativeQuery.getResultList();
-        List<Car> carList = publicService.convertToType(list,Car.class.getName());
-        return carList;
+        return carInfoRepository.findAll();
     }
 
     @Override

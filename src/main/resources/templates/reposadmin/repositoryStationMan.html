@@ -1,10 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <div th:replace="reposadmin/header :: header-css"/>
+    <style>
+        .content {
+            height: 35px;
+            width: 200px;
+            float: left;
+        }
+    </style>
+
+    <title>Repos_Man</title>
+
 </head>
 <body>
+<div th:replace="reposadmin/header :: header"/>
+<div class="col-md-9 main">
+    <div class="header-grids">
+        <div class="col-md-6 log">
+            <h3>新增仓库信息</h3>
+            <form autocomplete="off"
+                  th:object="${warehouseInfo}" th:action="@{/reposadmin/addWarehouseInfo}" method="post" class="form-horizontal"
+                  role="form" id="addWarehouseInfo" name="addWarehouseInfo">
+                <div>
+                    <div class="content"><h5>仓库名称:</h5></div>
+                    <div class="content"><input type="text" value="" name="carNum" th:filed="*{warehouseName}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>仓库编号:</h5></div>
+                    <div class="content"><input type="text" value="" name="carName" th:filed="*{warehouseNum}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>仓库地址:</h5></div>
+                    <div class="content"><input type="text" value="" name="carName" th:filed="*{warehouseAdd}"></div>
+                </div>
+                <div>
+                    <div class="content"><h5>仓储温度:</h5></div>
+                    <div class="content">
+                        <input type="text" value="" name="carName" th:filed="*{wareHouseTemp}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="提交"></div>
+            </form>
+        </div>
 
+        <div class="col-md-6 log">
+            <h3>查询仓库信息</h3>
+            <form autocomplete="off"
+                  th:object="${wareInfoById}" th:action="@{/reposadmin/warehouseInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="warehouseInfoById" name="warehouseInfoById">
+                <div>
+                    <!-- <div class="content"><h5>按车辆编号:</h5></div>-->
+                    <div class="content">
+                        <select name="warehouseNum" th:filed="*{warehouseNum}">
+                            <option>仓号编号</option>
+                            <option th:each="warehouseInfoList:${warehouseInfoList}" th:value="${warehouseInfoList.warehouseNum}"
+                                    th:text="${warehouseInfoList.warehouseNum}+${warehouseInfoList.warehouseName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="col-md-6 log">
+            <h3>查询仓库信息</h3>
+            <form autocomplete="off"
+                  th:object="${queryPara}" th:action="@{/reposadmin/warehouseInfoByTime}" method="post"
+                  class="form-horizontal"
+                  role="form" id="warehouseInfoByTime" name="warehouseInfoByTime">
+                <div>
+                    <div class="content"><h5>起始时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="startTime" th:filed="*{startTime}">
+                    </div>
+                </div>
+                <div>
+                    <div class="content"><h5>终止时间:</h5></div>
+                    <div class="content">
+                        <input type="datetime-local" name="endTime" th:filed="*{endTime}">
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!--表格显示-->
+    <div width="100%">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>仓库编号</th>
+                <th>仓库名称</th>
+                <th>所属仓储节点</th>
+                <th>仓库地址</th>
+                <th>仓储温度</th>
+                <th>登记时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="warehouseInfoRes:${warehouseInfoResList}">
+                <td th:text="${warehouseInfoRes.warehouseNum}"></td>
+                <td th:text="${warehouseInfoRes.warehouseName}"></td>
+                <td th:text="${warehouseInfoRes.coopNum}"></td>
+                <td th:text="${warehouseInfoRes.warehouseAdd}"></td>
+                <td th:text="${warehouseInfoRes.wareHouseTemp}"></td>
+                <td th:text="${warehouseInfoRes.regTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
 </body>
 </html>
