@@ -1,8 +1,6 @@
 server:
     port: 8081
 
-logging:
-  config: E:\IntelliJIDEAWork\food-traceability-system\src\main\resources\log4j2.yml
 
 spring:
     datasource:
