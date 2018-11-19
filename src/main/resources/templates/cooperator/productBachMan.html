@@ -25,10 +25,12 @@
                   role="form" id="addProductBachInfo" name="addProductBachInfo">
                 <div>
                     <div class="content"><h5>生产节点名称:</h5></div>
+                    <div class="content">
                     <select name="coopNum" th:filed="*{coopNum}">
                         <option>生产节点名称</option>
                         <option th:text="${compNum}+${compName}" th:value="${compNum}"></option>
                     </select>
+                    </div>
                 </div>
                 <div>
                     <div class="content"><h5>地块选择:</h5></div>

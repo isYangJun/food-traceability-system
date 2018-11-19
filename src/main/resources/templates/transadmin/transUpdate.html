@@ -15,17 +15,17 @@
 
 </head>
 <body>
-<div th:replace="transporter/header :: header"/>
+<div th:replace="transadmin/header :: header"/>
 <div class="col-md-9 main">
     <div class="header-grids">
         <div class="col-md-6 log">
             <h3>修改/撤销产品入站信息</h3>
-
             <form autocomplete="off"
                   th:object="${upTransInfo}" th:action="@{/transadmin/upTransInfo}" method="post"
                   class="form-horizontal"
                   role="form" id="upTransInfo" name="upTransInfo">
                 <div>
+                    <div class="content"><h5>产品编号:</h5></div>
                     <div class="content">
                         <select name="proNum" th:filed="*{proNum}">
                             <option>产品编号</option>

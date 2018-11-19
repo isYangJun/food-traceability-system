@@ -24,15 +24,17 @@
                   role="form" id="addFiledInfo" name="addFiledInfo">
                 <div>
                     <div class="content"><h5>地块地址:</h5></div>
-                    <div><input type="text" value="" name="filedAdd" th:filed="*{filedAdd}"></div>
+                    <div class="content">
+                   <input type="text" value="" name="filedAdd" th:filed="*{filedAdd}">
+                    </div>
                 </div>
                 <div>
                     <div class="content"><h5>地块名称:</h5></div>
-                    <div><input type="text" value="" name="filedName" th:filed="*{filedName}"></div>
+                    <div class="content"><input type="text" value="" name="filedName" th:filed="*{filedName}"></div>
                 </div>
                 <div>
                     <div class="content"><h5>地块面积:</h5></div>
-                    <div><input type="text" value="" name="filedArea" th:filed="*{filedArea}"></div>
+                    <div class="content"><input type="text" value="" name="filedArea" th:filed="*{filedArea}"></div>
                 </div>
                 <div><input class="content" type="submit" value="提交"></div>
             </form>

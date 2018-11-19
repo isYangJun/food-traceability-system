@@ -25,12 +25,13 @@
                   role="form" id="addTransStationInfo" name="addTrandStationInfo">
                 <div>
                     <div class="content"><h5>车辆编号:</h5></div>
-                    <div><input type="text" value="" name="carNum" th:filed="*{carNum}"></div>
+                    <div class="content"><input type="text" value="" name="carNum" th:filed="*{carNum}"></div>
                 </div>
                 <div>
                     <div class="content"><h5>车辆名称:</h5></div>
-                    <div><input type="text" value="" name="carName" th:filed="*{carName}"></div>
+                    <div class="content"><input type="text" value="" name="carName" th:filed="*{carName}"></div>
                 </div>
+                <div>
                 <div class="content"><h5>运输车类型:</h5></div>
                 <div class="content">
                     <select name="carType" th:filed="*{carType}">
@@ -39,13 +40,14 @@
                                 th:text="${car.id}+${car.type}"></option>
                     </select>
                 </div>
+                </div>
                 <div>
                     <div class="content"><h5>公司名称:</h5></div>
-                    <div><input type="text" value="" name="companyName" th:filed="*{companyName}"></div>
+                    <div class="content"><input type="text" value="" name="companyName" th:filed="*{companyName}"></div>
                 </div>
                 <div>
                     <div class="content"><h5>公司编号:</h5></div>
-                    <div><input type="text" value="" name="companyNum" th:filed="*{companyNum}"></div>
+                    <div class="content"><input type="text" value="" name="companyNum" th:filed="*{companyNum}"></div>
                 </div>
                 <div><input class="content" type="submit" value="提交"></div>
             </form>

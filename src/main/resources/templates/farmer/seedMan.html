@@ -24,19 +24,19 @@
                   role="form" id="addSeedInfo" name="addSeedInfo">
                 <div>
                     <div class="content"><h5>种子名称:</h5></div>
-                    <div><input type="text" value="" name="seedName" th:filed="*{seedName}"></div>
+                    <div class="content"><input type="text" value="" name="seedName" th:filed="*{seedName}"></div>
                 </div>
                 <div>
                     <div class="content"><h5>种子生产编号:</h5></div>
-                    <div><input type="text" value="" name="seedWeight" th:filed="*{seedWeight}"></div>
+                    <div class="content"><input type="text" value="" name="seedWeight" th:filed="*{seedWeight}"></div>
                 </div>
                 <div>
                     <div class="content"><h5>种子生产产商:</h5></div>
-                    <div><input type="text" value="" name="seedProducer" th:filed="*{seedProducer}"></div>
+                    <div class="content"><input type="text" value="" name="seedProducer" th:filed="*{seedProducer}"></div>
                 </div>
                 <div>
                     <div class="content"><h5>保质期限:</h5></div>
-                    <div><input type="text" value="" name="seedValTime" th:filed="*{seedValTime}"></div>
+                    <div class="content"><input type="text" value="" name="seedValTime" th:filed="*{seedValTime}"></div>
                 </div>
                 <div><input class="content" type="submit" value="提交"></div>
             </form>
@@ -62,28 +62,27 @@
                 </div>
                 <div><input class="content" type="submit" value="查询"></div>
             </form>
-
-            <div class="col-md-6 log">
-                <form autocomplete="off"
-                      th:object="${operationHerPara}" th:action="@{/farmer/querySeedInfoById}" method="post"
-                      class="form-horizontal"
-                      role="form" id="querySeedInfoById" name="querySeedInfoById">
-                    <div>
-                        <div class="content"><h5>种子选择:</h5></div>
-                        <div class="content">
-                            <select name="seedId" th:filed="*{seedId}">
-                                <option>请选择种子</option>
-                                <option th:each="seedInfoList:${seedInfoList}" th:value="${seedInfoList.id}"
-                                        th:text="${seedInfoList.id}+${seedInfoList.seedName}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div><input class="content" type="submit" value="查询"></div>
-                </form>
-            </div>
-
-            <div class="clearfix"></div>
         </div>
+        <div class="col-md-6 log">
+            <form autocomplete="off"
+                  th:object="${operationHerPara}" th:action="@{/farmer/querySeedInfoById}" method="post"
+                  class="form-horizontal"
+                  role="form" id="querySeedInfoById" name="querySeedInfoById">
+                <div>
+                    <div class="content"><h5>种子选择:</h5></div>
+                    <div class="content">
+                        <select name="seedId" th:filed="*{seedId}">
+                            <option>请选择种子</option>
+                            <option th:each="seedInfoList:${seedInfoList}" th:value="${seedInfoList.id}"
+                                    th:text="${seedInfoList.id}+${seedInfoList.seedName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div><input class="content" type="submit" value="查询"></div>
+            </form>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 
         <!--表格显示-->
         <div width="100%">
