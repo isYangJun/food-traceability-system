@@ -1,13 +1,10 @@
 package com.yj.foodtracesystem.repository;
 
 import com.yj.foodtracesystem.model.OperationOrderInfo;
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import sun.management.jdp.JdpPacket;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @Author:yangjun

@@ -24,9 +24,9 @@
                   th:object="${productInfo}" th:action="@{/cooperator/addProduct}" method="post" class="form-horizontal"
                   role="form" id="addProduct" name="addProduct">
                 <div>
-                    <div class="content"><h5>合作社名称:</h5></div>
+                    <div class="content"><h5>生产节点名称:</h5></div>
                     <select name="coopNum" th:filed="*{coopNum}">
-                        <option>合作社名称</option>
+                        <option>生产节点名称</option>
                         <option th:text="${compNum}+${compName}" th:value="${compNum}"></option>
                     </select>
                 </div>
@@ -130,13 +130,13 @@
     </div>
 
     <!--表格显示-->
-    <div class="col-md-6 log">
+    <div width="100%">
         <table border="1">
             <thead>
             <tr>
                 <th>产品名称</th>
                 <th>编号</th>
-                <th>所属合作社</th>
+                <th>所属生产节点</th>
                 <th>所属地块</th>
                 <th>收获时间</th>
                 <th>产品重量</th>
