@@ -71,7 +71,7 @@ public class TransController {
         if(publicService.isReasonableProWeight(preWeight,addTransInfo.getProWeight())){
             double grossLossRate=addTransInfo.getProWeight()*1.0/preWeight;
             grossLossRate=((int)(grossLossRate*1000))/1000.0;
-            addTransInfo.setGrossLossRate(grossLossRate);
+            addTransInfo.setGrossLossRate(1-grossLossRate);
             transporterService.saveTransInfo(addTransInfo);
             initialParaModel(modelAndView, user);
             modelAndView.setViewName("transporter/transMan");
@@ -238,7 +238,7 @@ public class TransController {
             if(publicService.isReasonableProWeight(preWeight,upTransInfo.getProWeight())){
                 double grossLossRate=upTransInfo.getProWeight()*1.0/preWeight;
                 grossLossRate=((int)(grossLossRate*1000))/1000.0;
-                upTransInfo.setGrossLossRate(grossLossRate);
+                upTransInfo.setGrossLossRate(1-grossLossRate);
                 int preProId=transporterService.findIdByComNumAndProNum(user.getUserComp(),upTransInfo.getProNum());
                 transporterService.updateTransporterInfo(upTransInfo,preProId);
                 modelAndView.setViewName("transadmin/transUpdate");

@@ -91,7 +91,7 @@ public class RepositoryController {
         if (publicService.isReasonableProWeight(preWeight, repositoryInfo.getProWeight())) {
             double grossLossRate = repositoryInfo.getProWeight() * 1.0 / preWeight;
             grossLossRate = ((int) (grossLossRate * 1000)) / 1000.0;
-            repositoryInfo.setGrossLossRate(grossLossRate);
+            repositoryInfo.setGrossLossRate(1-grossLossRate);
 
             reposService.saveRepositoryInfo(repositoryInfo);
             initalModelView(modelAndView, user);
@@ -197,7 +197,7 @@ public class RepositoryController {
         if (publicService.isReasonableProWeight(preWeight, addTransInfo.getProWeight())) {
             double grossLossRate = addTransInfo.getProWeight() * 1.0 / preWeight;
             grossLossRate = ((int) (grossLossRate * 1000)) / 1000.0;
-            addTransInfo.setGrossLossRate(grossLossRate);
+            addTransInfo.setGrossLossRate(1-grossLossRate);
             transporterService.saveTransInfo(addTransInfo);
 
             modelAndView.addObject("addTransInfo", new TransportInfo());

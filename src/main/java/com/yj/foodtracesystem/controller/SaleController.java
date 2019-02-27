@@ -79,7 +79,7 @@ public class SaleController {
         if(publicService.isReasonableProWeight(preWeight,saleInfo.getProWeight())){
             double grossLossRate=saleInfo.getProWeight()*1.0/preWeight;
             grossLossRate=((int)(grossLossRate*1000))/1000.0;
-            saleInfo.setGrossLossRate(grossLossRate);
+            saleInfo.setGrossLossRate(1-grossLossRate);
             saleService.saveSaleInfo(saleInfo);
             initialModel(modelAndView, user);
             modelAndView.setViewName("saleman/saleMan");
